@@ -15,6 +15,7 @@ options(repos = c(CRAN = "http://cran.rstudio.com"))
 #install.packages("tidyverse")
 #install.packages("nycflights13")
 ```
+
 ## Working directory
 ```{r echo=TRUE}
 getwd()
