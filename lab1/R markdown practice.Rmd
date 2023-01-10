@@ -1,0 +1,11 @@
+---
+title: "R Markdown Practice"
+author: "Kyra Kong"
+date: '2023-01-10'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
