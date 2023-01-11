@@ -23,6 +23,7 @@ R studio is the GUI or graphical user interface, allows coding to be easier visu
 Github is a website for the programmers to make their coding readily accesible to any computer by uploading or pushing their code.
 
 **3. Navigate to my [BIS15L](https://github.com/jmledford3115/BIS15LW2022_jledford) repository on GitHub. Notice that near the bottom there is a nice, clean description of the repository. You want this on your repository! It is built by making edits to the `README.md` file using the RMarkdown conventions. Edit your repository's `README.md` file so that you have a clean informative description, including your email address. Be creative! You don't need to just copy mine. There are lots of examples online.**  
+Added information to my repository. It generally includes my name and email.
 
 **4. Calculate the following expressions. Be sure to include each one in a separate code chunk.**  
 
