@@ -45,11 +45,11 @@ Both of the results surprised me. I didn't know what adding two asterisks does w
 ```{r}
 (5-3)*2
 ```
-
+Answer is 4
 ```{r}
 ((8/2)*2)*2
 ```
-
+Answer is 16
 
 **6. `Objects` in R are a way in which we can store data or operations. We will talk more about objects next week. For now, make a new object `pi` as 3.14159265359 by running the following code chunk. You should now see the object `pi` in the environment window in the top right.**  
 ```{r}
@@ -75,13 +75,12 @@ x <- c(2, 8, 6, 6, 7, 4, 9, 9, 9, 10)
 ```{r}
 mean(x)
 ```
-
-
+The mean is 6.25
 **10. Repeat the procedure above, but this time calculate the median.**  
 ```{r}
 median(x)
 ```
-
+The median is 6.5
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.  
