@@ -87,7 +87,7 @@ Added pi as an object
 ## [1] 6.283185
 ```
 
-
+Answer is 6.283185
 **8. In order to get help with any command in R, just type a `?` in front the command of interest. Practice this by running the following code chunk.**  
 
 ```r
