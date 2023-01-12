@@ -34,10 +34,25 @@ Assign a value to object 'x'. The '<-' symbol is read as 'gets'. In this case, x
 ```{r}
 x <- 42
 ```
-
+## x getting 42.
 To print the object to the screen, just type x.  
 ```{r}
 x
+```
+## if you are confused about what x is, can type x into the code
+```{r}
+y <- 5
+```
+
+```{r}
+y+5 
+```
+
+```{r}
+x+y
+```
+```{r}
+z <- x+y
 ```
 
 Once an object has been created, you can do things with them.  
@@ -51,51 +66,75 @@ Here we make a new object `my_experiment` that is the sum of the treatment and c
 my_experiment <- sum(treatment, control)
 my_experiment
 ```
+## making a new object in environment, sum (object 1, object 2)
 
 ## Nomenclature
-We need to be careful about nomenclature when we write code. R allows us to give almost any name we want to an object, but there are exceptions. For example, we don't want to give a name to an object that is the same as a function in R.  
+We need to be careful about nomenclature when we write code. R allows us to give almost any name we want to an object, but there are exceptions. For example, we don't want to give a name to an object that is the same as a function in R (creates problems)
+
 ```{r eval=FALSE, include=TRUE}
 else <- 12
 ```
 
 We get an error here because `else` is a function in R. You also don't want to give names that might get confused with functions; i.e. you can assign a value to 'mean' but this could become confusing because mean is used as a function.  
 
+
 ## Practice
 1. Create three new objects, `venom_GT`, `chiron`, and `veyron`. These are the fastest cars in the world. Assign each car to its top speed. The venom_GT can go 270, chiron is 261, and veyron is 268.
 ```{r}
 venom_GT <- 270
+venom_GT
+
+chiron <- 261
+chiron
+
+veyron <- 268
+veyron
 ```
 
 2. Use arithmetic to calculate the mean top speed for the cars.
 ```{r}
-
+(270+261+268)/3
 ```
 
 3. Use the function `mean()` to calculate the mean top speed for the cars.
 ```{r}
+speeds <- c(270,261,268) #making new object, combining all the cars (catatinate)
+mean(speeds)
 
+```
+## if you had typed mean(venom_GT, chiron, veyron), you'd get the wrong answer. 
+
+```{r}
+cars_2 <- c(venom_GT, chiron, veyron) # can use object labels instead of values
+mean(cars_2)
 ```
 
 ## Types of Data
 There are five frequently used `classes` of data: 1. numeric, 2. integer, 3. character, 4. logical, 5. complex.
 ```{r}
-my_numeric <- 42
+my_numeric <- 42 # any numerical value
 my_integer <- 2L #adding an L automatically denotes an integer
 my_character <- "universe"
-my_logical <- FALSE
-my_complex <- 2+4i
+my_logical <- FALSE # true or false
+my_complex <- 2+4i #formula
 ```
 
 To find out what type of data you are working with, use the `class()` function. This is important because sometimes we will need to change the type of data to perform certain analyses.
 ```{r}
 class(my_numeric)
 ```
+```{r}
+class(my_integer)
+```
+```{r}
+class(my_logical)
+```
 
 You can use the `is()` and `as()` functions to clarify or specify a type of data.
 ```{r}
 is.integer(my_numeric) #is my_numeric an integer?
 ```
-
+## can change something into an integer, making a new object. changing numeric
 ```{r}
 my_integer <- 
   as.integer(my_numeric) #create a new object specified as an integer
@@ -112,7 +151,7 @@ NA values are used to designate missing data. `is.na` or `anyNA` are useful func
 ```{r}
 my_missing <- NA
 ```
-
+## is na missing values, predict true
 ```{r}
 is.na(my_missing)
 ```
@@ -129,16 +168,18 @@ new_vector <- c(7, 6.2, 5, 9, NA, 4, 9.8, 7, 3, 2)
 
 2. As we did in homework 1, calculate the mean of `new_vector`.
 ```{r}
-
+mean(new_vector)
 ```
 
 3. How do you interpret this result? What does this mean about NAs?  
+NA, it means that since there is data missing, the calculation of the mean is inconclusive. The NAs are significant and must be considered when conducting statistical analyses. It is exceedingly difficult to deal with this.
 
-4. Recalculate the mean using the following code chunk. Why is the useful?  
+4. Recalculate the mean using the following code chunk. Why is the useful?
+## remove the NA, then calculates the mean
 ```{r}
-mean(new_vector, na.rm=T) #na.rm removes the NA values in the vector
+mean(new_vector, na.rm=T) #na.rm removes the NA values in the vector, T for True
 ```
-
+This is useful to find the mean of the data set (minus the missing values or NA)
 ## That's it! Let's take a break and then move on to part 2!
 
 -->[Home](https://jmledford3115.github.io/datascibiol/)  
