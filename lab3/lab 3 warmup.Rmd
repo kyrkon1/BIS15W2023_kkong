@@ -1,0 +1,74 @@
+---
+title: "lab 3 warm up"
+output: 
+  html_document: 
+    keep_md: yes
+date: "2023-01-17"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## plant height
+```{r}
+plant_height <-c(30.7,37.6,28.4,NA,33.2)
+plant_height
+```
+## plant mass
+```{r}
+plant_mass <-c(4,5.2,3.7,NA,4.6)
+plant_mass
+```
+##plpant labels
+```{r}
+samples <- c("Plant 1", "Plant 2", "Plant 3", "Plant 4", "Plant 5")
+measures <- c("Height", "Mass")
+```
+
+
+## plant matrix combined data
+
+plant_experiment <-c (plant_height, plant_mass) plant_experiment
+```{r}
+plant_experiment <-c(plant_height, plant_mass)
+plant_experiment
+```
+
+## build data matrix 
+```{r}
+plant_experiment_matrix <-matrix (plant_experiment, nrow =5, byrow =F)
+plant_experiment_matrix
+```
+
+
+## labels for height and mass
+```{r}
+colnames(plant_experiment_matrix) <-measures
+rownames(plant_experiment_matrix) <- samples
+
+plant_experiment_matrix
+
+```
+## calculate column means
+
+```{r}
+plant_means <-colMeans(plant_experiment_matrix, na.rm=T)
+plant_means
+```
+
+## removal NA or data missing from the data set with the na.rm = T
+
+## adding the new column to the matrix
+```{r}
+plant_experiment_matrix_final <- rbind(plant_experiment_matrix, plant_means)
+plant_experiment_matrix_final
+```
+## printing final matrix
+```{r}
+plant_experiment_matrix_final
+```
+
+
+
+
