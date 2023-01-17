@@ -20,13 +20,25 @@ library("jpeg")
 ## Review from last time
 ### *With a partner, discuss the following questions*
 1. What are examples of different classes of objects in R?
+  Numerical, Character, Integer (whole number), Logical (true or false), and Complex (formula)
+  
 2. What is a vector? What is the command to make a vector in R?
+
+Representation of data, list of values of the same class 
+object <- c( 1,2,3,4,5) (numerical) #catatinate
+if its for a character, has to use quotations likes
+new_vectors <- c("data 1", "data 2")
+
 3. What is a data matrix and how does a data matrix relate to vectors?
+multiple vectors, can create a table like an excel sheet
+data matrix (2 dimensional) or stacked vectors
+
 4. Do you have any questions from homework 2?
 
 ## Warm-up
 1. Build a vector that includes the following height measurements for five plants:
 plant 1 30.7, plant 2 37.6, plant 3 28.4, plant 4 NA, plant 5 33.2
+
 2. Build another vector that includes the following mass measurements:
 plant 1 4, plant 2 5.2, plant 3 3.7, plant 4 NA, plant 5 4.6
 3. Assemble these vectors into a labeled data matrix with two columns
