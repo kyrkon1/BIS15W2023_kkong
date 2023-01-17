@@ -101,9 +101,7 @@ steve_value <-final_spring_matrix[,2]
 steve_value
 mean(steve_value)
 ```
-```{r}
-mean(susan_value)
-```
+
 
 
 ## Push your final code to GitHub!

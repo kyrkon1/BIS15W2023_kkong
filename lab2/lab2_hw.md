@@ -1,7 +1,7 @@
 ---
 title: "Lab 2 Homework"
 author: "Kyra Kong"
-date: "2023-01-14"
+date: "2023-01-16"
 output:
   html_document: 
     theme: spacelab
@@ -204,13 +204,6 @@ mean(steve_value)
 ## [1] 33.93125
 ```
 
-```r
-mean(susan_value)
-```
-
-```
-## [1] 33.35
-```
 
 
 ## Push your final code to GitHub!
