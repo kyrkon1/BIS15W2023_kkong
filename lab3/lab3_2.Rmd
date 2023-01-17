@@ -172,12 +172,12 @@ str(mammals)
 ```
 
 ```{r}
-glimpse(mammals)
+glimpse(mammals) #makes most sense
 ```
 
 5. . Try the `table()` command to produce counts of mammal order, family, and genus.  
 ```{r}
-table(mammals$order)
+table(mammals$order) # can only do one column at a time
 ```
 ```{r}
 table(mammals$family)
@@ -185,6 +185,10 @@ table(mammals$family)
 ```{r}
 table(mammals$Genus)
 ```
+```{r}
+names(mammals)
+```
+
 
 ## Wrap-up
 Please review the learning goals and be sure to use the code here as a reference when completing the homework.  
