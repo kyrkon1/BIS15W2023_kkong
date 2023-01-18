@@ -1,7 +1,7 @@
 ---
 title: "Lab 3 Homework"
 author: "Kyra Kong"
-date: "2023-01-17"
+date: "2023-01-18"
 output:
   html_document: 
     theme: spacelab
@@ -43,7 +43,7 @@ msleep
 ## # … with 73 more rows, 1 more variable: bodywt <dbl>, and abbreviated variable
 ## #   names ¹​conservation, ²​sleep_total, ³​sleep_rem, ⁴​sleep_cycle
 ```
-The dataset for mammal sleep patterns is taken from V.M. Savage and G.B. West. This is from the National Academy of Sciences.
+The dataset for mammal sleep patterns is taken from V.M. Savage and G.B. West. This is from the National Academy of Sciences, 104 (3):1051-1056, 2007.
 
 
 2. Store these data into a new data frame `sleep`.

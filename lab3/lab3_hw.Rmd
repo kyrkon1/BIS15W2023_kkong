@@ -23,7 +23,7 @@ library(tidyverse)
 ```{r}
 msleep
 ```
-The dataset for mammal sleep patterns is taken from V.M. Savage and G.B. West. This is from the National Academy of Sciences.
+The dataset for mammal sleep patterns is taken from V.M. Savage and G.B. West. This is from the National Academy of Sciences, 104 (3):1051-1056, 2007.
 
 
 2. Store these data into a new data frame `sleep`.
