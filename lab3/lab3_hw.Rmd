@@ -3,9 +3,9 @@ title: "Lab 3 Homework"
 author: "Kyra Kong"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ## Instructions
@@ -51,7 +51,7 @@ There are NAs in the data frame, just by looking at the glimpse, I can see the p
 ```{r}
 names(sleep)
 ```
-the list of columns are name, genus, vore, order, conservation, sleep_total, sleep_rem, sleep_cycle, awake, brainwt, and bodywt.
+THe list of columns are name, genus, vore, order, conservation, sleep_total, sleep_rem, sleep_cycle, awake, brainwt, and bodywt.
 
 
 6. How many herbivores are represented in the data?  
@@ -105,20 +105,26 @@ mean(small_sleeptime)
 On average, smaller animals sleep longer.
 
 
-10. Which animal is the sleepiest among the entire dataframe?
+10. Which animal is the sleepiest among the entire data frame?
+
 ```{r}
 summary(sleep)
-sleep_data <- 
-sleepiest_animal <-filter(sleep, sleep_rem ==0.100)
-sleepiest_animal
 ```
-I would use this but since there are NAs present in the sleep_rem, I decided to use the sleep_totals instead.
+
+## checking if less sleep cycle is equal to sleepiness?
 ```{r}
-summary(sleep)
-sleepy_animal_check <- filter(sleep, sleep_total ==1.90)
-sleepy_animal_check
+sleepcycle_dataframe <-filter(sleep, sleep_cycle <=0.12)
+sleepcycle_dataframe
 ```
-The sleepiest animal total is the giraffe.
+The chinchilla and the big brown bat have the exact same hours for the length of their sleep cycle, but the big brown bat has more total hours of sleep.
+
+##checking if less sleep time is equal to sleepiness
+```{r}
+sleeptime_dataframe <-filter(sleep,sleep_total <=5)
+sleeptime_dataframe
+```
+
+The cow is probably the most sleepiest animal in the data frame, it has 4 hours of sleep for sleep total and the sleep cycle is 0.6667 hours.
 
 
 ## Push your final code to GitHub!

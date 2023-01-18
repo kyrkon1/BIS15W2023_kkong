@@ -493,7 +493,7 @@ the totals of NAs, for sleep_rem its 22, sleep_cycle 51, and brainwt:
 <pre><code>##  [1] &quot;name&quot;         &quot;genus&quot;        &quot;vore&quot;         &quot;order&quot;        &quot;conservation&quot;
 ##  [6] &quot;sleep_total&quot;  &quot;sleep_rem&quot;    &quot;sleep_cycle&quot;  &quot;awake&quot;        &quot;brainwt&quot;     
 ## [11] &quot;bodywt&quot;</code></pre>
-<p>the list of columns are name, genus, vore, order, conservation,
+<p>THe list of columns are name, genus, vore, order, conservation,
 sleep_total, sleep_rem, sleep_cycle, awake, brainwt, and bodywt.</p>
 <ol start="6" style="list-style-type: decimal">
 <li>How many herbivores are represented in the data?</li>
@@ -638,7 +638,7 @@ small_sleeptime</code></pre>
 <pre><code>## [1] 12.65833</code></pre>
 <p>On average, smaller animals sleep longer.</p>
 <ol start="10" style="list-style-type: decimal">
-<li>Which animal is the sleepiest among the entire dataframe?</li>
+<li>Which animal is the sleepiest among the entire data frame?</li>
 </ol>
 <pre class="r"><code>summary(sleep)</code></pre>
 <pre><code>##      name              genus               vore              order          
@@ -665,47 +665,50 @@ small_sleeptime</code></pre>
 ##  3rd Qu.:16.15   3rd Qu.:0.12550   3rd Qu.:  41.750  
 ##  Max.   :22.10   Max.   :5.71200   Max.   :6654.000  
 ##                  NA&#39;s   :27</code></pre>
-<pre class="r"><code>sleep_data &lt;- 
-sleepiest_animal &lt;-filter(sleep, sleep_rem ==0.100)
-sleepiest_animal</code></pre>
-<pre><code>##          name         genus  vore   order conservation sleep_total sleep_rem
-## 1 Pilot whale Globicephalus carni Cetacea           cd         2.7       0.1
-##   sleep_cycle awake brainwt bodywt
-## 1          NA 21.35      NA    800</code></pre>
-<p>I would use this but since there are NAs present in the sleep_rem, I
-decided to use the sleep_totals instead.</p>
-<pre class="r"><code>summary(sleep)</code></pre>
-<pre><code>##      name              genus               vore              order          
-##  Length:83          Length:83          Length:83          Length:83         
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##                                                                             
-##  conservation        sleep_total      sleep_rem      sleep_cycle    
-##  Length:83          Min.   : 1.90   Min.   :0.100   Min.   :0.1167  
-##  Class :character   1st Qu.: 7.85   1st Qu.:0.900   1st Qu.:0.1833  
-##  Mode  :character   Median :10.10   Median :1.500   Median :0.3333  
-##                     Mean   :10.43   Mean   :1.875   Mean   :0.4396  
-##                     3rd Qu.:13.75   3rd Qu.:2.400   3rd Qu.:0.5792  
-##                     Max.   :19.90   Max.   :6.600   Max.   :1.5000  
-##                                     NA&#39;s   :22      NA&#39;s   :51      
-##      awake          brainwt            bodywt        
-##  Min.   : 4.10   Min.   :0.00014   Min.   :   0.005  
-##  1st Qu.:10.25   1st Qu.:0.00290   1st Qu.:   0.174  
-##  Median :13.90   Median :0.01240   Median :   1.670  
-##  Mean   :13.57   Mean   :0.28158   Mean   : 166.136  
-##  3rd Qu.:16.15   3rd Qu.:0.12550   3rd Qu.:  41.750  
-##  Max.   :22.10   Max.   :5.71200   Max.   :6654.000  
-##                  NA&#39;s   :27</code></pre>
-<pre class="r"><code>sleepy_animal_check &lt;- filter(sleep, sleep_total ==1.90)
-sleepy_animal_check</code></pre>
-<pre><code>##      name   genus  vore        order conservation sleep_total sleep_rem
-## 1 Giraffe Giraffa herbi Artiodactyla           cd         1.9       0.4
-##   sleep_cycle awake brainwt  bodywt
-## 1          NA  22.1      NA 899.995</code></pre>
-<p>The sleepiest animal total is the giraffe.</p>
+</div>
+<div id="checking-if-less-sleep-cycle-is-equal-to-sleepiness" class="section level2">
+<h2>checking if less sleep cycle is equal to sleepiness?</h2>
+<pre class="r"><code>sleepcycle_dataframe &lt;-filter(sleep, sleep_cycle &lt;=0.12)
+sleepcycle_dataframe</code></pre>
+<pre><code>##            name      genus    vore      order conservation sleep_total
+## 1    Chinchilla Chinchilla   herbi   Rodentia domesticated        12.5
+## 2 Big brown bat  Eptesicus insecti Chiroptera           lc        19.7
+##   sleep_rem sleep_cycle awake brainwt bodywt
+## 1       1.5   0.1166667  11.5  0.0064  0.420
+## 2       3.9   0.1166667   4.3  0.0003  0.023</code></pre>
+<p>The chinchilla and the big brown bat have the exact same hours for
+the length of their sleep cycle, but the big brown bat has more total
+hours of sleep.</p>
+<p>##checking if less sleep time is equal to sleepiness</p>
+<pre class="r"><code>sleeptime_dataframe &lt;-filter(sleep,sleep_total &lt;=5)
+sleeptime_dataframe</code></pre>
+<pre><code>##                name         genus  vore          order conservation sleep_total
+## 1               Cow           Bos herbi   Artiodactyla domesticated         4.0
+## 2          Roe deer     Capreolus herbi   Artiodactyla           lc         3.0
+## 3    Asian elephant       Elephas herbi    Proboscidea           en         3.9
+## 4             Horse         Equus herbi Perissodactyla domesticated         2.9
+## 5            Donkey         Equus herbi Perissodactyla domesticated         3.1
+## 6           Giraffe       Giraffa herbi   Artiodactyla           cd         1.9
+## 7       Pilot whale Globicephalus carni        Cetacea           cd         2.7
+## 8  African elephant     Loxodonta herbi    Proboscidea           vu         3.3
+## 9             Sheep          Ovis herbi   Artiodactyla domesticated         3.8
+## 10     Caspian seal         Phoca carni      Carnivora           vu         3.5
+## 11  Brazilian tapir       Tapirus herbi Perissodactyla           vu         4.4
+##    sleep_rem sleep_cycle awake brainwt   bodywt
+## 1        0.7   0.6666667 20.00  0.4230  600.000
+## 2         NA          NA 21.00  0.0982   14.800
+## 3         NA          NA 20.10  4.6030 2547.000
+## 4        0.6   1.0000000 21.10  0.6550  521.000
+## 5        0.4          NA 20.90  0.4190  187.000
+## 6        0.4          NA 22.10      NA  899.995
+## 7        0.1          NA 21.35      NA  800.000
+## 8         NA          NA 20.70  5.7120 6654.000
+## 9        0.6          NA 20.20  0.1750   55.500
+## 10       0.4          NA 20.50      NA   86.000
+## 11       1.0   0.9000000 19.60  0.1690  207.501</code></pre>
+<p>The cow is probably the most sleepiest animal in the data frame, it
+has 4 hours of sleep for sleep total and the sleep cycle is 0.6667
+hours.</p>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>
