@@ -20,7 +20,7 @@ plant_height
 plant_mass <-c(4,5.2,3.7,NA,4.6)
 plant_mass
 ```
-##plpant labels
+##plant labels
 ```{r}
 samples <- c("Plant 1", "Plant 2", "Plant 3", "Plant 4", "Plant 5")
 measures <- c("Height", "Mass")
