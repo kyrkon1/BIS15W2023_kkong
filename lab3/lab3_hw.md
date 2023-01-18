@@ -426,6 +426,7 @@ sleeptime_dataframe
 ```
 
 The cow is probably the most sleepiest animal in the data frame, it has 4 hours of sleep for sleep total and the sleep cycle is 0.6667 hours.
+The horse is a good second guess for me since it has 2.9 hours of total sleep and it has 1 hour for its sleep cycle.
 
 
 ## Push your final code to GitHub!
