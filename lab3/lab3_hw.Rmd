@@ -41,8 +41,10 @@ dim(sleep)
 4. Are there any NAs in the data? How did you determine this? Please show your code.  
 ```{r}
 glimpse(sleep)
+
+summary(sleep)
 ```
-There are NAs in the data frame, just by looking at the glimpse, I can see the prescence of NAs in the data sets
+There are NAs in the data frame, just by looking at the glimpse, I can see the presence of NAs in the data sets. For the summary it gives the totals of NAs, for sleep_rem its 22, sleep_cycle 51, and brainwt: 27.
 
 
 5. Show a list of the column names is this data frame.
@@ -105,12 +107,19 @@ On average, smaller animals sleep longer.
 
 10. Which animal is the sleepiest among the entire dataframe?
 ```{r}
-
+summary(sleep)
+sleep_data <- 
+sleepiest_animal <-filter(sleep, sleep_rem ==0.100)
+sleepiest_animal
 ```
-
+I would use this but since there are NAs present in the sleep_rem, I decided to use the sleep_totals instead.
 ```{r}
-
+summary(sleep)
+sleepy_animal_check <- filter(sleep, sleep_total ==1.90)
+sleepy_animal_check
 ```
+The sleepiest animal total is the giraffe.
+
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   

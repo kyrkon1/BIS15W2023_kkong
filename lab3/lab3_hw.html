@@ -457,8 +457,35 @@ show your code.</li>
 ## $ awake        &lt;dbl&gt; 11.9, 7.0, 9.6, 9.1, 20.0, 9.6, 15.3, 17.0, 13.9, 21.0, 1…
 ## $ brainwt      &lt;dbl&gt; NA, 0.01550, NA, 0.00029, 0.42300, NA, NA, NA, 0.07000, 0…
 ## $ bodywt       &lt;dbl&gt; 50.000, 0.480, 1.350, 0.019, 600.000, 3.850, 20.490, 0.04…</code></pre>
+<pre class="r"><code>summary(sleep)</code></pre>
+<pre><code>##      name              genus               vore              order          
+##  Length:83          Length:83          Length:83          Length:83         
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##  conservation        sleep_total      sleep_rem      sleep_cycle    
+##  Length:83          Min.   : 1.90   Min.   :0.100   Min.   :0.1167  
+##  Class :character   1st Qu.: 7.85   1st Qu.:0.900   1st Qu.:0.1833  
+##  Mode  :character   Median :10.10   Median :1.500   Median :0.3333  
+##                     Mean   :10.43   Mean   :1.875   Mean   :0.4396  
+##                     3rd Qu.:13.75   3rd Qu.:2.400   3rd Qu.:0.5792  
+##                     Max.   :19.90   Max.   :6.600   Max.   :1.5000  
+##                                     NA&#39;s   :22      NA&#39;s   :51      
+##      awake          brainwt            bodywt        
+##  Min.   : 4.10   Min.   :0.00014   Min.   :   0.005  
+##  1st Qu.:10.25   1st Qu.:0.00290   1st Qu.:   0.174  
+##  Median :13.90   Median :0.01240   Median :   1.670  
+##  Mean   :13.57   Mean   :0.28158   Mean   : 166.136  
+##  3rd Qu.:16.15   3rd Qu.:0.12550   3rd Qu.:  41.750  
+##  Max.   :22.10   Max.   :5.71200   Max.   :6654.000  
+##                  NA&#39;s   :27</code></pre>
 <p>There are NAs in the data frame, just by looking at the glimpse, I
-can see the prescence of NAs in the data sets</p>
+can see the presence of NAs in the data sets. For the summary it gives
+the totals of NAs, for sleep_rem its 22, sleep_cycle 51, and brainwt:
+27.</p>
 <ol start="5" style="list-style-type: decimal">
 <li>Show a list of the column names is this data frame.</li>
 </ol>
@@ -613,6 +640,72 @@ small_sleeptime</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>Which animal is the sleepiest among the entire dataframe?</li>
 </ol>
+<pre class="r"><code>summary(sleep)</code></pre>
+<pre><code>##      name              genus               vore              order          
+##  Length:83          Length:83          Length:83          Length:83         
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##  conservation        sleep_total      sleep_rem      sleep_cycle    
+##  Length:83          Min.   : 1.90   Min.   :0.100   Min.   :0.1167  
+##  Class :character   1st Qu.: 7.85   1st Qu.:0.900   1st Qu.:0.1833  
+##  Mode  :character   Median :10.10   Median :1.500   Median :0.3333  
+##                     Mean   :10.43   Mean   :1.875   Mean   :0.4396  
+##                     3rd Qu.:13.75   3rd Qu.:2.400   3rd Qu.:0.5792  
+##                     Max.   :19.90   Max.   :6.600   Max.   :1.5000  
+##                                     NA&#39;s   :22      NA&#39;s   :51      
+##      awake          brainwt            bodywt        
+##  Min.   : 4.10   Min.   :0.00014   Min.   :   0.005  
+##  1st Qu.:10.25   1st Qu.:0.00290   1st Qu.:   0.174  
+##  Median :13.90   Median :0.01240   Median :   1.670  
+##  Mean   :13.57   Mean   :0.28158   Mean   : 166.136  
+##  3rd Qu.:16.15   3rd Qu.:0.12550   3rd Qu.:  41.750  
+##  Max.   :22.10   Max.   :5.71200   Max.   :6654.000  
+##                  NA&#39;s   :27</code></pre>
+<pre class="r"><code>sleep_data &lt;- 
+sleepiest_animal &lt;-filter(sleep, sleep_rem ==0.100)
+sleepiest_animal</code></pre>
+<pre><code>##          name         genus  vore   order conservation sleep_total sleep_rem
+## 1 Pilot whale Globicephalus carni Cetacea           cd         2.7       0.1
+##   sleep_cycle awake brainwt bodywt
+## 1          NA 21.35      NA    800</code></pre>
+<p>I would use this but since there are NAs present in the sleep_rem, I
+decided to use the sleep_totals instead.</p>
+<pre class="r"><code>summary(sleep)</code></pre>
+<pre><code>##      name              genus               vore              order          
+##  Length:83          Length:83          Length:83          Length:83         
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##  conservation        sleep_total      sleep_rem      sleep_cycle    
+##  Length:83          Min.   : 1.90   Min.   :0.100   Min.   :0.1167  
+##  Class :character   1st Qu.: 7.85   1st Qu.:0.900   1st Qu.:0.1833  
+##  Mode  :character   Median :10.10   Median :1.500   Median :0.3333  
+##                     Mean   :10.43   Mean   :1.875   Mean   :0.4396  
+##                     3rd Qu.:13.75   3rd Qu.:2.400   3rd Qu.:0.5792  
+##                     Max.   :19.90   Max.   :6.600   Max.   :1.5000  
+##                                     NA&#39;s   :22      NA&#39;s   :51      
+##      awake          brainwt            bodywt        
+##  Min.   : 4.10   Min.   :0.00014   Min.   :   0.005  
+##  1st Qu.:10.25   1st Qu.:0.00290   1st Qu.:   0.174  
+##  Median :13.90   Median :0.01240   Median :   1.670  
+##  Mean   :13.57   Mean   :0.28158   Mean   : 166.136  
+##  3rd Qu.:16.15   3rd Qu.:0.12550   3rd Qu.:  41.750  
+##  Max.   :22.10   Max.   :5.71200   Max.   :6654.000  
+##                  NA&#39;s   :27</code></pre>
+<pre class="r"><code>sleepy_animal_check &lt;- filter(sleep, sleep_total ==1.90)
+sleepy_animal_check</code></pre>
+<pre><code>##      name   genus  vore        order conservation sleep_total sleep_rem
+## 1 Giraffe Giraffa herbi Artiodactyla           cd         1.9       0.4
+##   sleep_cycle awake brainwt  bodywt
+## 1          NA  22.1      NA 899.995</code></pre>
+<p>The sleepiest animal total is the giraffe.</p>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>
