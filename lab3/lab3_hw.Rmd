@@ -109,15 +109,16 @@ On average, smaller animals sleep longer.
 
 ```{r}
 summary(sleep)
+
 ```
 
 ##checking if less sleep time is equal to sleepiness
 ```{r}
-sleeptime_dataframe <-filter(sleep,sleep_total <=3)
+sleeptime_dataframe <-filter(sleep,sleep_total >=18.90)
 sleeptime_dataframe
 ```
 
-Without removing the N.A, the Giraffe would be the sleepiest with 1.9 hours of sleep but the second best option would be the horse if N.A is removed with 2.9 hours of sleep.
+Without removing the NAs, the one with the highest sleep total is the little brown bat with 19.9 hours, but without the NAs, the one with the highest sleep totals is the big brown bat with 19.7 hours
 
 
 ## Push your final code to GitHub!

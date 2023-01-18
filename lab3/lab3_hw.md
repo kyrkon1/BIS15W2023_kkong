@@ -377,24 +377,22 @@ summary(sleep)
 ##checking if less sleep time is equal to sleepiness
 
 ```r
-sleeptime_dataframe <-filter(sleep,sleep_total <=3)
+sleeptime_dataframe <-filter(sleep,sleep_total >=18.90)
 sleeptime_dataframe
 ```
 
 ```
-##          name         genus  vore          order conservation sleep_total
-## 1    Roe deer     Capreolus herbi   Artiodactyla           lc         3.0
-## 2       Horse         Equus herbi Perissodactyla domesticated         2.9
-## 3     Giraffe       Giraffa herbi   Artiodactyla           cd         1.9
-## 4 Pilot whale Globicephalus carni        Cetacea           cd         2.7
-##   sleep_rem sleep_cycle awake brainwt  bodywt
-## 1        NA          NA 21.00  0.0982  14.800
-## 2       0.6           1 21.10  0.6550 521.000
-## 3       0.4          NA 22.10      NA 899.995
-## 4       0.1          NA 21.35      NA 800.000
+##                   name      genus    vore           order conservation
+## 1        Big brown bat  Eptesicus insecti      Chiroptera           lc
+## 2 Thick-tailed opposum Lutreolina   carni Didelphimorphia           lc
+## 3     Little brown bat     Myotis insecti      Chiroptera         <NA>
+##   sleep_total sleep_rem sleep_cycle awake brainwt bodywt
+## 1        19.7       3.9   0.1166667   4.3 0.00030  0.023
+## 2        19.4       6.6          NA   4.6      NA  0.370
+## 3        19.9       2.0   0.2000000   4.1 0.00025  0.010
 ```
 
-Without removing the N.A, the Giraffe would be the sleepiest with 1.9 hours of sleep but the second best option would be the horse if N.A is removed with 2.9 hours of sleep.
+Without removing the NAs, the one with the highest sleep total is the little brown bat with 19.9 hours, but without the NAs, the one with the highest sleep totals is the big brown bat with 19.7 hours
 
 
 ## Push your final code to GitHub!
