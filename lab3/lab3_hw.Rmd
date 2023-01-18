@@ -111,21 +111,13 @@ On average, smaller animals sleep longer.
 summary(sleep)
 ```
 
-## checking if less sleep cycle is equal to sleepiness?
-```{r}
-sleepcycle_dataframe <-filter(sleep, sleep_cycle <=0.12)
-sleepcycle_dataframe
-```
-The chinchilla and the big brown bat have the exact same hours for the length of their sleep cycle, but the big brown bat has more total hours of sleep.
-
 ##checking if less sleep time is equal to sleepiness
 ```{r}
-sleeptime_dataframe <-filter(sleep,sleep_total <=5)
+sleeptime_dataframe <-filter(sleep,sleep_total <=3)
 sleeptime_dataframe
 ```
 
-The cow is probably the most sleepiest animal in the data frame, it has 4 hours of sleep for sleep total and the sleep cycle is 0.6667 hours.
-The horse is a good second guess for me since it has 2.9 hours of total sleep and it has 1 hour for its sleep cycle.
+Without removing the N.A, the Giraffe would be the sleepiest with 1.9 hours of sleep but the second best option would be the horse if N.A is removed with 2.9 hours of sleep.
 
 
 ## Push your final code to GitHub!
