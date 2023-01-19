@@ -20,7 +20,13 @@ library("jpeg")
 ## Review from last time
 ### *With a partner, discuss the following questions*
 1. How is a data frame and how is it different than a data matrix?  
+Data frame is like a better way of presenting data, as it tells you what class of data it is at the top and is organized visually to be more user friendly. Resembles a spreadsheet, includes more information than a data matrix.
+
 2. What is the command we use to import .csv files into R?  
+readr : : read_csv("file")
+package is readr :: read_csv ("pathway") 
+can recognize the file 
+
 3. Take a moment to show your repository on GitHub to a partner. Can you make any improvements?  
 
 ## Warm-up

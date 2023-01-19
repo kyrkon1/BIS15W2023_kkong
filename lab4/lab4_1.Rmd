@@ -34,7 +34,7 @@ fish <- readr::read_csv("data/Gaeta_etal_CLC_data.csv")
 ## Data Structure
 Once data have been uploaded, let's get an idea of its structure, contents, and dimensions.  
 ```{r}
-glimpse(fish)
+glimpse(fish) # mix of catagorical and numerical values (what is edge?) in ann number
 ```
 
 ```{r}
@@ -42,7 +42,7 @@ str(fish)
 ```
 
 ```{r}
-summary(fish)
+summary(fish) ## did 5 num sum for you
 ```
 
 ```{r}
@@ -51,10 +51,11 @@ names(fish)
 
 ## Tidyverse
 The [tidyverse](www.tidyverse.org) is an "opinionated" collection of packages that make workflow in R easier. The packages operate more intuitively than base R commands and share a common organizational philosophy.  
+tidydata (every variable has its own column, every observation has its own row, and every cell has its own unique value)
 ![*Data Science Workflow in the Tidyverse.*](tidy-1.png)  
 
-## dplyr
-The first package that we will use that is part of the tidyverse is `dplyr`. `dplyr` is used to transform data frames by extracting, rearranging, and summarizing data such that they are focused on a question of interest. This is very helpful,  especially when wrangling large data, and makes dplyr one of most frequently used packages in the tidyverse. The two functions we will use most are `select()` and `filter()`.  
+## dplyr 
+The first package that we will use that is part of the tidyverse is `dplyr`. `dplyr` is used to transform data frames by extracting, rearranging, and summarizing data such that they are focused on a question of interest. This is very helpful,  especially when wrangling large data, and makes dplyr one of most frequently used packages in the tidyverse. The two functions we will use most are `select()` and `filter()`.  (allows to take a dataframe and adjust to suit our interests, excel (harder for replication)
 
 ## `select()`
 Select allows you to pull out columns of interest from a dataframe. To do this, just add the names of the columns to the `select()` command. The order in which you add them, will determine the order in which they appear in the output.
@@ -64,7 +65,10 @@ names(fish)
 
 We are only interested in lakeid and scalelength.
 ```{r}
-select(fish, "lakeid", "scalelength")
+select(fish, "lakeid", "scalelength") # select (data, variable "x", "y",) spelling counts, creating a new data frame
+```
+```{r}
+select(fish, "lakeid", "annnumber") # typically put them in quotes 
 ```
 
 To add a range of columns use `start_col:end_col`.
@@ -73,7 +77,7 @@ fish
 ```
 
 ```{r}
-select(fish, fish_id:length)
+select(fish, fish_id:length) # pulls everything between fish id and length
 ```
 
 The - operator is useful in select. It allows us to select everything except the specified variables.
@@ -88,7 +92,7 @@ names(fish)
 ```
 
 ```{r}
-select(fish, contains("length"))
+select(fish, contains("length")) # pulling out variables that contain
 ```
 
 When columns are sequentially named, `starts_with()` makes selecting columns easier.
@@ -116,7 +120,7 @@ select(fish, contains("fish"))
 
 We won't cover [regex](https://en.wikipedia.org/wiki/Regular_expression) in this class, but the following code is helpful when you know that a column contains a letter (in this case "a") followed by a subsequent string (in this case "er").  
 ```{r}
-select(fish, matches("a.+er"))
+select(fish, matches("a.+er")) # important to know matches a and ends with er
 ```
 
 You can also select columns based on the class of data.  
@@ -128,7 +132,7 @@ glimpse(fish)
 select_if(fish, is.numeric)
 ```
 
-To select all columns that are *not* a class of data, you need to add a `~`.
+To select all columns that are *not* a class of data, you need to add a `~!` and (.).
 ```{r}
 select_if(fish, ~!is.numeric(.))
 ```
@@ -142,42 +146,55 @@ mammals <- readr::read_csv("data/mammal_lifehistories_v2.csv")
 
 1. Use one or more of your favorite functions to assess the structure of the data.  
 ```{r}
-
+str(mammals)
+```
+```{r}
+summary(mammals)
 ```
 
 2. Are there any NAs? Are you sure? Try taking an average of `max. life` as a test.  
 ```{r}
-
+anyNA(mammals)
 ```
+
+```{r}
+mean(mammals$`max. life`) # how do you get a negative mean  or mass (?)  they used the code -999 instead of a zero to indicate NA but R still thinks that -999 is a numeric, for ecological data -999 is a common code 
+```
+No NAs
+
 
 3. What are the names of the columns in the `mammals` data?
 ```{r}
-
+names(mammals)
 ```
 
 4. Rename any columns that have capitol letters or punctuation issues.  
 ```{r}
-
+mammals_new <-rename(mammals, genus = "Genus", afr = "AFR", max_life = "max. life", litter_size = "litter size", litters_year = "litters/year")
+names(mammals_new)
 ```
 
 5. We are only interested in the variables `genus`, `species`, and `mass`. Use `select()` to build a new dataframe `mass` focused on these variables.
 ```{r}
-
+select(mammals_new, genus:mass)
 ```
 
 6. What if we only wanted to exclude `order` and `family`? Use the `-` operator to make the code efficient.
 ```{r}
-
+select(mammals_new, -order, -family)
 ```
 
 7. Select the columns that include "mass" as part of the name.  
 ```{r}
-
+select(mammals_new,contains("mass"))
 ```
 
 8. Select all of the columns that are of class `character`.  
 ```{r}
-
+select_if(mammals_new,~!is.numeric(.)) # the period is necessary for character class
+```
+```{r}
+select_if(mammals_new, is.character)
 ```
 
 ## Other
@@ -185,12 +202,12 @@ Here are two examples of code that are super helpful to have in your bag of tric
 
 Imported data frames often have a mix of lower and uppercase column names. Use `toupper()` or `tolower()` to fix this issue. I always try to use lowercase to keep things consistent.  
 ```{r}
-#mammals <- select_all(mammals, tolower)
+mammals <- select_all(mammals, tolower)
 ```
 
 When naming columns, blank spaces are often added (don't do this, please). Here is a trick to remove these.  
 ```{r}
-#select_all(mammals, ~str_replace(., " ", "_"))
+select_all(mammals, ~str_replace(., " ", "_"))
 ```
 
 ## That's it! Let's take a break and then move on to part 2! 

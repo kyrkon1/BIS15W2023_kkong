@@ -12,7 +12,7 @@ output:
 
 ## Learning Goals  
 *At the end of this exercise, you will be able to:*    
-1. Use the functions of dplyr (filter, select, arrange) to organize and sort data frames.  
+1. Use the functions of dplyr (filter, select, arrange) to organize and sort data frames.   
 2. Use `mutate()` to calculate a new column from existing columns.  
 
 ## Review  
@@ -38,10 +38,19 @@ To keep things tidy, I am going to rename the variables in the mammals data.
 mammals <- rename(mammals, genus=Genus, wean_mass="wean mass", max_life="max. life", litter_size="litter size", litters_per_year="litters/year")
 ```
 
+select takes out columns, filter looks in rows 
 ## `filter()`
 Unlike `select()`, `filter()` allows us to extract data that meet specific criteria within a variable. Let's say that we are interested only in the fish that occur in lake "AL". We can use `filter()` to extract these observations.  
 ```{r}
-filter(fish, lakeid == "AL")
+names(fish)
+```
+```{r}
+table(fish$lakeid)
+```
+
+
+```{r}
+filter(fish, lakeid == "AL") # filter (data, x == (equal to) y)
 ```
 
 Similarly, if we are only interested in fish with a length greater than or equal to 350 we can use `filter()` to extract these observations.  
@@ -59,7 +68,7 @@ filter(fish, lakeid != "AL")
 ## Using `filter()` with multiple observations  
 Filtering multiple values within the same variable requires the `%in%` [operator](https://www.tutorialspoint.com/r/r_operators.htm).    
 ```{r}
-filter(fish, length %in% c(167, 175))
+filter(fish, length %in% c(167, 175)) # filter within a range look within (%in%) to find lengths between 167 and 175
 ```
 
 Alternatively, you can use `between` if you are looking for a range of specific values.  
@@ -69,39 +78,40 @@ filter(fish, between(scalelength, 2.5, 2.55))
 
 You can also extract observations "near" a certain value but you need to specify a tolerance.  
 ```{r}
-filter(fish, near(radii_length_mm, 2, tol = 0.2))
+filter(fish, near(radii_length_mm, 2, tol = 0.2)) # tol is tolerance
 ```
 
 ## Practice
 1. Filter the `fish` data to include the samples from lake "BO".
 ```{r}
-
+names(fish)
+filter(fish,lakeid == "BO")
 ```
 
 2. Filter the data to include all lakes except "AR".
 ```{r}
-
+filter(fish, lakeid !="AR")
 ```
 
 3. Filter the fish data to include all fish with a scalelength within 0.25 of 8.
 ```{r}
-
+filter(fish, near(scalelength, 8, tol =0.25))
 ```
 
 4. Filter the fish data to include fish with a scalelength between 2 and 4.
 ```{r}
-
+filter(fish, between(scalelength,2,4))
 ```
 
 ## Using `filter()` on multiple conditions
 You can also use `filter()` to extract data based on multiple conditions. Below we extract only the fish that have lakeid "AL" and length >350.
 ```{r}
-filter(fish, lakeid == "AL" & length > 350)
+filter(fish, lakeid == "AL" & length > 350) # filter where lake id is AL and the length is greater than 350
 ```
 
 Notice that the `|` operator generates a different result.
 ```{r}
-filter(fish, lakeid == "AL" | length > 350)
+filter(fish, lakeid == "AL" | length > 350) # or operator | either all lake id is equal to AL or the length is greater than 350
 ```
 
 Rules:  
@@ -118,31 +128,35 @@ filter(fish, length > 400, (scalelength > 11 | radii_length_mm > 8))
 ## Practice  
 1. Have a look at the mammals data using the summary functions of your choosing.    
 ```{r}
-
+summary(mammals)
 ```
 
 2. What are the names of the variables in the mammals data?  
 ```{r}
-
+names(mammals)
 ```
 
 3.  From the `mammals` data, filter all members of the family Bovidae with a mass greater than 450000.
 ```{r}
-
+filter(mammals, family == "Bovidae" & mass > 450000)
 ```
 
 4. Let's say we are only interested in family, genus, species, mass, and gestation. Relimit the mammals data frame to these variables.  
 ```{r}
-
+select(mammals, family:gestation)
+mammals_new <- select(mammals,family:gestation)
+mammals_new
 ```
 
 5. Use the output from #4 to focus on the family Bovidae with a mass greater than 450000.
 ```{r}
-
+filter(mammals_new, family == "Bovidae" & mass > 450000)
 ```
 
 6. From the `mammals` data, build a data frame that compares `mass`, `gestation`, and `newborn` among the primate genera `Lophocebus`, `Erythrocebus`, and `Macaca`. Among these genera, which species has the smallest `newborn` mass?
 ```{r}
+select(mammals, family, mass, gestation, newborn)
+newframemammal <- select(mammals, family, mass, gestation, newborn)
 
 ```
 
