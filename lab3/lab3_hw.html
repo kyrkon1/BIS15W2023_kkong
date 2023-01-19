@@ -667,6 +667,8 @@ small_sleeptime</code></pre>
 ##  Max.   :22.10   Max.   :5.71200   Max.   :6654.000  
 ##                  NA&#39;s   :27</code></pre>
 <p>##checking if less sleep time is equal to sleepiness</p>
+<pre class="r"><code>max(sleep$sleep_total)</code></pre>
+<pre><code>## [1] 19.9</code></pre>
 <pre class="r"><code>sleeptime_dataframe &lt;-filter(sleep,sleep_total &gt;=18.90)
 sleeptime_dataframe</code></pre>
 <pre><code>##                   name      genus    vore           order conservation

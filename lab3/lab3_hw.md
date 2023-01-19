@@ -377,6 +377,14 @@ summary(sleep)
 ##checking if less sleep time is equal to sleepiness
 
 ```r
+max(sleep$sleep_total)
+```
+
+```
+## [1] 19.9
+```
+
+```r
 sleeptime_dataframe <-filter(sleep,sleep_total >=18.90)
 sleeptime_dataframe
 ```
