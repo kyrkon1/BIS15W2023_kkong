@@ -1,0 +1,46 @@
+---
+title: "lab 4 warmup"
+output: html_document
+date: "2023-01-19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+```{r}
+library(tidyverse)
+
+```
+
+```{r}
+library(palmerpenguins)
+```
+## identify the dimensions
+```{r}
+penguins ## penguins is already in the library so you can just type penguins
+dim(penguins)
+glimpse(penguins)
+```
+Dimensions are 344 x 8 or 344 instances of 8 variables
+
+## identify names of variables
+```{r}
+names(penguins) ## constantly use this function: important for spelling purposes
+```
+
+
+The names of the variables are species, island, bill length (mm), bill depth (mm), flipper length (mm), body mass (g), sex, and year
+## identify how many individuals are sampled on each island
+```{r}
+table(penguins$island) # in penguins make a table for island, does not work well for tables that aren't categorical 
+```
+
+168 penguins on Biscoe, 124 on Dream, and 52 at Torgersen.
+
+## what is the mean body mass for all the individuals in the penguins dataset
+
+```{r}
+mean(penguins$body_mass_g, na.rm =T) ## there is NA in the dataset, so removal is necessary, doesn't work for a class of data that is a categorical (classes for variables in a dataset MATTERS)
+```
