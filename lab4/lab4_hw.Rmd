@@ -1,11 +1,11 @@
 ---
 title: "Lab 4 Homework"
-author: "Please Add Your Name Here"
+author: "Kyra Kong"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -30,22 +30,143 @@ Reference: Tamburello N, Cote IM, Dulvy NK (2015) Energy and the scaling of anim
 Data: http://datadryad.org/resource/doi:10.5061/dryad.q5j65/1  
 
 **1. Load the data into a new object called `homerange`.**
+```{r}
+homerange <-readr::read_csv("data/Tamburelloetal_HomeRangeDatabase.csv")
+```
 
 **2. Explore the data. Show the dimensions, column names, classes for each variable, and a statistical summary. Keep these as separate code chunks.**  
 
+#dimensions 
+```{r}
+dim(homerange)
+```
+#column names
+```{r}
+names(homerange)
+```
+#classes for each variable
+```{r}
+glimpse(homerange)
+```
+#statistical summary
+```{r}
+summary(homerange)
+```
+
 **3. Change the class of the variables `taxon` and `order` to factors and display their levels.**  
+#setting taxon to factor
+```{r}
+homerange$taxon <-as.factor(homerange$taxon)
+class(homerange$taxon)
+```
+#levels of taxon
+```{r}
+levels(homerange$taxon)
+```
+
+#setting order to factor
+```{r}
+homerange$order <-as.factor(homerange$order)
+class(homerange$order)
+```
+#levels of order
+```{r}
+levels(homerange$order)
+```
+
 
 **4. What taxa are represented in the `homerange` data frame? Make a new data frame `taxa` that is restricted to taxon, common name, class, order, family, genus, species.**  
+```{r}
+select(homerange, taxon)
+```
+Mammals, marine fishes, lake fishes, river fishes, birds, snakes, lizards, tortoises, turtles
+
+#restrict data frame to taxon, common name, class, order, family, genus, species
+
+```{r}
+names(homerange)
+```
+```{r}
+select(homerange, taxon:species)
+```
+Taxon: 
 
 **5. The variable `taxon` identifies the large, common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.**  
 
+```{r}
+table(homerange$taxon)
+```
+
 **6. The species in `homerange` are also classified into trophic guilds. How many species are represented in each trophic guild.**  
+```{r}
+select(homerange, trophic.guild, species)
+trophic_species <- select(homerange,trophic.guild, species)
+```
+
+##list of carnivore and respective species
+```{r}
+filter(trophic_species, trophic.guild =="carnivore")
+```
+## list of herbivores and respective species
+```{r}
+filter(trophic_species, trophic.guild == "herbivore")
+```
+
+
 
 **7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  
 
+## dataframe carnivore
+```{r}
+carnivores <- filter(homerange,trophic.guild == "carnivore")
+carnivores
+```
+## dataframe herbivore
+```{r}
+herbivores <- filter(homerange, trophic.guild =="herbivore")
+herbivores
+```
+
+
 **8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.**  
+## carnivore mean.hra.m2
+```{r}
+mean1 <- table(carnivores$mean.hra.m2)
+mean(mean1, na.rm = T)
+```
+## herbivore mean.hra.m2
+```{r}
+mean2 <-table(herbivores$mean.hra.m2)
+mean(mean2,na.rm=T)
+```
+On average the carnivores have a larger mean.hra.m2.
 
 **9. Make a new dataframe `deer` that is limited to the mean mass, log10 mass, family, genus, and species of deer in the database. The family for deer is cervidae. Arrange the data in descending order by log10 mass. Which is the largest deer? What is its common name?**  
+```{r}
+animaldata <- select(homerange, mean.mass.g, log10.mass, family, genus, species)
+
+```
+## made deer dataframe
+```{r}
+deer <-filter(animaldata, family == "cervidae")
+deer
+
+```
+## finding largest deer
+```{r}
+max(deer$mean.mass.g)
+```
+```{r}
+filter(deer, mean.mass.g >=40000)
+```
+Largest deer is the Alces deer or known as its common name the moose.
+
+
+
+```{r}
+
+```
+
 
 **10. As measured by the data, which snake species has the smallest homerange? Show all of your work, please. Look this species up online and tell me about it!** **Snake is found in taxon column**    
 
