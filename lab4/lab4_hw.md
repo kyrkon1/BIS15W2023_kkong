@@ -345,7 +345,7 @@ select(homerange, trophic.guild, species)
 trophic_species <- select(homerange,trophic.guild, species)
 ```
 
-##list of carnivore and respective species
+# list of carnivore and respective species
 
 ```r
 filter(trophic_species, trophic.guild =="carnivore")
@@ -367,7 +367,7 @@ filter(trophic_species, trophic.guild =="carnivore")
 ## 10 carnivore     rupestris  
 ## # … with 332 more rows
 ```
-## list of herbivores and respective species
+# list of herbivores and respective species
 
 ```r
 filter(trophic_species, trophic.guild == "herbivore")
@@ -394,7 +394,7 @@ filter(trophic_species, trophic.guild == "herbivore")
 
 **7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  
 
-## dataframe carnivore
+# dataframe carnivore
 
 ```r
 carnivores <- filter(homerange,trophic.guild == "carnivore")
@@ -422,7 +422,7 @@ carnivores
 ## #   prey.size.reference <chr>, and abbreviated variable names ¹​common.name,
 ## #   ²​primarymethod, ³​mean.mass.g, ⁴​log10.mass
 ```
-## dataframe herbivore
+# dataframe herbivore
 
 ```r
 herbivores <- filter(homerange, trophic.guild =="herbivore")
@@ -453,7 +453,7 @@ herbivores
 
 
 **8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.**  
-## carnivore mean.hra.m2
+# carnivore mean.hra.m2
 
 ```r
 mean1 <- table(carnivores$mean.hra.m2)
@@ -463,7 +463,7 @@ mean(mean1, na.rm = T)
 ```
 ## [1] 1.062112
 ```
-## herbivore mean.hra.m2
+# herbivore mean.hra.m2
 
 ```r
 mean2 <-table(herbivores$mean.hra.m2)
@@ -480,7 +480,8 @@ On average the carnivores have a larger mean.hra.m2.
 ```r
 animaldata <- select(homerange, mean.mass.g, log10.mass, family, genus, species)
 ```
-## made deer dataframe
+
+# made deer dataframe
 
 ```r
 deer <-filter(animaldata, family == "cervidae")
@@ -504,7 +505,7 @@ deer
 ## 11       7500.       3.88 cervidae pudu       puda       
 ## 12     102059.       5.01 cervidae rangifer   tarandus
 ```
-## renamed data so its not confusing with the . to _
+# renamed data so its not confusing with the . to _
 
 ```r
 deer_new <- rename(deer, mean_mass_g = "mean.mass.g", log10_mass = "log10.mass", family = "family", genus = "genus", species = "species")
@@ -528,7 +529,7 @@ deer_new
 ## 11       7500.       3.88 cervidae pudu       puda       
 ## 12     102059.       5.01 cervidae rangifer   tarandus
 ```
-## arranged the dataset by log10_mass and in descending order
+# arranged the dataset by log10_mass and in descending order
 
 ```r
 arrange(deer_new,desc(log10_mass), by_row = T)
@@ -553,7 +554,7 @@ arrange(deer_new,desc(log10_mass), by_row = T)
 ```
 
 
-## finding largest deer
+# finding largest deer
 
 ```r
 max(deer$mean.mass.g)
@@ -585,7 +586,7 @@ Largest deer is the Alces deer or known as its common name the Moose.
 
 **10. As measured by the data, which snake species has the smallest homerange? Show all of your work, please. Look this species up online and tell me about it!** **Snake is found in taxon column**
 
-## creating dataframe based on snake
+# creating dataframe based on snake
 
 ```r
 snakes <- filter(homerange, taxon == "snakes")
@@ -615,27 +616,33 @@ snakes
 ```
 
 ```r
-select(snakes, genus,species, mean.mass.g, log10.mass, mean.hra.m2)
+snakes_new <-select(snakes, genus,species, mean.mass.g, log10.mass, mean.hra.m2, log10.hra)
+```
+
+#arranging the snakes by log10 hra since hra = home range in ascending order
+
+
+```r
+arrange(snakes_new, log10.hra)
 ```
 
 ```
-## # A tibble: 41 × 5
-##    genus      species                  mean.mass.g log10.mass mean.hra.m2
-##    <chr>      <chr>                          <dbl>      <dbl>       <dbl>
-##  1 carphopis  vermis                          3.46      0.539         700
-##  2 carphopis  viridis                         3.65      0.562         253
-##  3 coluber    constrictor                   556.        2.75       151000
-##  4 coluber    constrictor flaviventris      144.        2.16       114500
-##  5 diadophis  punctatus                       9         0.954        6476
-##  6 drymarchon couperi                       450         2.65      1853000
-##  7 elaphe     guttata emoryi                257.        2.41       150600
-##  8 elaphe     obsoleta                      643.        2.81        46000
-##  9 heterodon  platirhinos                   147.        2.17       516375
-## 10 hierophis  viridiflavus                  234.        2.37       110900
+## # A tibble: 41 × 6
+##    genus       species      mean.mass.g log10.mass mean.hra.m2 log10.hra
+##    <chr>       <chr>              <dbl>      <dbl>       <dbl>     <dbl>
+##  1 bitis       schneideri         17.0       1.23         200       2.30
+##  2 carphopis   viridis             3.65      0.562        253       2.40
+##  3 thamnophis  butleri            21.5       1.33         600       2.78
+##  4 carphopis   vermis              3.46      0.539        700       2.85
+##  5 vipera      latastei           97.4       1.99        2400       3.38
+##  6 gloydius    shedaoensis       197.        2.29        2614.      3.42
+##  7 diadophis   punctatus           9         0.954       6476       3.81
+##  8 agkistrodon piscivorous       188         2.27       10655       4.03
+##  9 oocatochus  rufodorsatus       62.5       1.80       15400       4.19
+## 10 pituophis   catenifer         375         2.57       17400       4.24
 ## # … with 31 more rows
 ```
-
-
+Snake with the smallest home range is the bitis schneideri.
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   

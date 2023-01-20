@@ -103,11 +103,11 @@ select(homerange, trophic.guild, species)
 trophic_species <- select(homerange,trophic.guild, species)
 ```
 
-##list of carnivore and respective species
+# list of carnivore and respective species
 ```{r}
 filter(trophic_species, trophic.guild =="carnivore")
 ```
-## list of herbivores and respective species
+# list of herbivores and respective species
 ```{r}
 filter(trophic_species, trophic.guild == "herbivore")
 ```
@@ -116,12 +116,12 @@ filter(trophic_species, trophic.guild == "herbivore")
 
 **7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  
 
-## dataframe carnivore
+# dataframe carnivore
 ```{r}
 carnivores <- filter(homerange,trophic.guild == "carnivore")
 carnivores
 ```
-## dataframe herbivore
+# dataframe herbivore
 ```{r}
 herbivores <- filter(homerange, trophic.guild =="herbivore")
 herbivores
@@ -129,12 +129,12 @@ herbivores
 
 
 **8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.**  
-## carnivore mean.hra.m2
+# carnivore mean.hra.m2
 ```{r}
 mean1 <- table(carnivores$mean.hra.m2)
 mean(mean1, na.rm = T)
 ```
-## herbivore mean.hra.m2
+# herbivore mean.hra.m2
 ```{r}
 mean2 <-table(herbivores$mean.hra.m2)
 mean(mean2,na.rm=T)
@@ -146,25 +146,26 @@ On average the carnivores have a larger mean.hra.m2.
 animaldata <- select(homerange, mean.mass.g, log10.mass, family, genus, species)
 
 ```
-## made deer dataframe
+
+# made deer dataframe
 ```{r}
 deer <-filter(animaldata, family == "cervidae")
 deer
 
 ```
-## renamed data so its not confusing with the . to _
+# renamed data so its not confusing with the . to _
 ```{r}
 deer_new <- rename(deer, mean_mass_g = "mean.mass.g", log10_mass = "log10.mass", family = "family", genus = "genus", species = "species")
 deer_new
 ```
-## arranged the dataset by log10_mass and in descending order
+# arranged the dataset by log10_mass and in descending order
 ```{r}
 arrange(deer_new,desc(log10_mass), by_row = T)
 
 ```
 
 
-## finding largest deer
+# finding largest deer
 ```{r}
 max(deer$mean.mass.g)
 ```
@@ -177,16 +178,21 @@ Largest deer is the Alces deer or known as its common name the Moose.
 
 **10. As measured by the data, which snake species has the smallest homerange? Show all of your work, please. Look this species up online and tell me about it!** **Snake is found in taxon column**
 
-## creating dataframe based on snake
+# creating dataframe based on snake
 ```{r}
 snakes <- filter(homerange, taxon == "snakes")
 snakes
 ```
 ```{r}
-select(snakes, genus,species, mean.mass.g, log10.mass, mean.hra.m2)
+snakes_new <-select(snakes, genus,species, mean.mass.g, log10.mass, mean.hra.m2, log10.hra)
 ```
 
+#arranging the snakes by log10 hra since hra = home range in ascending order
 
+```{r}
+arrange(snakes_new, log10.hra)
+```
+Snake with the smallest home range is the bitis schneideri.
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   
