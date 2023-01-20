@@ -1,7 +1,7 @@
 ---
 title: "Lab 4 Homework"
 author: "Kyra Kong"
-date: "2023-01-19"
+date: "2023-01-20"
 output:
   html_document: 
     theme: spacelab
@@ -504,6 +504,55 @@ deer
 ## 11       7500.       3.88 cervidae pudu       puda       
 ## 12     102059.       5.01 cervidae rangifer   tarandus
 ```
+## renamed data so its not confusing with the . to _
+
+```r
+deer_new <- rename(deer, mean_mass_g = "mean.mass.g", log10_mass = "log10.mass", family = "family", genus = "genus", species = "species")
+deer_new
+```
+
+```
+## # A tibble: 12 × 5
+##    mean_mass_g log10_mass family   genus      species    
+##          <dbl>      <dbl> <chr>    <chr>      <chr>      
+##  1     307227.       5.49 cervidae alces      alces      
+##  2      62823.       4.80 cervidae axis       axis       
+##  3      24050.       4.38 cervidae capreolus  capreolus  
+##  4     234758.       5.37 cervidae cervus     elaphus    
+##  5      29450.       4.47 cervidae cervus     nippon     
+##  6      71450.       4.85 cervidae dama       dama       
+##  7      13500.       4.13 cervidae muntiacus  reevesi    
+##  8      53864.       4.73 cervidae odocoileus hemionus   
+##  9      87884.       4.94 cervidae odocoileus virginianus
+## 10      35000.       4.54 cervidae ozotoceros bezoarticus
+## 11       7500.       3.88 cervidae pudu       puda       
+## 12     102059.       5.01 cervidae rangifer   tarandus
+```
+## arranged the dataset by log10_mass and in descending order
+
+```r
+arrange(deer_new,desc(log10_mass), by_row = T)
+```
+
+```
+## # A tibble: 12 × 5
+##    mean_mass_g log10_mass family   genus      species    
+##          <dbl>      <dbl> <chr>    <chr>      <chr>      
+##  1     307227.       5.49 cervidae alces      alces      
+##  2     234758.       5.37 cervidae cervus     elaphus    
+##  3     102059.       5.01 cervidae rangifer   tarandus   
+##  4      87884.       4.94 cervidae odocoileus virginianus
+##  5      71450.       4.85 cervidae dama       dama       
+##  6      62823.       4.80 cervidae axis       axis       
+##  7      53864.       4.73 cervidae odocoileus hemionus   
+##  8      35000.       4.54 cervidae ozotoceros bezoarticus
+##  9      29450.       4.47 cervidae cervus     nippon     
+## 10      24050.       4.38 cervidae capreolus  capreolus  
+## 11      13500.       4.13 cervidae muntiacus  reevesi    
+## 12       7500.       3.88 cervidae pudu       puda
+```
+
+
 ## finding largest deer
 
 ```r
@@ -530,14 +579,63 @@ filter(deer, mean.mass.g >=40000)
 ## 6      87884.       4.94 cervidae odocoileus virginianus
 ## 7     102059.       5.01 cervidae rangifer   tarandus
 ```
-Largest deer is the Alces deer or known as its common name the moose.
+Largest deer is the Alces deer or known as its common name the Moose.
 
 
 
+**10. As measured by the data, which snake species has the smallest homerange? Show all of your work, please. Look this species up online and tell me about it!** **Snake is found in taxon column**
+
+## creating dataframe based on snake
+
+```r
+snakes <- filter(homerange, taxon == "snakes")
+snakes
+```
+
+```
+## # A tibble: 41 × 24
+##    taxon  commo…¹ class order family genus species prima…² N     mean.…³ log10…⁴
+##    <fct>  <chr>   <chr> <fct> <chr>  <chr> <chr>   <chr>   <chr>   <dbl>   <dbl>
+##  1 snakes wester… rept… squa… colub… carp… vermis  radiot… 1        3.46   0.539
+##  2 snakes easter… rept… squa… colub… carp… viridis radiot… 10       3.65   0.562
+##  3 snakes racer   rept… squa… colub… colu… constr… teleme… 15     556.     2.75 
+##  4 snakes yellow… rept… squa… colub… colu… constr… teleme… 12     144.     2.16 
+##  5 snakes ringne… rept… squa… colub… diad… puncta… mark-r… <NA>     9      0.954
+##  6 snakes easter… rept… squa… colub… drym… couperi teleme… 1      450      2.65 
+##  7 snakes great … rept… squa… colub… elap… guttat… teleme… 12     257.     2.41 
+##  8 snakes wester… rept… squa… colub… elap… obsole… teleme… 18     643.     2.81 
+##  9 snakes hognos… rept… squa… colub… hete… platir… teleme… 8      147.     2.17 
+## 10 snakes Europe… rept… squa… colub… hier… viridi… teleme… 32     234.     2.37 
+## # … with 31 more rows, 13 more variables: alternative.mass.reference <chr>,
+## #   mean.hra.m2 <dbl>, log10.hra <dbl>, hra.reference <chr>, realm <chr>,
+## #   thermoregulation <chr>, locomotion <chr>, trophic.guild <chr>,
+## #   dimension <dbl>, preymass <dbl>, log10.preymass <dbl>, PPMR <dbl>,
+## #   prey.size.reference <chr>, and abbreviated variable names ¹​common.name,
+## #   ²​primarymethod, ³​mean.mass.g, ⁴​log10.mass
+```
+
+```r
+select(snakes, genus,species, mean.mass.g, log10.mass, mean.hra.m2)
+```
+
+```
+## # A tibble: 41 × 5
+##    genus      species                  mean.mass.g log10.mass mean.hra.m2
+##    <chr>      <chr>                          <dbl>      <dbl>       <dbl>
+##  1 carphopis  vermis                          3.46      0.539         700
+##  2 carphopis  viridis                         3.65      0.562         253
+##  3 coluber    constrictor                   556.        2.75       151000
+##  4 coluber    constrictor flaviventris      144.        2.16       114500
+##  5 diadophis  punctatus                       9         0.954        6476
+##  6 drymarchon couperi                       450         2.65      1853000
+##  7 elaphe     guttata emoryi                257.        2.41       150600
+##  8 elaphe     obsoleta                      643.        2.81        46000
+##  9 heterodon  platirhinos                   147.        2.17       516375
+## 10 hierophis  viridiflavus                  234.        2.37       110900
+## # … with 31 more rows
+```
 
 
-
-**10. As measured by the data, which snake species has the smallest homerange? Show all of your work, please. Look this species up online and tell me about it!** **Snake is found in taxon column**    
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   
