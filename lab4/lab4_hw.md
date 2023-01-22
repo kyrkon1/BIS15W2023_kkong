@@ -1,7 +1,7 @@
 ---
 title: "Lab 4 Homework"
 author: "Kyra Kong"
-date: "2023-01-20"
+date: "2023-01-21"
 output:
   html_document: 
     theme: spacelab
@@ -259,7 +259,7 @@ select(homerange, taxon)
 ```
 Mammals, marine fishes, lake fishes, river fishes, birds, snakes, lizards, tortoises, turtles
 
-#restrict data frame to taxon, common name, class, order, family, genus, species
+
 
 
 ```r
@@ -280,9 +280,11 @@ names(homerange)
 ## [21] "preymass"                   "log10.preymass"            
 ## [23] "PPMR"                       "prey.size.reference"
 ```
+#restrict data frame to taxon, common name, class, order, family, genus, species
 
 ```r
-select(homerange, taxon:species)
+taxa <-select(homerange, taxon:species)
+taxa
 ```
 
 ```
@@ -301,7 +303,7 @@ select(homerange, taxon:species)
 ## 10 marine fishes orangespine unicornfish actinoptery… perc… acant… naso  litura…
 ## # … with 559 more rows
 ```
-Taxon: 
+
 
 **5. The variable `taxon` identifies the large, common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.**  
 
@@ -344,7 +346,7 @@ select(homerange, trophic.guild, species)
 ```r
 trophic_species <- select(homerange,trophic.guild, species)
 ```
-
+Two types of trophic guilds: carnivores and herbivores.
 # list of carnivore and respective species
 
 ```r
@@ -367,6 +369,7 @@ filter(trophic_species, trophic.guild =="carnivore")
 ## 10 carnivore     rupestris  
 ## # … with 332 more rows
 ```
+342 counts of carnivores.
 # list of herbivores and respective species
 
 ```r
@@ -389,7 +392,7 @@ filter(trophic_species, trophic.guild == "herbivore")
 ## 10 herbivore     apicalis  
 ## # … with 217 more rows
 ```
-
+227 counts of herbivores
 
 
 **7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  

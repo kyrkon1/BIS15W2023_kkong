@@ -11,7 +11,7 @@
 
 <meta name="author" content="Kyra Kong" />
 
-<meta name="date" content="2023-01-20" />
+<meta name="date" content="2023-01-21" />
 
 <title>Lab 4 Homework</title>
 
@@ -382,7 +382,7 @@ pre code {
 
 <h1 class="title toc-ignore">Lab 4 Homework</h1>
 <h4 class="author">Kyra Kong</h4>
-<h4 class="date">2023-01-20</h4>
+<h4 class="date">2023-01-21</h4>
 
 </div>
 
@@ -582,8 +582,6 @@ species.</strong></p>
 ## # … with 559 more rows</code></pre>
 <p>Mammals, marine fishes, lake fishes, river fishes, birds, snakes,
 lizards, tortoises, turtles</p>
-<p>#restrict data frame to taxon, common name, class, order, family,
-genus, species</p>
 <pre class="r"><code>names(homerange)</code></pre>
 <pre><code>##  [1] &quot;taxon&quot;                      &quot;common.name&quot;               
 ##  [3] &quot;class&quot;                      &quot;order&quot;                     
@@ -597,7 +595,10 @@ genus, species</p>
 ## [19] &quot;trophic.guild&quot;              &quot;dimension&quot;                 
 ## [21] &quot;preymass&quot;                   &quot;log10.preymass&quot;            
 ## [23] &quot;PPMR&quot;                       &quot;prey.size.reference&quot;</code></pre>
-<pre class="r"><code>select(homerange, taxon:species)</code></pre>
+<p>#restrict data frame to taxon, common name, class, order, family,
+genus, species</p>
+<pre class="r"><code>taxa &lt;-select(homerange, taxon:species)
+taxa</code></pre>
 <pre><code>## # A tibble: 569 × 7
 ##    taxon         common.name             class        order family genus species
 ##    &lt;fct&gt;         &lt;chr&gt;                   &lt;chr&gt;        &lt;fct&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  
@@ -612,7 +613,6 @@ genus, species</p>
 ##  9 marine fishes lined surgeonfish       actinoptery… perc… acant… acan… lineat…
 ## 10 marine fishes orangespine unicornfish actinoptery… perc… acant… naso  litura…
 ## # … with 559 more rows</code></pre>
-<p>Taxon:</p>
 <p><strong>5. The variable <code>taxon</code> identifies the large,
 common name groups of the species represented in <code>homerange</code>.
 Make a table the shows the counts for each of these
@@ -642,9 +642,8 @@ guild.</strong></p>
 ## 10 herbivore     lituratus  
 ## # … with 559 more rows</code></pre>
 <pre class="r"><code>trophic_species &lt;- select(homerange,trophic.guild, species)</code></pre>
-</div>
-<div id="list-of-carnivore-and-respective-species" class="section level1">
-<h1>list of carnivore and respective species</h1>
+<p>Two types of trophic guilds: carnivores and herbivores. # list of
+carnivore and respective species</p>
 <pre class="r"><code>filter(trophic_species, trophic.guild ==&quot;carnivore&quot;)</code></pre>
 <pre><code>## # A tibble: 342 × 2
 ##    trophic.guild species    
@@ -660,9 +659,8 @@ guild.</strong></p>
 ##  9 carnivore     ignobilis  
 ## 10 carnivore     rupestris  
 ## # … with 332 more rows</code></pre>
-</div>
-<div id="list-of-herbivores-and-respective-species" class="section level1">
-<h1>list of herbivores and respective species</h1>
+<p>342 counts of carnivores. # list of herbivores and respective
+species</p>
 <pre class="r"><code>filter(trophic_species, trophic.guild == &quot;herbivore&quot;)</code></pre>
 <pre><code>## # A tibble: 227 × 2
 ##    trophic.guild species   
@@ -678,6 +676,7 @@ guild.</strong></p>
 ##  9 herbivore     wardi     
 ## 10 herbivore     apicalis  
 ## # … with 217 more rows</code></pre>
+<p>227 counts of herbivores</p>
 <p><strong>7. Make two new data frames, one which is restricted to
 carnivores and another that is restricted to herbivores.</strong></p>
 </div>

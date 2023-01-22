@@ -81,15 +81,17 @@ select(homerange, taxon)
 ```
 Mammals, marine fishes, lake fishes, river fishes, birds, snakes, lizards, tortoises, turtles
 
-#restrict data frame to taxon, common name, class, order, family, genus, species
+
 
 ```{r}
 names(homerange)
 ```
+#restrict data frame to taxon, common name, class, order, family, genus, species
 ```{r}
-select(homerange, taxon:species)
+taxa <-select(homerange, taxon:species)
+taxa
 ```
-Taxon: 
+
 
 **5. The variable `taxon` identifies the large, common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.**  
 
@@ -102,16 +104,18 @@ table(homerange$taxon)
 select(homerange, trophic.guild, species)
 trophic_species <- select(homerange,trophic.guild, species)
 ```
-
+Two types of trophic guilds: carnivores and herbivores.
 # list of carnivore and respective species
 ```{r}
 filter(trophic_species, trophic.guild =="carnivore")
+
 ```
+342 counts of carnivores.
 # list of herbivores and respective species
 ```{r}
 filter(trophic_species, trophic.guild == "herbivore")
 ```
-
+227 counts of herbivores
 
 
 **7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  
