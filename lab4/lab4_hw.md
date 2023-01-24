@@ -1,7 +1,7 @@
 ---
 title: "Lab 4 Homework"
 author: "Kyra Kong"
-date: "2023-01-21"
+date: "2023-01-23"
 output:
   html_document: 
     theme: spacelab
@@ -626,7 +626,7 @@ snakes_new <-select(snakes, genus,species, mean.mass.g, log10.mass, mean.hra.m2,
 
 
 ```r
-arrange(snakes_new, log10.hra)
+arrange(snakes_new, mean.hra.m2)
 ```
 
 ```

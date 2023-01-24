@@ -194,7 +194,7 @@ snakes_new <-select(snakes, genus,species, mean.mass.g, log10.mass, mean.hra.m2,
 #arranging the snakes by log10 hra since hra = home range in ascending order
 
 ```{r}
-arrange(snakes_new, log10.hra)
+arrange(snakes_new, mean.hra.m2)
 ```
 Snake with the smallest home range is the bitis schneideri.
 
