@@ -1,0 +1,56 @@
+---
+title: "Lab 5 warmup"
+output: html_document
+date: "2023-01-24"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library("tidyverse")
+```
+
+## loading up bison data
+```{r}
+bison <-readr::read_csv("data/bison.csv")
+```
+## dimensions of bison data
+```{r}
+dim(bison)
+```
+
+## code,sex, weight, year of birth
+```{r}
+names(bison)
+```
+
+```{r}
+new_bison <-select(bison, animal_code:animal_yob )
+new_bison
+```
+## animals born from 1980-1990
+```{r}
+ageselected <- filter(new_bison, animal_yob >= 1980 & animal_yob <= 1990)
+
+```
+## how many males or females are in the group
+
+```{r}
+table(ageselected$animal_sex)
+```
+## which one weighed more on average
+```{r}
+bison_m <- filter(ageselected, animal_sex == "M")
+bison_f <-filter(ageselected, animal_sex == "F")
+```
+
+```{r}
+mean(bison_m$animal_weight)
+```
+
+```{r}
+mean(bison_f$animal_weight)
+```
+
+On average the male bison weighs more than the female bisons born between 1980 and 1990.
