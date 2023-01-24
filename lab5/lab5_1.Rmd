@@ -22,7 +22,7 @@ At this point, you should be comfortable using the `select()` and `filter()` fun
 
 ## Load the tidyverse
 ```{r message=FALSE, warning=FALSE}
-library("tidyverse")
+library(tidyverse)
 ```
 
 ## Load the data
@@ -39,22 +39,30 @@ mammals <- readr::read_csv("data/mammal_lifehistories_v2.csv")
 ```
 
 ```{r}
-names(mammals)
+names(mammals) # renaming them for consistency 
 ```
 
 Let's rename some of the `mammals` variables.  
 ```{r}
-mammals <- rename(mammals, genus="Genus", wean_mass="wean mass", max_life= "max. life", litter_size="litter size", litters_per_year="litters/year")
+mammals <- rename(mammals, genus="Genus", wean_mass="wean mass", max_life= "max. life", litter_size="litter size", litters_per_year="litters/year", afr = "AFR")
 ```
 
 ```{r}
 names(mammals)
+```
+```{r}
+glimpse(mammals)
+```
+
+```{r}
+mammals %>% mutate_if(is.character, as.factor)
 ```
 
 ## Pipes `%>%` 
 In order to start combining `select()`, `filter()`, and other functions efficiently, we need to learn pipes. Pipes feed the output from one function into the input of another function. This helps us keep our code sequential and clean.  
 
 In this example, we use a pipe to select only `lakeid` and `scalelength` then filter that output only for lakes "AL". Notice that we only need to call the data one time.
+
 ```{r}
 filter(fish, lakeid == "AL")
 ```
@@ -62,16 +70,16 @@ filter(fish, lakeid == "AL")
 ```{r}
 select(fish, lakeid, scalelength)
 ```
-
+## connecting the lines into one code
 ```{r}
-fish %>%
+fish %>% # fish shift cmd m or shift control m makes pipe, take the fish data and put it into the select pipe the results into lake id AL
   select(lakeid, scalelength) %>%
   filter(lakeid == "AL")
 ```
 
 Here we select family, genus, and species then filter for gestation greater than 15 months.
 ```{r}
-mammals %>% 
+mammals %>%  ## take mammals data, choosing variables family, genus, species, gestation, and filtering out the gestation period of greater than or equal to 15 months
   select(family, genus, species, gestation) %>% 
   filter(gestation>=15)
 ```
@@ -79,7 +87,15 @@ mammals %>%
 ## Practice
 1. We are interested in the fish from the lakes "AL" and "AR" with a radii length between 2 and 4. Extract this information from the `fish` data. Use pipes!  
 ```{r}
+names(fish)
+```
 
+```{r}
+fish_subset <- fish %>% 
+  select(lakeid, radii_length_mm) %>% 
+  filter(lakeid == "AL"| lakeid == "AR") %>%  # can do conditional
+  filter(radii_length_mm >=2 & radii_length_mm <= 4)
+fish_subset
 ```
 
 ## `arrange()`
@@ -108,13 +124,20 @@ fish %>%
 ## Practice
 1. We are interested in the radii length and scalelength of fish with the id `300`. Extract this information from the `fish` data. Please sort the data by radii length.
 ```{r}
+names(fish)
+```
 
+```{r}
+fish %>% 
+  filter(fish_id == "300") %>% 
+  select(fish_id, radii_length_mm, scalelength) %>%  
+  arrange(radii_length_mm)
 ```
 
 ## `mutate()`  
 Mutate allows us to create a new column from existing columns in a data frame. We are doing a small introduction here and will add some additional functions later. Let's convert the length variable from cm to millimeters and create a new variable called length_mm.  
 ```{r}
-fish %>% 
+ fish %>% 
   mutate(length_mm = length*10) %>% 
   select(fish_id, length, length_mm)
 ```
@@ -129,7 +152,7 @@ mammals
 
 ```{r}
 mammals %>%
-  mutate_all(tolower)
+  mutate_all(tolower) # changing all column names to lowercase in one code
 ```
 
 Using the across function we can specify individual columns.
@@ -157,13 +180,27 @@ mammals %>%
 
 ## Practice
 1. Use `mutate()` to make a new column that is the half length of each fish: length_half = length/2. Select only fish_id, length, and length_half.
-```{r}
 
+```{r}
+names(fish)
+```
+
+```{r}
+fish %>% 
+  mutate(length_half = length/2) %>% 
+  select(fish_id, length, length_half)
 ```
 
 2. We are interested in the family, genus, species and max life variables. Because the max life span for several mammals is unknown, the authors have use -999 in place of NA. Replace all of these values with NA in a new column titled `max_life_new`. Finally, sort the date in descending order by max_life_new. Which mammal has the oldest known life span?
 ```{r}
+names(mammals)
+```
 
+```{r}
+mammals %>% 
+  select(family, genus, species, max_life) %>% 
+  mutate(max_life_new= ifelse(max_life == "-999", NA, max_life))%>% 
+           arrange(desc(max_life_new))
 ```
 
 ## That's it! Let's take a break and then move on to part 2! 
