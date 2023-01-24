@@ -116,6 +116,9 @@ filter(trophic_species, trophic.guild =="carnivore")
 filter(trophic_species, trophic.guild == "herbivore")
 ```
 227 counts of herbivores
+```{r}
+table(homerange$species, homerange$trophic.guild)
+```
 
 
 **7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  
@@ -191,7 +194,7 @@ snakes
 snakes_new <-select(snakes, genus,species, mean.mass.g, log10.mass, mean.hra.m2, log10.hra)
 ```
 
-#arranging the snakes by log10 hra since hra = home range in ascending order
+#arranging the snakes by mean hra.m2 since hra = home range in ascending order
 
 ```{r}
 arrange(snakes_new, mean.hra.m2)
