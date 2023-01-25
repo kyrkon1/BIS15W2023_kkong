@@ -179,13 +179,13 @@ superhero_powers %>%
 15. Pick your favorite superhero and let's see their powers!
 ```{r}
 scarlet_witch <- superhero_powers %>% 
-  filter(hero_names == "Scarlet Witch")
-```
-```{r}
-summary(scarlet_witch)
+  filter(hero_names == "Scarlet Witch") %>%  
+  select_if(all_vars(.== "TRUE"))
+scarlet_witch
 ```
 
-Scarlet Witch has longevity, agility
+Scarlet witch has agility, dimensional_awareness, flight, longevity, energy blasts, teleportation, magic, telekinesis, astral projection, energy constructs, probability manipulation, levitation, probability manipulation, levitation, illusions, and reality warping 
+
 
 
 

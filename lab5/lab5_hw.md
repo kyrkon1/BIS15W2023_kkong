@@ -723,185 +723,35 @@ superhero_powers %>%
 
 ```r
 scarlet_witch <- superhero_powers %>% 
-  filter(hero_names == "Scarlet Witch")
+  filter(hero_names == "Scarlet Witch") %>%  
+  select_if(all_vars(.== "TRUE"))
+```
+
+```
+## Warning: The `.predicate` argument of `select_if()` can't contain quosures. as of dplyr
+## 0.8.3.
+## ℹ Please use a one-sided formula, a function, or a function name.
+## ℹ The deprecated feature was likely used in the base package.
+##   Please report the issue to the authors.
 ```
 
 ```r
-summary(scarlet_witch)
+scarlet_witch
 ```
 
 ```
-##   hero_names        agility        accelerated_healing lantern_power_ring
-##  Length:1           Mode:logical   Mode :logical       Mode :logical     
-##  Class :character   TRUE:1         FALSE:1             FALSE:1           
-##  Mode  :character                                                        
-##  dimensional_awareness cold_resistance durability       stealth       
-##  Mode:logical          Mode :logical   Mode :logical   Mode :logical  
-##  TRUE:1                FALSE:1         FALSE:1         FALSE:1        
-##                                                                       
-##  energy_absorption  flight        danger_sense    underwater_breathing
-##  Mode :logical     Mode:logical   Mode :logical   Mode :logical       
-##  FALSE:1           TRUE:1         FALSE:1         FALSE:1             
-##                                                                       
-##  marksmanship    weapons_master  power_augmentation animal_attributes
-##  Mode :logical   Mode :logical   Mode :logical      Mode :logical    
-##  FALSE:1         FALSE:1         FALSE:1            FALSE:1          
-##                                                                      
-##  longevity      intelligence    super_strength  cryokinesis     telepathy      
-##  Mode:logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  TRUE:1         FALSE:1         FALSE:1         FALSE:1         FALSE:1        
-##                                                                                
-##  energy_armor    energy_blasts  duplication     size_changing   density_control
-##  Mode :logical   Mode:logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1         TRUE:1         FALSE:1         FALSE:1         FALSE:1        
-##                                                                                
-##   stamina        astral_travel   audio_control   dexterity      
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
-##                                                                 
-##   omnitrix       super_speed     possession      animal_oriented_powers
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical         
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1               
-##                                                                        
-##  weapon_based_powers electrokinesis  darkforce_manipulation death_touch    
-##  Mode :logical       Mode :logical   Mode :logical          Mode :logical  
-##  FALSE:1             FALSE:1         FALSE:1                FALSE:1        
-##                                                                            
-##  teleportation  enhanced_senses telekinesis    energy_beams     magic        
-##  Mode:logical   Mode :logical   Mode:logical   Mode :logical   Mode:logical  
-##  TRUE:1         FALSE:1         TRUE:1         FALSE:1         TRUE:1        
-##                                                                              
-##  hyperkinesis       jump         clairvoyance    dimensional_travel
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical     
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1           
-##                                                                    
-##  power_sense     shapeshifting   peak_human_condition immortality    
-##  Mode :logical   Mode :logical   Mode :logical        Mode :logical  
-##  FALSE:1         FALSE:1         FALSE:1              FALSE:1        
-##                                                                      
-##  camouflage      element_control  phasing        astral_projection
-##  Mode :logical   Mode :logical   Mode :logical   Mode:logical     
-##  FALSE:1         FALSE:1         FALSE:1         TRUE:1           
-##                                                                   
-##  electrical_transport fire_control    projection      summoning      
-##  Mode :logical        Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1              FALSE:1         FALSE:1         FALSE:1        
-##                                                                      
-##  enhanced_memory  reflexes       invulnerability energy_constructs
-##  Mode :logical   Mode :logical   Mode :logical   Mode:logical     
-##  FALSE:1         FALSE:1         FALSE:1         TRUE:1           
-##                                                                   
-##  force_fields    self_sustenance anti_gravity     empathy       
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
-##                                                                 
-##  power_nullifier radiation_control psionic_powers  elasticity     
-##  Mode :logical   Mode :logical     Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1           FALSE:1         FALSE:1        
-##                                                                   
-##  substance_secretion elemental_transmogrification technopath_cyberpath
-##  Mode :logical       Mode :logical                Mode :logical       
-##  FALSE:1             FALSE:1                      FALSE:1             
-##                                                                       
-##  photographic_reflexes seismic_power   animation       precognition   
-##  Mode :logical         Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1               FALSE:1         FALSE:1         FALSE:1        
-##                                                                       
-##  mind_control    fire_resistance power_absorption enhanced_hearing
-##  Mode :logical   Mode :logical   Mode :logical    Mode :logical   
-##  FALSE:1         FALSE:1         FALSE:1          FALSE:1         
-##                                                                   
-##  nova_force       insanity       hypnokinesis    animal_control 
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
-##                                                                 
-##  natural_armor   intangibility   enhanced_sight  molecular_manipulation
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical         
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1               
-##                                                                        
-##  heat_generation adaptation       gliding        power_suit     
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
-##                                                                 
-##  mind_blast      probability_manipulation gravity_control regeneration   
-##  Mode :logical   Mode:logical             Mode :logical   Mode :logical  
-##  FALSE:1         TRUE:1                   FALSE:1         FALSE:1        
-##                                                                          
-##  light_control   echolocation    levitation     toxin_and_disease_control
-##  Mode :logical   Mode :logical   Mode:logical   Mode :logical            
-##  FALSE:1         FALSE:1         TRUE:1         FALSE:1                  
-##                                                                          
-##    banish        energy_manipulation heat_resistance natural_weapons
-##  Mode :logical   Mode :logical       Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1             FALSE:1         FALSE:1        
-##                                                                     
-##  time_travel     enhanced_smell  illusions      thirstokinesis 
-##  Mode :logical   Mode :logical   Mode:logical   Mode :logical  
-##  FALSE:1         FALSE:1         TRUE:1         FALSE:1        
-##                                                                
-##  hair_manipulation illumination    omnipotent       cloaking      
-##  Mode :logical     Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1           FALSE:1         FALSE:1         FALSE:1        
-##                                                                   
-##  changing_armor  power_cosmic    biokinesis      water_control  
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
-##                                                                 
-##  radiation_immunity vision_telescopic toxin_and_disease_resistance
-##  Mode :logical      Mode :logical     Mode :logical               
-##  FALSE:1            FALSE:1           FALSE:1                     
-##                                                                   
-##  spatial_awareness energy_resistance telepathy_resistance molecular_combustion
-##  Mode :logical     Mode :logical     Mode :logical        Mode :logical       
-##  FALSE:1           FALSE:1           FALSE:1              FALSE:1             
-##                                                                               
-##  omnilingualism  portal_creation magnetism       mind_control_resistance
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical          
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1                
-##                                                                         
-##  plant_control     sonar         sonic_scream    time_manipulation
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical    
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1          
-##                                                                   
-##  enhanced_touch  magic_resistance invisibility    sub_mariner    
-##  Mode :logical   Mode :logical    Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1          FALSE:1         FALSE:1        
-##                                                                  
-##  radiation_absorption intuitive_aptitude vision_microscopic  melting       
-##  Mode :logical        Mode :logical      Mode :logical      Mode :logical  
-##  FALSE:1              FALSE:1            FALSE:1            FALSE:1        
-##                                                                            
-##  wind_control    super_breath    wallcrawling    vision_night   
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
-##                                                                 
-##  vision_infrared grim_reaping    matter_absorption the_force      
-##  Mode :logical   Mode :logical   Mode :logical     Mode :logical  
-##  FALSE:1         FALSE:1         FALSE:1           FALSE:1        
-##                                                                   
-##  resurrection    terrakinesis    vision_heat     vitakinesis    
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
-##                                                                 
-##  radar_sense     qwardian_power_ring weather_control vision_x_ray   
-##  Mode :logical   Mode :logical       Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1             FALSE:1         FALSE:1        
-##                                                                     
-##  vision_thermal  web_creation    reality_warping odin_force     
-##  Mode :logical   Mode :logical   Mode:logical    Mode :logical  
-##  FALSE:1         FALSE:1         TRUE:1          FALSE:1        
-##                                                                 
-##  symbiote_costume speed_force     phoenix_force   molecular_dissipation
-##  Mode :logical    Mode :logical   Mode :logical   Mode :logical        
-##  FALSE:1          FALSE:1         FALSE:1         FALSE:1              
-##                                                                        
-##  vision_cryo     omnipresent     omniscient     
-##  Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:1         FALSE:1         FALSE:1        
-## 
+## # A tibble: 1 × 14
+##   agility dimensi…¹ flight longe…² energ…³ telep…⁴ telek…⁵ magic astra…⁶ energ…⁷
+##   <lgl>   <lgl>     <lgl>  <lgl>   <lgl>   <lgl>   <lgl>   <lgl> <lgl>   <lgl>  
+## 1 TRUE    TRUE      TRUE   TRUE    TRUE    TRUE    TRUE    TRUE  TRUE    TRUE   
+## # … with 4 more variables: probability_manipulation <lgl>, levitation <lgl>,
+## #   illusions <lgl>, reality_warping <lgl>, and abbreviated variable names
+## #   ¹​dimensional_awareness, ²​longevity, ³​energy_blasts, ⁴​teleportation,
+## #   ⁵​telekinesis, ⁶​astral_projection, ⁷​energy_constructs
 ```
 
-Scarlet Witch has longevity, agility
+Scarlet witch has agility, dimensional_awareness, flight, longevity, energy blasts, teleportation, magic, telekinesis, astral projection, energy constructs, probability manipulation, levitation, probability manipulation, levitation, illusions, and reality warping 
+
 
 
 
