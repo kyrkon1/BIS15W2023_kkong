@@ -184,9 +184,6 @@ scarlet_witch <- superhero_powers %>%
 ```{r}
 summary(scarlet_witch)
 ```
-```{r}
-sum(scarlet_witch, )
-```
 
 Scarlet Witch has longevity, agility
 
