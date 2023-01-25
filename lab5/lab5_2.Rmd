@@ -36,7 +36,7 @@ superhero_powers <- readr::read_csv("data/super_hero_powers.csv", na = c("", "-9
 names (superhero_info)
 ```
 ```{r}
-superhero_info <-rename(superhero_info, height = "Height" )
+superhero_info <-rename(superhero_info, gender = "Gender", eye_color = "Eye color", race = "Race", hair_color = "Hair color", height = "Height", publisher = "Publisher", skin_color = "Skin color", alignment = "Alignment", weight = "Weight")
 names(superhero_info)
 ```
 
@@ -152,14 +152,13 @@ More good guys that are bald
 ```{r}
 superhero_info %>% 
   select(name, height, weight) %>% 
-  filter(height >= 200) %>% 
-  filter(weight >=240)
+  filter(height >= 300| weight >= 450)
 ```
 
 11. Just to be clear on the `|` operator,  have a look at the superheros over 300 in height...
 ```{r}
 superhero_info %>% 
-  select(name, height) %>% 
+  select(name, height, weight) %>% 
   filter(height >= 300)
 ```
 
@@ -169,6 +168,7 @@ superhero_info %>%
   select(name, height, weight) %>% 
   filter(weight >= 450)
 ```
+We don't have 16 rows in question #10 because the or operator | is saying that we are looking for height greater than 300 OR weight greater than 450. If it's by itself individually, there are 8 superheros that have height greater than 300 and 8 more superheros with weight greater than 450. 
 
 ## Height to Weight Ratio
 13. It's easy to be strong when you are heavy and tall, but who is heavy and short? Which superheros have the highest height to weight ratio?
