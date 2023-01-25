@@ -1,6 +1,6 @@
 ---
 title: "dplyr Superhero"
-date: "2023-01-22"
+date: "2023-01-24"
 output:
   html_document: 
     theme: spacelab
@@ -17,7 +17,7 @@ library("tidyverse")
 
 ```
 ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+## ✔ ggplot2 3.4.0      ✔ purrr   1.0.0 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
 ## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
 ## ✔ readr   2.1.3      ✔ forcats 0.5.2 
@@ -65,6 +65,15 @@ superhero_powers <- readr::read_csv("data/super_hero_powers.csv", na = c("", "-9
 ## Data tidy
 1. Some of the names used in the `superhero_info` data are problematic so you should rename them here.  
 
+```r
+superhero_info <-rename(superhero_info, gender = "Gender", eye_color = "Eye color", race = "Race", hair_color = "Hair color", height = "Height", publisher = "Publisher", skin_color = "Skin color", alignment = "Alignment", weight = "Weight")
+names(superhero_info)
+```
+
+```
+##  [1] "name"       "gender"     "eye_color"  "race"       "hair_color"
+##  [6] "height"     "publisher"  "skin_color" "alignment"  "weight"
+```
 
 Yikes! `superhero_powers` has a lot of variables that are poorly named. We need some R superpowers...
 
@@ -120,49 +129,388 @@ The `janitor` package has many awesome functions that we will explore. Here is i
 
 
 ```r
-#tabyl(superhero_info, alignment)
+tabyl(superhero_info, alignment)
+```
+
+```
+##  alignment   n     percent valid_percent
+##        bad 207 0.282016349    0.28473177
+##       good 496 0.675749319    0.68225585
+##    neutral  24 0.032697548    0.03301238
+##       <NA>   7 0.009536785            NA
 ```
 
 2. Notice that we have some neutral superheros! Who are they?
 
+```r
+superhero_info %>% 
+  select(alignment, name) %>% 
+  filter(alignment == "neutral")
+```
+
+```
+## # A tibble: 24 × 2
+##    alignment name        
+##    <chr>     <chr>       
+##  1 neutral   Bizarro     
+##  2 neutral   Black Flash 
+##  3 neutral   Captain Cold
+##  4 neutral   Copycat     
+##  5 neutral   Deadpool    
+##  6 neutral   Deathstroke 
+##  7 neutral   Etrigan     
+##  8 neutral   Galactus    
+##  9 neutral   Gladiator   
+## 10 neutral   Indigo      
+## # … with 14 more rows
+```
 
 ## `superhero_info`
 3. Let's say we are only interested in the variables name, alignment, and "race". How would you isolate these variables from `superhero_info`?
 
+```r
+superhero_info %>% 
+  select(name, alignment, race)
+```
+
+```
+## # A tibble: 734 × 3
+##    name          alignment race             
+##    <chr>         <chr>     <chr>            
+##  1 A-Bomb        good      Human            
+##  2 Abe Sapien    good      Icthyo Sapien    
+##  3 Abin Sur      good      Ungaran          
+##  4 Abomination   bad       Human / Radiation
+##  5 Abraxas       bad       Cosmic Entity    
+##  6 Absorbing Man bad       Human            
+##  7 Adam Monroe   good      <NA>             
+##  8 Adam Strange  good      Human            
+##  9 Agent 13      good      <NA>             
+## 10 Agent Bob     good      Human            
+## # … with 724 more rows
+```
 
 ## Not Human
 4. List all of the superheros that are not human.
 
+```r
+superhero_info %>% 
+  select(name, race) %>% 
+  filter(race != "Human")
+```
+
+```
+## # A tibble: 222 × 2
+##    name         race             
+##    <chr>        <chr>            
+##  1 Abe Sapien   Icthyo Sapien    
+##  2 Abin Sur     Ungaran          
+##  3 Abomination  Human / Radiation
+##  4 Abraxas      Cosmic Entity    
+##  5 Ajax         Cyborg           
+##  6 Alien        Xenomorph XX121  
+##  7 Amazo        Android          
+##  8 Angel        Vampire          
+##  9 Angel Dust   Mutant           
+## 10 Anti-Monitor God / Eternal    
+## # … with 212 more rows
+```
 
 ## Good and Evil
 5. Let's make two different data frames, one focused on the "good guys" and another focused on the "bad guys".
 
+```r
+good_guys <-
+  superhero_info %>% 
+  filter(alignment == "good")
+good_guys
+```
+
+```
+## # A tibble: 496 × 10
+##    name       gender eye_c…¹ race  hair_…² height publi…³ skin_…⁴ align…⁵ weight
+##    <chr>      <chr>  <chr>   <chr> <chr>    <dbl> <chr>   <chr>   <chr>    <dbl>
+##  1 A-Bomb     Male   yellow  Human No Hair    203 Marvel… <NA>    good       441
+##  2 Abe Sapien Male   blue    Icth… No Hair    191 Dark H… blue    good        65
+##  3 Abin Sur   Male   blue    Unga… No Hair    185 DC Com… red     good        90
+##  4 Adam Monr… Male   blue    <NA>  Blond       NA NBC - … <NA>    good        NA
+##  5 Adam Stra… Male   blue    Human Blond      185 DC Com… <NA>    good        88
+##  6 Agent 13   Female blue    <NA>  Blond      173 Marvel… <NA>    good        61
+##  7 Agent Bob  Male   brown   Human Brown      178 Marvel… <NA>    good        81
+##  8 Agent Zero Male   <NA>    <NA>  <NA>       191 Marvel… <NA>    good       104
+##  9 Alan Scott Male   blue    <NA>  Blond      180 DC Com… <NA>    good        90
+## 10 Alex Wool… Male   <NA>    <NA>  <NA>        NA NBC - … <NA>    good        NA
+## # … with 486 more rows, and abbreviated variable names ¹​eye_color, ²​hair_color,
+## #   ³​publisher, ⁴​skin_color, ⁵​alignment
+```
 
 
+
+```r
+bad_guys <- 
+  superhero_info %>% 
+  filter(alignment == "bad")
+bad_guys
+```
+
+```
+## # A tibble: 207 × 10
+##    name       gender eye_c…¹ race  hair_…² height publi…³ skin_…⁴ align…⁵ weight
+##    <chr>      <chr>  <chr>   <chr> <chr>    <dbl> <chr>   <chr>   <chr>    <dbl>
+##  1 Abominati… Male   green   Huma… No Hair    203 Marvel… <NA>    bad        441
+##  2 Abraxas    Male   blue    Cosm… Black       NA Marvel… <NA>    bad         NA
+##  3 Absorbing… Male   blue    Human No Hair    193 Marvel… <NA>    bad        122
+##  4 Air-Walker Male   blue    <NA>  White      188 Marvel… <NA>    bad        108
+##  5 Ajax       Male   brown   Cybo… Black      193 Marvel… <NA>    bad         90
+##  6 Alex Merc… Male   <NA>    Human <NA>        NA Wildst… <NA>    bad         NA
+##  7 Alien      Male   <NA>    Xeno… No Hair    244 Dark H… black   bad        169
+##  8 Amazo      Male   red     Andr… <NA>       257 DC Com… <NA>    bad        173
+##  9 Ammo       Male   brown   Human Black      188 Marvel… <NA>    bad        101
+## 10 Angela     Female <NA>    <NA>  <NA>        NA Image … <NA>    bad         NA
+## # … with 197 more rows, and abbreviated variable names ¹​eye_color, ²​hair_color,
+## #   ³​publisher, ⁴​skin_color, ⁵​alignment
+```
 
 6. For the good guys, use the `tabyl` function to summarize their "race".
 
+```r
+tabyl(good_guys,race)
+```
+
+```
+##               race   n     percent valid_percent
+##              Alien   3 0.006048387   0.010752688
+##              Alpha   5 0.010080645   0.017921147
+##             Amazon   2 0.004032258   0.007168459
+##            Android   4 0.008064516   0.014336918
+##             Animal   2 0.004032258   0.007168459
+##          Asgardian   3 0.006048387   0.010752688
+##          Atlantean   4 0.008064516   0.014336918
+##         Bolovaxian   1 0.002016129   0.003584229
+##              Clone   1 0.002016129   0.003584229
+##             Cyborg   3 0.006048387   0.010752688
+##           Demi-God   2 0.004032258   0.007168459
+##              Demon   3 0.006048387   0.010752688
+##            Eternal   1 0.002016129   0.003584229
+##     Flora Colossus   1 0.002016129   0.003584229
+##        Frost Giant   1 0.002016129   0.003584229
+##      God / Eternal   6 0.012096774   0.021505376
+##             Gungan   1 0.002016129   0.003584229
+##              Human 148 0.298387097   0.530465950
+##         Human-Kree   2 0.004032258   0.007168459
+##      Human-Spartoi   1 0.002016129   0.003584229
+##       Human-Vulcan   1 0.002016129   0.003584229
+##    Human-Vuldarian   1 0.002016129   0.003584229
+##    Human / Altered   2 0.004032258   0.007168459
+##     Human / Cosmic   2 0.004032258   0.007168459
+##  Human / Radiation   8 0.016129032   0.028673835
+##      Icthyo Sapien   1 0.002016129   0.003584229
+##            Inhuman   4 0.008064516   0.014336918
+##    Kakarantharaian   1 0.002016129   0.003584229
+##         Kryptonian   4 0.008064516   0.014336918
+##            Martian   1 0.002016129   0.003584229
+##          Metahuman   1 0.002016129   0.003584229
+##             Mutant  46 0.092741935   0.164874552
+##     Mutant / Clone   1 0.002016129   0.003584229
+##             Planet   1 0.002016129   0.003584229
+##             Saiyan   1 0.002016129   0.003584229
+##           Symbiote   3 0.006048387   0.010752688
+##           Talokite   1 0.002016129   0.003584229
+##         Tamaranean   1 0.002016129   0.003584229
+##            Ungaran   1 0.002016129   0.003584229
+##            Vampire   2 0.004032258   0.007168459
+##     Yoda's species   1 0.002016129   0.003584229
+##      Zen-Whoberian   1 0.002016129   0.003584229
+##               <NA> 217 0.437500000            NA
+```
 
 7. Among the good guys, Who are the Asgardians?
 
+```r
+good_guys %>% 
+  select(name, race) %>% 
+  filter(race == "Asgardian")
+```
+
+```
+## # A tibble: 3 × 2
+##   name      race     
+##   <chr>     <chr>    
+## 1 Sif       Asgardian
+## 2 Thor      Asgardian
+## 3 Thor Girl Asgardian
+```
 
 8. Among the bad guys, who are the male humans over 200 inches in height?
 
+```r
+bad_guys %>% 
+  select(name, gender, race, height) %>% 
+  filter(height >= 200) %>% 
+  filter(race == "Human") %>% 
+  filter(gender == "Male")
+```
+
+```
+## # A tibble: 5 × 4
+##   name        gender race  height
+##   <chr>       <chr>  <chr>  <dbl>
+## 1 Bane        Male   Human    203
+## 2 Doctor Doom Male   Human    201
+## 3 Kingpin     Male   Human    201
+## 4 Lizard      Male   Human    203
+## 5 Scorpion    Male   Human    211
+```
 
 9. OK, so are there more good guys or bad guys that are bald (personal interest)?
 
+```r
+good_guys %>% 
+  select(name,hair_color) %>% 
+  filter(hair_color == "No Hair")
+```
+
+```
+## # A tibble: 37 × 2
+##    name            hair_color
+##    <chr>           <chr>     
+##  1 A-Bomb          No Hair   
+##  2 Abe Sapien      No Hair   
+##  3 Abin Sur        No Hair   
+##  4 Beta Ray Bill   No Hair   
+##  5 Bishop          No Hair   
+##  6 Black Lightning No Hair   
+##  7 Blaquesmith     No Hair   
+##  8 Bloodhawk       No Hair   
+##  9 Crimson Dynamo  No Hair   
+## 10 Donatello       No Hair   
+## # … with 27 more rows
+```
+
+
+```r
+bad_guys %>% 
+  select(name, hair_color) %>% 
+  filter(hair_color == "No Hair")
+```
+
+```
+## # A tibble: 35 × 2
+##    name          hair_color
+##    <chr>         <chr>     
+##  1 Abomination   No Hair   
+##  2 Absorbing Man No Hair   
+##  3 Alien         No Hair   
+##  4 Annihilus     No Hair   
+##  5 Anti-Monitor  No Hair   
+##  6 Black Manta   No Hair   
+##  7 Bloodwraith   No Hair   
+##  8 Brainiac      No Hair   
+##  9 Darkseid      No Hair   
+## 10 Darth Vader   No Hair   
+## # … with 25 more rows
+```
 
 10. Let's explore who the really "big" superheros are. In the `superhero_info` data, which have a height over 200 or weight greater than or equal to 450?
 
+```r
+superhero_info %>% 
+  select(name, height, weight) %>% 
+  filter(height >= 300| weight >= 450)
+```
+
+```
+## # A tibble: 14 × 3
+##    name          height weight
+##    <chr>          <dbl>  <dbl>
+##  1 Bloodaxe       218      495
+##  2 Darkseid       267      817
+##  3 Fin Fang Foom  975       18
+##  4 Galactus       876       16
+##  5 Giganta         62.5    630
+##  6 Groot          701        4
+##  7 Hulk           244      630
+##  8 Juggernaut     287      855
+##  9 MODOK          366      338
+## 10 Onslaught      305      405
+## 11 Red Hulk       213      630
+## 12 Sasquatch      305      900
+## 13 Wolfsbane      366      473
+## 14 Ymir           305.      NA
+```
 
 11. Just to be clear on the `|` operator,  have a look at the superheros over 300 in height...
 
+```r
+superhero_info %>% 
+  select(name, height, weight) %>% 
+  filter(height >= 300)
+```
+
+```
+## # A tibble: 8 × 3
+##   name          height weight
+##   <chr>          <dbl>  <dbl>
+## 1 Fin Fang Foom   975      18
+## 2 Galactus        876      16
+## 3 Groot           701       4
+## 4 MODOK           366     338
+## 5 Onslaught       305     405
+## 6 Sasquatch       305     900
+## 7 Wolfsbane       366     473
+## 8 Ymir            305.     NA
+```
 
 12. ...and the superheros over 450 in weight. Bonus question! Why do we not have 16 rows in question #10?
 
+```r
+superhero_info %>% 
+  select(name, height, weight) %>% 
+  filter(weight >= 450)
+```
+
+```
+## # A tibble: 8 × 3
+##   name       height weight
+##   <chr>       <dbl>  <dbl>
+## 1 Bloodaxe    218      495
+## 2 Darkseid    267      817
+## 3 Giganta      62.5    630
+## 4 Hulk        244      630
+## 5 Juggernaut  287      855
+## 6 Red Hulk    213      630
+## 7 Sasquatch   305      900
+## 8 Wolfsbane   366      473
+```
+We don't have 16 rows in question #10 because the or operator | is saying that we are looking for height greater than 300 OR weight greater than 450. If it's by itself individually, there are 8 superheros that have height greater than 300 and 8 more superheros with weight greater than 450. 
 
 ## Height to Weight Ratio
 13. It's easy to be strong when you are heavy and tall, but who is heavy and short? Which superheros have the highest height to weight ratio?
+
+```r
+superhero_info %>% 
+  select(name, height, weight) %>% 
+  mutate(heightweight_ratio = height/weight) %>% 
+  arrange(desc(heightweight_ratio))
+```
+
+```
+## # A tibble: 734 × 4
+##    name            height weight heightweight_ratio
+##    <chr>            <dbl>  <dbl>              <dbl>
+##  1 Groot              701      4             175.  
+##  2 Galactus           876     16              54.8 
+##  3 Fin Fang Foom      975     18              54.2 
+##  4 Longshot           188     36               5.22
+##  5 Jack-Jack           71     14               5.07
+##  6 Rocket Raccoon     122     25               4.88
+##  7 Dash               122     27               4.52
+##  8 Howard the Duck     79     18               4.39
+##  9 Swarm              196     47               4.17
+## 10 Yoda                66     17               3.88
+## # … with 724 more rows
+```
+Groot has the highest height/weight ratio with a height of 701 and weight of 4. For the one with the lowest height/weight ratio it would be Giganta with a height of 62.5 and weight of 630
 
 
 ## `superhero_powers`
@@ -347,9 +695,214 @@ glimpse(superhero_powers)
 
 14. How many superheros have a combination of accelerated healing, durability, and super strength?
 
+```r
+superhero_powers %>% 
+  select(hero_names, accelerated_healing, durability, super_strength) %>% 
+  filter(accelerated_healing == "TRUE", durability == "TRUE", super_strength == "TRUE")
+```
 
+```
+## # A tibble: 97 × 4
+##    hero_names   accelerated_healing durability super_strength
+##    <chr>        <lgl>               <lgl>      <lgl>         
+##  1 A-Bomb       TRUE                TRUE       TRUE          
+##  2 Abe Sapien   TRUE                TRUE       TRUE          
+##  3 Angel        TRUE                TRUE       TRUE          
+##  4 Anti-Monitor TRUE                TRUE       TRUE          
+##  5 Anti-Venom   TRUE                TRUE       TRUE          
+##  6 Aquaman      TRUE                TRUE       TRUE          
+##  7 Arachne      TRUE                TRUE       TRUE          
+##  8 Archangel    TRUE                TRUE       TRUE          
+##  9 Ardina       TRUE                TRUE       TRUE          
+## 10 Ares         TRUE                TRUE       TRUE          
+## # … with 87 more rows
+```
+97 superheros have a combination of all three powers
 ## Your Favorite
 15. Pick your favorite superhero and let's see their powers!
+
+```r
+scarlet_witch <- superhero_powers %>% 
+  filter(hero_names == "Scarlet Witch")
+```
+
+```r
+summary(scarlet_witch)
+```
+
+```
+##   hero_names        agility        accelerated_healing lantern_power_ring
+##  Length:1           Mode:logical   Mode :logical       Mode :logical     
+##  Class :character   TRUE:1         FALSE:1             FALSE:1           
+##  Mode  :character                                                        
+##  dimensional_awareness cold_resistance durability       stealth       
+##  Mode:logical          Mode :logical   Mode :logical   Mode :logical  
+##  TRUE:1                FALSE:1         FALSE:1         FALSE:1        
+##                                                                       
+##  energy_absorption  flight        danger_sense    underwater_breathing
+##  Mode :logical     Mode:logical   Mode :logical   Mode :logical       
+##  FALSE:1           TRUE:1         FALSE:1         FALSE:1             
+##                                                                       
+##  marksmanship    weapons_master  power_augmentation animal_attributes
+##  Mode :logical   Mode :logical   Mode :logical      Mode :logical    
+##  FALSE:1         FALSE:1         FALSE:1            FALSE:1          
+##                                                                      
+##  longevity      intelligence    super_strength  cryokinesis     telepathy      
+##  Mode:logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  TRUE:1         FALSE:1         FALSE:1         FALSE:1         FALSE:1        
+##                                                                                
+##  energy_armor    energy_blasts  duplication     size_changing   density_control
+##  Mode :logical   Mode:logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1         TRUE:1         FALSE:1         FALSE:1         FALSE:1        
+##                                                                                
+##   stamina        astral_travel   audio_control   dexterity      
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
+##                                                                 
+##   omnitrix       super_speed     possession      animal_oriented_powers
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical         
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1               
+##                                                                        
+##  weapon_based_powers electrokinesis  darkforce_manipulation death_touch    
+##  Mode :logical       Mode :logical   Mode :logical          Mode :logical  
+##  FALSE:1             FALSE:1         FALSE:1                FALSE:1        
+##                                                                            
+##  teleportation  enhanced_senses telekinesis    energy_beams     magic        
+##  Mode:logical   Mode :logical   Mode:logical   Mode :logical   Mode:logical  
+##  TRUE:1         FALSE:1         TRUE:1         FALSE:1         TRUE:1        
+##                                                                              
+##  hyperkinesis       jump         clairvoyance    dimensional_travel
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical     
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1           
+##                                                                    
+##  power_sense     shapeshifting   peak_human_condition immortality    
+##  Mode :logical   Mode :logical   Mode :logical        Mode :logical  
+##  FALSE:1         FALSE:1         FALSE:1              FALSE:1        
+##                                                                      
+##  camouflage      element_control  phasing        astral_projection
+##  Mode :logical   Mode :logical   Mode :logical   Mode:logical     
+##  FALSE:1         FALSE:1         FALSE:1         TRUE:1           
+##                                                                   
+##  electrical_transport fire_control    projection      summoning      
+##  Mode :logical        Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1              FALSE:1         FALSE:1         FALSE:1        
+##                                                                      
+##  enhanced_memory  reflexes       invulnerability energy_constructs
+##  Mode :logical   Mode :logical   Mode :logical   Mode:logical     
+##  FALSE:1         FALSE:1         FALSE:1         TRUE:1           
+##                                                                   
+##  force_fields    self_sustenance anti_gravity     empathy       
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
+##                                                                 
+##  power_nullifier radiation_control psionic_powers  elasticity     
+##  Mode :logical   Mode :logical     Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1           FALSE:1         FALSE:1        
+##                                                                   
+##  substance_secretion elemental_transmogrification technopath_cyberpath
+##  Mode :logical       Mode :logical                Mode :logical       
+##  FALSE:1             FALSE:1                      FALSE:1             
+##                                                                       
+##  photographic_reflexes seismic_power   animation       precognition   
+##  Mode :logical         Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1               FALSE:1         FALSE:1         FALSE:1        
+##                                                                       
+##  mind_control    fire_resistance power_absorption enhanced_hearing
+##  Mode :logical   Mode :logical   Mode :logical    Mode :logical   
+##  FALSE:1         FALSE:1         FALSE:1          FALSE:1         
+##                                                                   
+##  nova_force       insanity       hypnokinesis    animal_control 
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
+##                                                                 
+##  natural_armor   intangibility   enhanced_sight  molecular_manipulation
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical         
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1               
+##                                                                        
+##  heat_generation adaptation       gliding        power_suit     
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
+##                                                                 
+##  mind_blast      probability_manipulation gravity_control regeneration   
+##  Mode :logical   Mode:logical             Mode :logical   Mode :logical  
+##  FALSE:1         TRUE:1                   FALSE:1         FALSE:1        
+##                                                                          
+##  light_control   echolocation    levitation     toxin_and_disease_control
+##  Mode :logical   Mode :logical   Mode:logical   Mode :logical            
+##  FALSE:1         FALSE:1         TRUE:1         FALSE:1                  
+##                                                                          
+##    banish        energy_manipulation heat_resistance natural_weapons
+##  Mode :logical   Mode :logical       Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1             FALSE:1         FALSE:1        
+##                                                                     
+##  time_travel     enhanced_smell  illusions      thirstokinesis 
+##  Mode :logical   Mode :logical   Mode:logical   Mode :logical  
+##  FALSE:1         FALSE:1         TRUE:1         FALSE:1        
+##                                                                
+##  hair_manipulation illumination    omnipotent       cloaking      
+##  Mode :logical     Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1           FALSE:1         FALSE:1         FALSE:1        
+##                                                                   
+##  changing_armor  power_cosmic    biokinesis      water_control  
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
+##                                                                 
+##  radiation_immunity vision_telescopic toxin_and_disease_resistance
+##  Mode :logical      Mode :logical     Mode :logical               
+##  FALSE:1            FALSE:1           FALSE:1                     
+##                                                                   
+##  spatial_awareness energy_resistance telepathy_resistance molecular_combustion
+##  Mode :logical     Mode :logical     Mode :logical        Mode :logical       
+##  FALSE:1           FALSE:1           FALSE:1              FALSE:1             
+##                                                                               
+##  omnilingualism  portal_creation magnetism       mind_control_resistance
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical          
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1                
+##                                                                         
+##  plant_control     sonar         sonic_scream    time_manipulation
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical    
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1          
+##                                                                   
+##  enhanced_touch  magic_resistance invisibility    sub_mariner    
+##  Mode :logical   Mode :logical    Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1          FALSE:1         FALSE:1        
+##                                                                  
+##  radiation_absorption intuitive_aptitude vision_microscopic  melting       
+##  Mode :logical        Mode :logical      Mode :logical      Mode :logical  
+##  FALSE:1              FALSE:1            FALSE:1            FALSE:1        
+##                                                                            
+##  wind_control    super_breath    wallcrawling    vision_night   
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
+##                                                                 
+##  vision_infrared grim_reaping    matter_absorption the_force      
+##  Mode :logical   Mode :logical   Mode :logical     Mode :logical  
+##  FALSE:1         FALSE:1         FALSE:1           FALSE:1        
+##                                                                   
+##  resurrection    terrakinesis    vision_heat     vitakinesis    
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1         FALSE:1         FALSE:1        
+##                                                                 
+##  radar_sense     qwardian_power_ring weather_control vision_x_ray   
+##  Mode :logical   Mode :logical       Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1             FALSE:1         FALSE:1        
+##                                                                     
+##  vision_thermal  web_creation    reality_warping odin_force     
+##  Mode :logical   Mode :logical   Mode:logical    Mode :logical  
+##  FALSE:1         FALSE:1         TRUE:1          FALSE:1        
+##                                                                 
+##  symbiote_costume speed_force     phoenix_force   molecular_dissipation
+##  Mode :logical    Mode :logical   Mode :logical   Mode :logical        
+##  FALSE:1          FALSE:1         FALSE:1         FALSE:1              
+##                                                                        
+##  vision_cryo     omnipresent     omniscient     
+##  Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:1         FALSE:1         FALSE:1        
+## 
+```
+
+Scarlet Witch has longevity, agility
+
 
 
 ## Push your final code to GitHub!
