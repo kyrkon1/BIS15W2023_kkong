@@ -31,17 +31,26 @@ glimpse(penguins)
 
 As biologists, a good question that we may ask is how do the measured variables differ by island (on average)?
 ```{r}
-
+penguins %>% 
+  group_by(island) %>% 
+  summarize(mean_bodymass = mean(body_mass_g))
 ```
 
 Why do we have NA here? Do all of these penguins lack data?
-```{r}
 
+```{r}
+penguins %>% 
+  group_by(island) %>% 
+  summarize(mean_bodymass= mean(body_mass_g, na.rm = T))
 ```
 
 Well, that won't work so let's remove the NAs and recalculate.
 ```{r}
-
+penguins %>% 
+  filter(!is.na(body_mass_g)) %>% 
+  group_by(island) %>% 
+  summarize(mean_bodymass = mean(body_mass_g), 
+            sd_bodymass =sd(body_mass_g))
 ```
 
 What if we are interested in the number of observations (penguins) by species and island?
@@ -78,7 +87,7 @@ penguins %>%
 For counts, I often prefer `tabyl()`. Lots of options are supported in [tabyl](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html)
 ```{r}
 penguins %>% 
-  tabyl(island, species)
+  tabyl(species, island)
 ```
 
 ```{r}

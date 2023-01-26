@@ -185,30 +185,46 @@ msleep %>%
 ```
 
 ## `group_by()`
-The `summarize()` function is most useful when used in conjunction with `group_by()`. Although producing a summary of body weight for all of the mammals in the data set is helpful, what if we were interested in body weight by feeding ecology?
+The `summarize()` function is most useful when used in conjunction with `group_by()`. Although producing a summary of body weight for all of the mammals in the data set is helpful, what if we were interested in body weight by feeding ecology? 
+grouping all of the animals with the same type of feeding
 ```{r}
 msleep %>%
-  group_by(vore) %>% #we are grouping by feeding ecology, a categorical variable
+  group_by(vore) %>% #we are grouping by feeding ecology, a categorical variable, takes all of the carnivores, herbivores, insectivores and clusters them for you
   summarize(min_bodywt = min(bodywt),
             max_bodywt = max(bodywt),
             mean_bodywt = mean(bodywt),
-            total=n())
+            total=n()) # leaving NAs in there (how do we know what that animal eats?)
 ```
 
 ## Practice
 1. Calculate mean brain weight by taxonomic order in the msleep data.
 ```{r}
-
+msleep %>% 
+  group_by(order) %>% 
+  summarize(meanbrain_weight= mean(brainwt))
 ```
 
 2. What does `NA` mean? How are NA's being treated by the summarize function?
+NA means not applicable or not listed, its kept for the entire function
 ```{r}
-
+msleep %>% 
+  filter(order == "Carnivora") %>% 
+  select(order, genus, brainwt)
 ```
 
 3. Try running the code again, but this time add `na.rm=TRUE`. What is the problem with Cetacea? Compare this to Carnivora. 
 ```{r}
+msleep %>% 
+  group_by(order) %>% 
+  summarize(meanbrain_weight= mean(brainwt, na.rm= T))
+```
+Cetacea has NA in the mean brain weight but na.rm says it removed the NA. 3 counts of NA
+Carnivora also has the same, it has 12 counts of NA
 
+```{r}
+msleep %>% 
+  filter(order == "Cetacea") %>% 
+  select(order, name, genus, brainwt)
 ```
 
 ## That's it! Let's take a break and then move on to part 2! 
