@@ -35,7 +35,7 @@ library("skimr")
 ## Load the data
 For this lab, we will use the built-in data on mammal sleep patterns. From: _V. M. Savage and G. B. West. A quantitative, theoretical framework for understanding mammalian sleep. Proceedings of the National Academy of Sciences, 104 (3):1051-1056, 2007_.
 ```{r}
-?msleep
+?msleep #built in data sets in R for biology, to build familiarity 
 names(msleep)
 ```
 
@@ -46,37 +46,55 @@ palmerpenguins::penguins_raw
 ```
 
 ## dplyr Practice
-Let's do a bit more practice to make sure that we understand `select()`, `filter()`, and `mutate()`. Start by building a new data frame `msleep24` from the `msleep` data that: contains the `name` and `vore` variables along with a new column called `sleep_total_24` which is the amount of time a species sleeps expressed as a proportion of a 24-hour day. Remove any rows with NA's and restrict the `sleep_total_24` values to less than 0.3. Arrange the output in descending order.  
+Let's do a bit more practice to make sure that we understand `select()`, `filter()`, and `mutate()`. Start by building a new data frame `msleep24` from the `msleep` data that: contains the `name` and `vore` variables along with a new column called `sleep_total_24` which is the amount of time a species sleeps expressed as a proportion of a 24-hour day. Remove any rows with NA's and restrict the `sleep_total_24` values to less than 0.3. Arrange the output in descending order. 
 ```{r}
+sleep <- msleep
+```
+```{r}
+names(sleep)
+```
 
+```{r}
+msleep24 <-msleep %>% 
+  mutate(sleep_total_24=sleep_total/24) %>% 
+  select(name,vore,sleep_total_24) %>% 
+  filter(!is.na(vore)) %>%  #removing NAs from a variable
+  filter(sleep_total_24 <= 0.3) %>% 
+  arrange(desc(sleep_total_24)) 
+msleep24
 ```
 
 Did `dplyr` do what we expected? How do we check our output? Remember, just because your code runs it doesn't mean that it did what you intended.
 ```{r}
-#summary(msleep24)
+summary(msleep24)
 ```
 
 Try out the new function `skim()` as part of the `skimr` package.
 ```{r}
-#skim(msleep24)
+skim(msleep24)
 ```
 
 Histograms are also a quick way to check the output.
 ```{r}
-#hist(msleep24$sleep_total_24)
+ hist(msleep24$sleep_total_24)
 ```
 
 Don't forget we can also use `tabyl()` across one or many variables.
 ```{r}
-#msleep24 %>% 
-#  tabyl(vore) %>% 
-#  adorn_pct_formatting(digits=1)
+msleep24 %>% 
+ tabyl(vore) %>% 
+ adorn_pct_formatting(digits=1)
 ```
 
 ## Practice
 1. Which taxonomic orders have species that belong to more than one class of `vore`?
 ```{r}
+names(sleep)
+```
 
+```{r}
+msleep %>% 
+ tabyl(vore,order) 
 ```
 
 ## `summarize()`
@@ -84,6 +102,7 @@ Don't forget we can also use `tabyl()` across one or many variables.
 ```{r}
 head(msleep)
 ```
+`
 
 For example, if we define "large" as having a `bodywt` greater than 200 then we get the following:
 ```{r}
@@ -103,7 +122,7 @@ We can accomplish the same task using the `summarize()` function to make things 
 ```{r}
 msleep %>% 
   filter(bodywt > 200) %>% #large mammals
-  summarize(mean_sleep_lg = mean(sleep_total))
+  summarize(mean_sleep_lg = mean(sleep_total)) # min, stdev, counts, etc
 ```
 
 You can also combine functions to make useful summaries for multiple variables.
@@ -119,14 +138,24 @@ msleep %>%
 ## Practice
 1. What is the mean, min, and max `bodywt` for the taxonomic order Primates? Provide the total number of observations.
 ```{r}
+names(msleep)
+```
 
+```{r}
+msleep %>% 
+  filter(order == "Primates") %>% 
+  summarize(mean_body_wt = mean(bodywt), 
+            min_body_wt = min(bodywt),
+            max_body_wt = max(bodywt),
+            sd_body_wt = sd(bodywt),
+            total= n())
 ```
 
 `n_distinct()` is a very handy way of cleanly presenting the number of distinct observations. Here we show the number of distinct genera over 100 in body weight.
 ```{r}
 msleep %>% 
   filter(bodywt > 100) %>% 
-  summarise(n_genera=n_distinct(genus))
+  summarise(n_genera=n_distinct(genus)) # 9 genera that have a bodyweight greater than 100
 ```
 
 There are many other useful summary statistics, depending on your needs: sd(), min(), max(), median(), sum(), n() (returns the length of a column), first() (returns first value in a column), last() (returns last value in a column) and n_distinct() (number of distinct values in a column).
@@ -134,12 +163,25 @@ There are many other useful summary statistics, depending on your needs: sd(), m
 ## Practice
 1. How many genera are represented in the msleep data frame?
 ```{r}
-
+msleep %>% 
+  summarize(n_genera=n_distinct(genus))
+```
+```{r}
+n_distinct(msleep$genus)
 ```
 
 2. What are the min, max, and mean `sleep_total` for all of the mammals? Be sure to include the total n.
 ```{r}
+names(msleep)
+```
 
+
+```{r}
+msleep %>% 
+  summarize(sleep_min =min(sleep_total),
+            sleep_max =max(sleep_total),
+            sleep_mean =mean(sleep_total),
+            total=n())
 ```
 
 ## `group_by()`

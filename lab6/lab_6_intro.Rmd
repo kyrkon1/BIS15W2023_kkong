@@ -20,9 +20,22 @@ library("jpeg")
 ## Review from last time
 ### *With a partner, discuss the following questions*
 1. What is a pipe? Why are they useful in R?
+
+a pipe is a way to make multiple functions or actions in a dataframe easier, as it inputs one outcome of one function into the other (or many others), combination of functions
+
 2. What is the shortcut for making a pipe?
+
+cmd shift m or control shift m
+
 3. What is the difference between `select`, `filter`, and `mutate`?
+
+select is to use or pick out columns of data
+filter is to use or pick out rows of data
+mutate allows us to create a new column using previous columns of data
+
 4. What are the logistics of midterm 1?
+
+the first 50 minutes are done by yourself and is based on completion and you get 5 points, the last 50 minutes is with your neighbors (allows for collaboration) and then it is graded in accuracy for the rest of the 30 points. it's in in class midterm using R, sort of "open book" not with github with 12 questions.
 
 ### Warm-up
 1. Open the data `ecs21351-sup-0003-SupplementS1.csv`

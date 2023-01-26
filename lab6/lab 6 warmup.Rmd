@@ -1,0 +1,54 @@
+---
+title: "lab 5 warm up"
+output: html_document
+date: "2023-01-26"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# loading tidyverse and janitor
+```{r}
+library(tidyverse)
+```
+```{r}
+library(janitor)
+```
+# uploading data set
+```{r}
+ecosphere <-read.csv("data/ecs21351-sup-0003-SupplementS1.csv", skip =2)
+```
+
+```{r}
+names(ecosphere)
+```
+```{r}
+ecosphere <- janitor::clean_names(ecosphere)
+```
+# renaming the names
+```{r}
+names(ecosphere)
+```
+
+# exploring data using a function of your choice
+```{r}
+summary(ecosphere)
+```
+# more veggie, omni, insectivore, or nectar feeders in the data
+```{r}
+ecosphere %>% 
+  tabyl(diet) %>% 
+  arrange(desc(n)) # n is the count of observations
+``` 
+
+# which familes are in veggies
+```{r}
+ecosphere %>% 
+  filter(diet == "Vegetation") %>% 
+  select(family, diet) %>% 
+  tabyl(diet)
+
+```
+
+
