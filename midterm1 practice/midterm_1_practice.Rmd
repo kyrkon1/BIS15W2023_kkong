@@ -66,7 +66,11 @@ class(elephants$sex)
 5. (2 points) How many male and female elephants are represented in the data?
 ```{r}
 elephants %>% 
-  tabyl(sex)
+  tabyl(sex) # or count(sex)
+```
+```{r}
+elephants %>% 
+  count(sex)
 ```
 
 
@@ -75,6 +79,11 @@ elephants %>%
 ```{r}
 mean_age <-mean(elephants$age)
 ```
+```{r}
+elephants %>% 
+  summarize(mean_age=mean(age))
+```
+
 
 7. (2 points) How does the average age and height of elephants compare by sex?
 ```{r}
@@ -100,7 +109,7 @@ elephants %>%
   summarize(mean_height = mean(height, na.rm =T), 
             min_height = min(height,na.rm=T),
             max_height =max(height,na.rm =T), 
-            n=n())
+            n_elephants=n())
 ```
 
 
@@ -111,15 +120,15 @@ Reference: Koerner SE, Poulsen JR, Blanchard EJ, Okouyi J, Clark CJ. Vertebrate 
 9. (2 points) Load `IvindoData_DryadVersion.csv` and use the function(s) of your choice to get an idea of the overall structure. Change the variables `HuntCat` and `LandUse` to factors.
 
 ```{r}
-transects <-read.csv("data/IvindoData_DryadVersion.csv")
+gabon <-read.csv("data/IvindoData_DryadVersion.csv")
 ```
 
 ```{r}
-glimpse(transects)
+glimpse(gabon)
 ```
 ```{r}
-transects <-janitor::clean_names(transects)
-names(transects)
+gabon <-janitor::clean_names(gabon)
+names(gabon)
 ```
 ```{r}
 transects$hunt_cat <-as.factor(transects$hunt_cat)
@@ -129,18 +138,58 @@ class(transects$hunt_cat)
 transects$land_use <-as.factor(transects$land_use)
 class(transects$land_use)
 ```
+```{r}
+gabon <-gabon %>% 
+  mutate_if(is.character,factor)
+```
+```{r}
+glimpse(gabon)
+```
 
 10. (4 points) For the transects with high and moderate hunting intensity, how does the average diversity of birds and mammals compare?
 
 ```{r}
-transects %>% 
-  group_by(hunt_cat) %>% 
+gabon %>% 
+  filter(hunt_cat =="High") %>% 
   summarize(mean_diversity_bird = mean(diversity_bird_species, na.rm=T),
-            mean_diversity_mammal = mean(diversity_mammal_species, na.rm =T))
+            mean_diversity_mammal = mean(diversity_mammal_species, na.rm =T),
+            nsamples=n())
  
+```
+```{r}
+gabon %>% 
+  filter(hunt_cat =="Moderate") %>% 
+  summarize(mean_diversity_bird = mean(diversity_bird_species, na.rm=T),
+            mean_diversity_mammal = mean(diversity_mammal_species, na.rm =T),
+            nsamples=n())
 ```
 
 11. (4 points) One of the conclusions in the study is that the relative abundance of animals drops off the closer you get to a village. Let's try to reconstruct this (without the statistics). How does the relative abundance (RA) of apes, birds, elephants, monkeys, rodents, and ungulates compare between sites that are less than 3km from a village to sites that are greater than 25km from a village? The variable `Distance` measures the distance of the transect from the nearest village. Hint: try using the `across` operator.  
-
+```{r}
+names(gabon)
+```
+```{r}
+gabon %>% 
+  filter(distance <3) %>% 
+  summarize(across(contains("ra_"),mean))
+```
+```{r}
+gabon %>% 
+  filter(distance> 25) %>% 
+  summarize(across(contains("ra_"),mean))
+```
 
 12. (4 points) Based on your interest, do one exploratory analysis on the `gabon` data of your choice. This analysis needs to include a minimum of two functions in `dplyr.`
+
+```{r}
+names(transects)
+```
+
+
+```{r}
+transects %>% 
+  group_by(diversity_all_species) %>% 
+  summarize(mean_num_households = mean(num_households, na.rm =T),n=n())
+
+```
+
