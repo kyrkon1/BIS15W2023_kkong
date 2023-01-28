@@ -159,7 +159,7 @@ superhero_info %>%
 ```{r}
 superhero_info %>% 
   select(name, height, weight) %>% 
-  filter(height >= 300)
+  filter(height >= 300| weight >=450)
 ```
 
 12. ...and the superheros over 450 in weight. Bonus question! Why do we not have 16 rows in question #10?
@@ -190,7 +190,9 @@ glimpse(superhero_powers)
 ## Your Favorite
 15. Pick your favorite superhero and let's see their powers!
 ```{r}
-
+superhero_powers %>% 
+  filter(hero_names == "Hulk") %>% 
+  select_if(all_vars(.=="TRUE"))
 ```
 
 ## Push your final code to GitHub!
