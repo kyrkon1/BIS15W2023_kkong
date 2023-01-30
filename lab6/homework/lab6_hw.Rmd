@@ -136,7 +136,8 @@ fisheries_tidy %>%
   filter(between(year, 2008,2021)) %>% 
   filter(isscaap_taxonomic_group == "Squids, cuttlefishes, octopuses") %>% 
   summarize(catch_total=sum(catch,na.rm =T)) %>% 
-  arrange(desc(catch_total))
+  arrange(desc(catch_total)) %>% 
+  head(n=5)
   
 ```
 

@@ -1,7 +1,7 @@
 ---
 title: "Lab 6 Homework"
 author: "Kyra Kong"
-date: "2023-01-29"
+date: "2023-01-30"
 output:
   html_document: 
     theme: spacelab
@@ -533,24 +533,19 @@ fisheries_tidy %>%
   filter(between(year, 2008,2021)) %>% 
   filter(isscaap_taxonomic_group == "Squids, cuttlefishes, octopuses") %>% 
   summarize(catch_total=sum(catch,na.rm =T)) %>% 
-  arrange(desc(catch_total))
+  arrange(desc(catch_total)) %>% 
+  head(n=5)
 ```
 
 ```
-## # A tibble: 122 × 2
-##    country                  catch_total
-##    <fct>                          <dbl>
-##  1 China                           8349
-##  2 Korea, Republic of              3480
-##  3 Peru                            3422
-##  4 Japan                           3248
-##  5 Chile                           2775
-##  6 United States of America        2417
-##  7 Indonesia                       1622
-##  8 Taiwan Province of China        1394
-##  9 Spain                           1147
-## 10 France                          1138
-## # … with 112 more rows
+## # A tibble: 5 × 2
+##   country            catch_total
+##   <fct>                    <dbl>
+## 1 China                     8349
+## 2 Korea, Republic of        3480
+## 3 Peru                      3422
+## 4 Japan                     3248
+## 5 Chile                     2775
 ```
 
 
