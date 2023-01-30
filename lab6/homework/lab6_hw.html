@@ -11,7 +11,7 @@
 
 <meta name="author" content="Kyra Kong" />
 
-<meta name="date" content="2023-01-26" />
+<meta name="date" content="2023-01-29" />
 
 <title>Lab 6 Homework</title>
 
@@ -382,7 +382,7 @@ pre code {
 
 <h1 class="title toc-ignore">Lab 6 Homework</h1>
 <h4 class="author">Kyra Kong</h4>
-<h4 class="date">2023-01-26</h4>
+<h4 class="date">2023-01-29</h4>
 
 </div>
 
@@ -464,133 +464,80 @@ what are the classes of the variables?</li>
 <pre><code>## [1] 17692    71</code></pre>
 <pre class="r"><code>anyNA(fisheries)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>summary(fisheries)</code></pre>
-<pre><code>##    Country          Common name        ISSCAAP group#  ISSCAAP taxonomic group
-##  Length:17692       Length:17692       Min.   :11.00   Length:17692           
-##  Class :character   Class :character   1st Qu.:33.00   Class :character       
-##  Mode  :character   Mode  :character   Median :36.00   Mode  :character       
-##                                        Mean   :37.38                          
-##                                        3rd Qu.:38.00                          
-##                                        Max.   :77.00                          
-##  ASFIS species#     ASFIS species name FAO major fishing area
-##  Length:17692       Length:17692       Min.   :18.00         
-##  Class :character   Class :character   1st Qu.:31.00         
-##  Mode  :character   Mode  :character   Median :37.00         
-##                                        Mean   :45.34         
-##                                        3rd Qu.:57.00         
-##                                        Max.   :88.00         
-##    Measure              1950               1951               1952          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1953               1954               1955               1956          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1957               1958               1959               1960          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1961               1962               1963               1964          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1965               1966               1967               1968          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1969               1970               1971               1972          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1973               1974               1975               1976          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1977               1978               1979               1980          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1981               1982               1983               1984          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1985               1986               1987               1988          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1989               1990               1991               1992          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1993               1994               1995               1996          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      1997               1998               1999               2000          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      2001               2002               2003               2004          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      2005               2006               2007               2008          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-##                                                                             
-##      2009               2010               2011               2012          
-##  Length:17692       Length:17692       Length:17692       Length:17692      
-##  Class :character   Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-##                                                                             
-##                                                                             
-## </code></pre>
+<pre class="r"><code>glimpse(fisheries)</code></pre>
+<pre><code>## Rows: 17,692
+## Columns: 71
+## $ Country                   &lt;chr&gt; &quot;Albania&quot;, &quot;Albania&quot;, &quot;Albania&quot;, &quot;Albania&quot;, …
+## $ `Common name`             &lt;chr&gt; &quot;Angelsharks, sand devils nei&quot;, &quot;Atlantic bo…
+## $ `ISSCAAP group#`          &lt;dbl&gt; 38, 36, 37, 45, 32, 37, 33, 45, 38, 57, 33, …
+## $ `ISSCAAP taxonomic group` &lt;chr&gt; &quot;Sharks, rays, chimaeras&quot;, &quot;Tunas, bonitos, …
+## $ `ASFIS species#`          &lt;chr&gt; &quot;10903XXXXX&quot;, &quot;1750100101&quot;, &quot;17710001XX&quot;, &quot;2…
+## $ `ASFIS species name`      &lt;chr&gt; &quot;Squatinidae&quot;, &quot;Sarda sarda&quot;, &quot;Sphyraena spp…
+## $ `FAO major fishing area`  &lt;dbl&gt; 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, …
+## $ Measure                   &lt;chr&gt; &quot;Quantity (tonnes)&quot;, &quot;Quantity (tonnes)&quot;, &quot;Q…
+## $ `1950`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1951`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1952`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1953`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1954`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1955`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1956`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1957`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1958`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1959`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1960`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1961`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1962`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1963`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1964`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1965`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1966`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1967`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1968`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1969`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1970`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1971`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1972`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1973`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1974`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1975`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1976`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1977`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1978`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1979`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1980`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1981`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1982`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `1983`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;559&quot;, NA, NA, NA, N…
+## $ `1984`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;392&quot;, NA, NA, NA, N…
+## $ `1985`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;406&quot;, NA, NA, NA, N…
+## $ `1986`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;499&quot;, NA, NA, NA, N…
+## $ `1987`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;564&quot;, NA, NA, NA, N…
+## $ `1988`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;724&quot;, NA, NA, NA, N…
+## $ `1989`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;583&quot;, NA, NA, NA, N…
+## $ `1990`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;754&quot;, NA, NA, NA, N…
+## $ `1991`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;283&quot;, NA, NA, NA, N…
+## $ `1992`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;196&quot;, NA, NA, NA, N…
+## $ `1993`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;150 F&quot;, NA, NA, NA,…
+## $ `1994`                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;100 F&quot;, NA, NA, NA,…
+## $ `1995`                    &lt;chr&gt; &quot;0 0&quot;, &quot;1&quot;, NA, &quot;0 0&quot;, &quot;0 0&quot;, NA, &quot;52&quot;, &quot;30&quot;…
+## $ `1996`                    &lt;chr&gt; &quot;53&quot;, &quot;2&quot;, NA, &quot;3&quot;, &quot;2&quot;, NA, &quot;104&quot;, &quot;8&quot;, NA,…
+## $ `1997`                    &lt;chr&gt; &quot;20&quot;, &quot;0 0&quot;, NA, &quot;0 0&quot;, &quot;0 0&quot;, NA, &quot;65&quot;, &quot;4&quot;…
+## $ `1998`                    &lt;chr&gt; &quot;31&quot;, &quot;12&quot;, NA, NA, NA, NA, &quot;220&quot;, &quot;18&quot;, NA,…
+## $ `1999`                    &lt;chr&gt; &quot;30&quot;, &quot;30&quot;, NA, NA, NA, NA, &quot;220&quot;, &quot;18&quot;, NA,…
+## $ `2000`                    &lt;chr&gt; &quot;30&quot;, &quot;25&quot;, &quot;2&quot;, NA, NA, NA, &quot;220&quot;, &quot;20&quot;, NA…
+## $ `2001`                    &lt;chr&gt; &quot;16&quot;, &quot;30&quot;, NA, NA, NA, NA, &quot;120&quot;, &quot;23&quot;, NA,…
+## $ `2002`                    &lt;chr&gt; &quot;79&quot;, &quot;24&quot;, NA, &quot;34&quot;, &quot;6&quot;, NA, &quot;150&quot;, &quot;84&quot;, …
+## $ `2003`                    &lt;chr&gt; &quot;1&quot;, &quot;4&quot;, NA, &quot;22&quot;, NA, NA, &quot;84&quot;, &quot;178&quot;, NA,…
+## $ `2004`                    &lt;chr&gt; &quot;4&quot;, &quot;2&quot;, &quot;2&quot;, &quot;15&quot;, &quot;1&quot;, &quot;2&quot;, &quot;76&quot;, &quot;285&quot;, …
+## $ `2005`                    &lt;chr&gt; &quot;68&quot;, &quot;23&quot;, &quot;4&quot;, &quot;12&quot;, &quot;5&quot;, &quot;6&quot;, &quot;68&quot;, &quot;150&quot;…
+## $ `2006`                    &lt;chr&gt; &quot;55&quot;, &quot;30&quot;, &quot;7&quot;, &quot;18&quot;, &quot;8&quot;, &quot;9&quot;, &quot;86&quot;, &quot;102&quot;…
+## $ `2007`                    &lt;chr&gt; &quot;12&quot;, &quot;19&quot;, NA, NA, NA, NA, &quot;132&quot;, &quot;18&quot;, NA,…
+## $ `2008`                    &lt;chr&gt; &quot;23&quot;, &quot;27&quot;, NA, NA, NA, NA, &quot;132&quot;, &quot;23&quot;, NA,…
+## $ `2009`                    &lt;chr&gt; &quot;14&quot;, &quot;21&quot;, NA, NA, NA, NA, &quot;154&quot;, &quot;20&quot;, NA,…
+## $ `2010`                    &lt;chr&gt; &quot;78&quot;, &quot;23&quot;, &quot;7&quot;, NA, NA, NA, &quot;80&quot;, &quot;228&quot;, NA…
+## $ `2011`                    &lt;chr&gt; &quot;12&quot;, &quot;12&quot;, NA, NA, NA, NA, &quot;88&quot;, &quot;9&quot;, NA, &quot;…
+## $ `2012`                    &lt;chr&gt; &quot;5&quot;, &quot;5&quot;, NA, NA, NA, NA, &quot;129&quot;, &quot;290&quot;, NA, …</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Use <code>janitor</code> to rename the columns and make them easier
 to use. As part of this cleaning step, change <code>country</code>,
@@ -635,18 +582,88 @@ and <code>fao_major_fishing_area</code> to data class factor.</li>
 ## [67] &quot;x2008&quot;                   &quot;x2009&quot;                  
 ## [69] &quot;x2010&quot;                   &quot;x2011&quot;                  
 ## [71] &quot;x2012&quot;</code></pre>
-<pre class="r"><code>fisheries$country &lt;-as.factor(fisheries$country)
-class(fisheries$country)</code></pre>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
-<pre class="r"><code>fisheries$isscaap_group_number&lt;- as.factor(fisheries$isscaap_group_number)
-class(fisheries$isscaap_group_number)</code></pre>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
-<pre class="r"><code>fisheries$asfis_species_number &lt;- as.factor(fisheries$asfis_species_number)
-class(fisheries$asfis_species_number)</code></pre>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
-<pre class="r"><code>fisheries$fao_major_fishing_area &lt;-as.factor(fisheries$fao_major_fishing_area)
-class(fisheries$fao_major_fishing_area)</code></pre>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre class="r"><code>fisheries&lt;- fisheries %&gt;% 
+  mutate(across(c(country, isscaap_group_number, asfis_species_number, fao_major_fishing_area),as_factor))</code></pre>
+<pre class="r"><code>glimpse(fisheries)</code></pre>
+<pre><code>## Rows: 17,692
+## Columns: 71</code></pre>
+<pre><code>## Warning in grepl(&quot;,&quot;, levels(x), fixed = TRUE): input string 43 is invalid UTF-8</code></pre>
+<pre><code>## Warning in grepl(&quot;,&quot;, levels(x), fixed = TRUE): input string 45 is invalid UTF-8</code></pre>
+<pre><code>## Warning in grepl(&quot;,&quot;, levels(x), fixed = TRUE): input string 149 is invalid
+## UTF-8</code></pre>
+<pre><code>## Warning in grepl(&quot;,&quot;, levels(x), fixed = TRUE): input string 150 is invalid
+## UTF-8</code></pre>
+<pre><code>## $ country                 &lt;fct&gt; &quot;Albania&quot;, &quot;Albania&quot;, &quot;Albania&quot;, &quot;Albania&quot;, &quot;A…
+## $ common_name             &lt;chr&gt; &quot;Angelsharks, sand devils nei&quot;, &quot;Atlantic boni…
+## $ isscaap_group_number    &lt;fct&gt; 38, 36, 37, 45, 32, 37, 33, 45, 38, 57, 33, 57…
+## $ isscaap_taxonomic_group &lt;chr&gt; &quot;Sharks, rays, chimaeras&quot;, &quot;Tunas, bonitos, bi…
+## $ asfis_species_number    &lt;fct&gt; 10903XXXXX, 1750100101, 17710001XX, 2280203101…
+## $ asfis_species_name      &lt;chr&gt; &quot;Squatinidae&quot;, &quot;Sarda sarda&quot;, &quot;Sphyraena spp&quot;,…
+## $ fao_major_fishing_area  &lt;fct&gt; 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37…
+## $ measure                 &lt;chr&gt; &quot;Quantity (tonnes)&quot;, &quot;Quantity (tonnes)&quot;, &quot;Qua…
+## $ x1950                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1951                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1952                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1953                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1954                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1955                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1956                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1957                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1958                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1959                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1960                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1961                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1962                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1963                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1964                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1965                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1966                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1967                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1968                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1969                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1970                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1971                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1972                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1973                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1974                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1975                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1976                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1977                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1978                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1979                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1980                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1981                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1982                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ x1983                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;559&quot;, NA, NA, NA, NA,…
+## $ x1984                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;392&quot;, NA, NA, NA, NA,…
+## $ x1985                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;406&quot;, NA, NA, NA, NA,…
+## $ x1986                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;499&quot;, NA, NA, NA, NA,…
+## $ x1987                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;564&quot;, NA, NA, NA, NA,…
+## $ x1988                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;724&quot;, NA, NA, NA, NA,…
+## $ x1989                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;583&quot;, NA, NA, NA, NA,…
+## $ x1990                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;754&quot;, NA, NA, NA, NA,…
+## $ x1991                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;283&quot;, NA, NA, NA, NA,…
+## $ x1992                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;196&quot;, NA, NA, NA, NA,…
+## $ x1993                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;150 F&quot;, NA, NA, NA, N…
+## $ x1994                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;100 F&quot;, NA, NA, NA, N…
+## $ x1995                   &lt;chr&gt; &quot;0 0&quot;, &quot;1&quot;, NA, &quot;0 0&quot;, &quot;0 0&quot;, NA, &quot;52&quot;, &quot;30&quot;, …
+## $ x1996                   &lt;chr&gt; &quot;53&quot;, &quot;2&quot;, NA, &quot;3&quot;, &quot;2&quot;, NA, &quot;104&quot;, &quot;8&quot;, NA, &quot;…
+## $ x1997                   &lt;chr&gt; &quot;20&quot;, &quot;0 0&quot;, NA, &quot;0 0&quot;, &quot;0 0&quot;, NA, &quot;65&quot;, &quot;4&quot;, …
+## $ x1998                   &lt;chr&gt; &quot;31&quot;, &quot;12&quot;, NA, NA, NA, NA, &quot;220&quot;, &quot;18&quot;, NA, &quot;…
+## $ x1999                   &lt;chr&gt; &quot;30&quot;, &quot;30&quot;, NA, NA, NA, NA, &quot;220&quot;, &quot;18&quot;, NA, &quot;…
+## $ x2000                   &lt;chr&gt; &quot;30&quot;, &quot;25&quot;, &quot;2&quot;, NA, NA, NA, &quot;220&quot;, &quot;20&quot;, NA, …
+## $ x2001                   &lt;chr&gt; &quot;16&quot;, &quot;30&quot;, NA, NA, NA, NA, &quot;120&quot;, &quot;23&quot;, NA, &quot;…
+## $ x2002                   &lt;chr&gt; &quot;79&quot;, &quot;24&quot;, NA, &quot;34&quot;, &quot;6&quot;, NA, &quot;150&quot;, &quot;84&quot;, NA…
+## $ x2003                   &lt;chr&gt; &quot;1&quot;, &quot;4&quot;, NA, &quot;22&quot;, NA, NA, &quot;84&quot;, &quot;178&quot;, NA, &quot;…
+## $ x2004                   &lt;chr&gt; &quot;4&quot;, &quot;2&quot;, &quot;2&quot;, &quot;15&quot;, &quot;1&quot;, &quot;2&quot;, &quot;76&quot;, &quot;285&quot;, &quot;1…
+## $ x2005                   &lt;chr&gt; &quot;68&quot;, &quot;23&quot;, &quot;4&quot;, &quot;12&quot;, &quot;5&quot;, &quot;6&quot;, &quot;68&quot;, &quot;150&quot;, …
+## $ x2006                   &lt;chr&gt; &quot;55&quot;, &quot;30&quot;, &quot;7&quot;, &quot;18&quot;, &quot;8&quot;, &quot;9&quot;, &quot;86&quot;, &quot;102&quot;, …
+## $ x2007                   &lt;chr&gt; &quot;12&quot;, &quot;19&quot;, NA, NA, NA, NA, &quot;132&quot;, &quot;18&quot;, NA, &quot;…
+## $ x2008                   &lt;chr&gt; &quot;23&quot;, &quot;27&quot;, NA, NA, NA, NA, &quot;132&quot;, &quot;23&quot;, NA, &quot;…
+## $ x2009                   &lt;chr&gt; &quot;14&quot;, &quot;21&quot;, NA, NA, NA, NA, &quot;154&quot;, &quot;20&quot;, NA, &quot;…
+## $ x2010                   &lt;chr&gt; &quot;78&quot;, &quot;23&quot;, &quot;7&quot;, NA, NA, NA, &quot;80&quot;, &quot;228&quot;, NA, …
+## $ x2011                   &lt;chr&gt; &quot;12&quot;, &quot;12&quot;, NA, NA, NA, NA, &quot;88&quot;, &quot;9&quot;, NA, &quot;90…
+## $ x2012                   &lt;chr&gt; &quot;5&quot;, &quot;5&quot;, NA, NA, NA, NA, &quot;129&quot;, &quot;290&quot;, NA, &quot;1…</code></pre>
 <p>We need to deal with the years because they are being treated as
 characters and start with an X. We also have the problem that the column
 names that are years actually represent data. We haven’t discussed tidy
@@ -672,35 +689,202 @@ list their names.</li>
 <pre class="r"><code>fisheries_tidy %&gt;% 
   count(country)</code></pre>
 <pre><code>## # A tibble: 203 × 2
-##    country                   n
-##    &lt;fct&gt;                 &lt;int&gt;
-##  1 &quot;Saint Barth\xe9lemy&quot;     6
-##  2 &quot;R\xe9union&quot;            736
-##  3 &quot;C\xf4te d&#39;Ivoire&quot;     1859
-##  4 &quot;Cura\xe7ao&quot;             18
-##  5 &quot;Albania&quot;               934
-##  6 &quot;Algeria&quot;              1561
-##  7 &quot;American Samoa&quot;        556
-##  8 &quot;Angola&quot;               2119
-##  9 &quot;Anguilla&quot;              129
-## 10 &quot;Antigua and Barbuda&quot;   356
+##    country                 n
+##    &lt;fct&gt;               &lt;int&gt;
+##  1 Albania               934
+##  2 Algeria              1561
+##  3 American Samoa        556
+##  4 Angola               2119
+##  5 Anguilla              129
+##  6 Antigua and Barbuda   356
+##  7 Argentina            3403
+##  8 Aruba                 172
+##  9 Australia            8183
+## 10 Bahamas               423
 ## # … with 193 more rows</code></pre>
 <ol start="4" style="list-style-type: decimal">
-<li><p>Refocus the data only to include country,
-isscaap_taxonomic_group, asfis_species_name, asfis_species_number, year,
-catch.</p></li>
-<li><p>Based on the asfis_species_number, how many distinct fish species
-were caught as part of these data?</p></li>
-<li><p>Which country had the largest overall catch in the year
-2000?</p></li>
-<li><p>Which country caught the most sardines (<em>Sardina
-pilchardus</em>) between the years 1990-2000?</p></li>
-<li><p>Which five countries caught the most cephalopods between
-2008-2012?</p></li>
-<li><p>Which species had the highest catch total between 2008-2012?
-(hint: Osteichthyes is not a species)</p></li>
-<li><p>Use the data to do at least one analysis of your choice.</p></li>
+<li>Refocus the data only to include country, isscaap_taxonomic_group,
+asfis_species_name, asfis_species_number, year, catch.</li>
 </ol>
+<pre class="r"><code>names(fisheries)</code></pre>
+<pre><code>##  [1] &quot;country&quot;                 &quot;common_name&quot;            
+##  [3] &quot;isscaap_group_number&quot;    &quot;isscaap_taxonomic_group&quot;
+##  [5] &quot;asfis_species_number&quot;    &quot;asfis_species_name&quot;     
+##  [7] &quot;fao_major_fishing_area&quot;  &quot;measure&quot;                
+##  [9] &quot;x1950&quot;                   &quot;x1951&quot;                  
+## [11] &quot;x1952&quot;                   &quot;x1953&quot;                  
+## [13] &quot;x1954&quot;                   &quot;x1955&quot;                  
+## [15] &quot;x1956&quot;                   &quot;x1957&quot;                  
+## [17] &quot;x1958&quot;                   &quot;x1959&quot;                  
+## [19] &quot;x1960&quot;                   &quot;x1961&quot;                  
+## [21] &quot;x1962&quot;                   &quot;x1963&quot;                  
+## [23] &quot;x1964&quot;                   &quot;x1965&quot;                  
+## [25] &quot;x1966&quot;                   &quot;x1967&quot;                  
+## [27] &quot;x1968&quot;                   &quot;x1969&quot;                  
+## [29] &quot;x1970&quot;                   &quot;x1971&quot;                  
+## [31] &quot;x1972&quot;                   &quot;x1973&quot;                  
+## [33] &quot;x1974&quot;                   &quot;x1975&quot;                  
+## [35] &quot;x1976&quot;                   &quot;x1977&quot;                  
+## [37] &quot;x1978&quot;                   &quot;x1979&quot;                  
+## [39] &quot;x1980&quot;                   &quot;x1981&quot;                  
+## [41] &quot;x1982&quot;                   &quot;x1983&quot;                  
+## [43] &quot;x1984&quot;                   &quot;x1985&quot;                  
+## [45] &quot;x1986&quot;                   &quot;x1987&quot;                  
+## [47] &quot;x1988&quot;                   &quot;x1989&quot;                  
+## [49] &quot;x1990&quot;                   &quot;x1991&quot;                  
+## [51] &quot;x1992&quot;                   &quot;x1993&quot;                  
+## [53] &quot;x1994&quot;                   &quot;x1995&quot;                  
+## [55] &quot;x1996&quot;                   &quot;x1997&quot;                  
+## [57] &quot;x1998&quot;                   &quot;x1999&quot;                  
+## [59] &quot;x2000&quot;                   &quot;x2001&quot;                  
+## [61] &quot;x2002&quot;                   &quot;x2003&quot;                  
+## [63] &quot;x2004&quot;                   &quot;x2005&quot;                  
+## [65] &quot;x2006&quot;                   &quot;x2007&quot;                  
+## [67] &quot;x2008&quot;                   &quot;x2009&quot;                  
+## [69] &quot;x2010&quot;                   &quot;x2011&quot;                  
+## [71] &quot;x2012&quot;</code></pre>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  select(country, isscaap_taxonomic_group, asfis_species_name, asfis_species_number, year, catch) </code></pre>
+<pre><code>## # A tibble: 376,771 × 6
+##    country isscaap_taxonomic_group asfis_species_name asfis_specie…¹  year catch
+##    &lt;fct&gt;   &lt;chr&gt;                   &lt;chr&gt;              &lt;fct&gt;          &lt;dbl&gt; &lt;dbl&gt;
+##  1 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX      1995    NA
+##  2 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX      1996    53
+##  3 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX      1997    20
+##  4 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX      1998    31
+##  5 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX      1999    30
+##  6 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX      2000    30
+##  7 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX      2001    16
+##  8 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX      2002    79
+##  9 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX      2003     1
+## 10 Albania Sharks, rays, chimaeras Squatinidae        10903XXXXX      2004     4
+## # … with 376,761 more rows, and abbreviated variable name ¹​asfis_species_number</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Based on the asfis_species_number, how many distinct fish species
+were caught as part of these data?</li>
+</ol>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  summarize(n_distinct_species= n_distinct(asfis_species_number))</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   n_distinct_species
+##                &lt;int&gt;
+## 1               1551</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Which country had the largest overall catch in the year 2000?</li>
+</ol>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  filter(year==&quot;2000&quot;) %&gt;% 
+  group_by(country) %&gt;% 
+  summarize(catch_total=sum(catch,na.rm=T)) %&gt;% 
+  arrange(desc(catch_total))</code></pre>
+<pre><code>## # A tibble: 193 × 2
+##    country                  catch_total
+##    &lt;fct&gt;                          &lt;dbl&gt;
+##  1 China                          25899
+##  2 Russian Federation             12181
+##  3 United States of America       11762
+##  4 Japan                           8510
+##  5 Indonesia                       8341
+##  6 Peru                            7443
+##  7 Chile                           6906
+##  8 India                           6351
+##  9 Thailand                        6243
+## 10 Korea, Republic of              6124
+## # … with 183 more rows</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Which country caught the most sardines (<em>Sardina pilchardus</em>)
+between the years 1990-2000?</li>
+</ol>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  filter(between(year, 1990, 2000)) %&gt;% 
+  group_by(country) %&gt;% 
+  filter(asfis_species_name == &quot;Sardina pilchardus&quot;) %&gt;% 
+  summarize(catch_total=sum(catch,na.rm =T)) %&gt;% 
+  arrange(desc(catch_total))</code></pre>
+<pre><code>## # A tibble: 37 × 2
+##    country               catch_total
+##    &lt;fct&gt;                       &lt;dbl&gt;
+##  1 Morocco                      7470
+##  2 Spain                        3507
+##  3 Russian Federation           1639
+##  4 Ukraine                      1030
+##  5 France                        966
+##  6 Portugal                      818
+##  7 Greece                        528
+##  8 Italy                         507
+##  9 Serbia and Montenegro         478
+## 10 Denmark                       477
+## # … with 27 more rows</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Which five countries caught the most cephalopods between
+2008-2012?</li>
+</ol>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  group_by(country) %&gt;%  
+  filter(between(year, 2008,2021)) %&gt;% 
+  filter(isscaap_taxonomic_group == &quot;Squids, cuttlefishes, octopuses&quot;) %&gt;% 
+  summarize(catch_total=sum(catch,na.rm =T)) %&gt;% 
+  arrange(desc(catch_total))</code></pre>
+<pre><code>## # A tibble: 122 × 2
+##    country                  catch_total
+##    &lt;fct&gt;                          &lt;dbl&gt;
+##  1 China                           8349
+##  2 Korea, Republic of              3480
+##  3 Peru                            3422
+##  4 Japan                           3248
+##  5 Chile                           2775
+##  6 United States of America        2417
+##  7 Indonesia                       1622
+##  8 Taiwan Province of China        1394
+##  9 Spain                           1147
+## 10 France                          1138
+## # … with 112 more rows</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Which species had the highest catch total between 2008-2012? (hint:
+Osteichthyes is not a species)</li>
+</ol>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  group_by(asfis_species_name) %&gt;% 
+  filter(between(year,2008,2012), asfis_species_name != &quot;Osteichthyes&quot;) %&gt;% 
+  summarize(catch_total = sum(catch,na.rm =T)) %&gt;% 
+  arrange(desc(catch_total))</code></pre>
+<pre><code>## # A tibble: 1,471 × 2
+##    asfis_species_name    catch_total
+##    &lt;chr&gt;                       &lt;dbl&gt;
+##  1 Theragra chalcogramma       41075
+##  2 Engraulis ringens           35523
+##  3 Katsuwonus pelamis          32153
+##  4 Trichiurus lepturus         30400
+##  5 Clupea harengus             28527
+##  6 Thunnus albacares           20119
+##  7 Scomber japonicus           14723
+##  8 Gadus morhua                13253
+##  9 Thunnus alalunga            12019
+## 10 Natantia                    11984
+## # … with 1,461 more rows</code></pre>
+<p>Highest total catch was the Theragra chalcogramma 10. Use the data to
+do at least one analysis of your choice.</p>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  group_by(country) %&gt;% 
+  select(common_name, year, catch) %&gt;% 
+  filter(between(year, 2000,2010)) %&gt;% 
+  arrange(desc(catch))</code></pre>
+<pre><code>## Adding missing grouping variables: `country`</code></pre>
+<pre><code>## # A tibble: 106,268 × 4
+## # Groups:   country [196]
+##    country                  common_name                     year catch
+##    &lt;fct&gt;                    &lt;chr&gt;                          &lt;dbl&gt; &lt;dbl&gt;
+##  1 Chile                    Chilean jack mackerel           2006  9941
+##  2 Chile                    Chilean jack mackerel           2001  9933
+##  3 United States of America Alaska pollock(=Walleye poll.)  2004  9928
+##  4 China                    Marine fishes nei               2002  9899
+##  5 Viet Nam                 Marine fishes nei               2010  9806
+##  6 Peru                     Anchoveta(=Peruvian anchovy)    2007  9802
+##  7 Myanmar                  Marine fishes nei               2004  9640
+##  8 Chile                    Anchoveta(=Peruvian anchovy)    2004  9571
+##  9 China                    Marine crustaceans nei          2001  9209
+## 10 Viet Nam                 Marine fishes nei               2003  9157
+## # … with 106,258 more rows</code></pre>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>
