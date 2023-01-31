@@ -50,13 +50,14 @@ n_distinct(ecosphere$order)
 ```
 
 Problem 4. (2 points) Which habitat has the highest diversity (number of species) in the data?
+
 ```{r}
 ecosphere %>% 
-  select(habitat, population_size) %>% 
   group_by(habitat) %>% 
-  summarize(diversity_total = sum(population_size, na.rm=T)) %>% 
-  arrange(desc(diversity_total))
-
+  filter(!is.na(habitat)) %>% 
+  select(common_name, habitat) %>% 
+  summarize(n=n()) %>% 
+  arrange(desc(habitat))
 ```
 
 Run the code below to learn about the `slice` function. Look specifically at the examples (at the bottom) for `slice_max()` and `slice_min()`. If you are still unsure, try looking up examples online (https://rpubs.com/techanswers88/dplyr-slice). Use this new function to answer question 5 below.
@@ -106,6 +107,7 @@ ducks %>%
   group_by(migratory_strategy) %>%
   summarize(mean_body_mass = mean(log10_mass, na.rm =T))
 ```
+Long distance migratory ducks have the lowest average body mass.
 
 Problem 9. (2 points) Accipitridae is the family that includes eagles, hawks, kites, and osprey. First, make a new object `eagles` that only includes species in the family Accipitridae. Next, restrict these data to only include the variables common_name, scientific_name, and population_size.
 ```{r}
@@ -113,6 +115,7 @@ eagles <- ecosphere %>%
   filter(family == "Accipitridae") %>% 
   select(common_name, scientific_name, population_size)
 ```
+
 ```{r}
 glimpse(eagles)
 ```
@@ -121,39 +124,43 @@ glimpse(eagles)
 Problem 10. (4 points) In the eagles data, any species with a population size less than 250,000 individuals is threatened. Make a new column `conservation_status` that shows whether or not a species is threatened.
 ```{r}
 eagles %>% 
-  mutate(conservation_status =population_size <250000)
+  filter(!is.na(population_size)) %>% 
+  mutate(conservation_status =population_size <250000) 
 ```
 
 Problem 11. (2 points) Consider the results from questions 9 and 10. Are there any species for which their threatened status needs further study? How do you know?
 ```{r}
 eagles %>% 
+  filter(!is.na(population_size)) %>% 
   group_by(population_size) %>% 
   mutate(conservation_status = population_size <250000) %>% 
-  arrange(population_size) 
+  filter(conservation_status == "TRUE") %>% 
+  arrange(population_size)
 ```
-Yes, the Harris's Hawk, Ferruginous Hawk, Golden Eagle, and the Northern Goshawk.
+Yes, the Harris's Hawk, Ferruginous Hawk, Golden Eagle, and the Northern Goshawk, the conservation_status is true, meaning that the population size is less than 250,000.
+
 Problem 12. (4 points) Use the `ecosphere` data to perform one exploratory analysis of your choice. The analysis must have a minimum of three lines and two functions. You must also clearly state the question you are attempting to answer.
 
-I want to know if having a vegetation diet or vertebrates leads to longer lifespan
+Which diet(s) have the longest life expectancy? 
 ```{r}
 ecosphere %>% 
-  group_by(life_expectancy) %>% 
-  select(diet, life_expectancy) %>% 
-  filter(diet== "Vegetation") %>% 
-  count(diet)
+ tabyl(diet)
 ```
+
+
 ```{r}
 ecosphere %>% 
-  group_by(life_expectancy) %>% 
+  group_by(diet) %>% 
   select(diet, life_expectancy) %>% 
-  filter(diet== "Vertebrates") %>% 
-  count(diet)
+  filter(life_expectancy == "Long") %>% 
+  tabyl(diet,life_expectancy)
 ```
 
 
 Please provide the names of the students you have worked with with during the exam:
 ```{r}
-
+# Harika worked with me
 ```
+
 
 Please be 100% sure your exam is saved, knitted, and pushed to your github repository. No need to submit a link on canvas, we will find your exam in your repository.

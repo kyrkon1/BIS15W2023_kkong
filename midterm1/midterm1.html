@@ -480,20 +480,20 @@ represented in the data?</p>
 <p>Problem 4. (2 points) Which habitat has the highest diversity (number
 of species) in the data?</p>
 <pre class="r"><code>ecosphere %&gt;% 
-  select(habitat, population_size) %&gt;% 
   group_by(habitat) %&gt;% 
-  summarize(diversity_total = sum(population_size, na.rm=T)) %&gt;% 
-  arrange(desc(diversity_total))</code></pre>
-<pre><code>## # A tibble: 7 × 2
-##   habitat   diversity_total
-##   &lt;chr&gt;               &lt;dbl&gt;
-## 1 Woodland       2507625000
-## 2 Various         997030000
-## 3 Shrubland       923070000
-## 4 Grassland       536190000
-## 5 Wetland          82280000
-## 6 &lt;NA&gt;             82000000
-## 7 Ocean                   0</code></pre>
+  filter(!is.na(habitat)) %&gt;% 
+  select(common_name, habitat) %&gt;% 
+  summarize(n=n()) %&gt;% 
+  arrange(desc(habitat))</code></pre>
+<pre><code>## # A tibble: 6 × 2
+##   habitat       n
+##   &lt;chr&gt;     &lt;int&gt;
+## 1 Woodland    177
+## 2 Wetland     153
+## 3 Various      45
+## 4 Shrubland    82
+## 5 Ocean        44
+## 6 Grassland    36</code></pre>
 <p>Run the code below to learn about the <code>slice</code> function.
 Look specifically at the examples (at the bottom) for
 <code>slice_max()</code> and <code>slice_min()</code>. If you are still
@@ -577,6 +577,7 @@ or low average body mass?</p>
 ## 3 Resident                     4.03
 ## 4 Short                        2.98
 ## 5 Withdrawal                   2.92</code></pre>
+<p>Long distance migratory ducks have the lowest average body mass.</p>
 <p>Problem 9. (2 points) Accipitridae is the family that includes
 eagles, hawks, kites, and osprey. First, make a new object
 <code>eagles</code> that only includes species in the family
@@ -596,96 +597,71 @@ population size less than 250,000 individuals is threatened. Make a new
 column <code>conservation_status</code> that shows whether or not a
 species is threatened.</p>
 <pre class="r"><code>eagles %&gt;% 
-  mutate(conservation_status =population_size &lt;250000)</code></pre>
-<pre><code>## # A tibble: 20 × 4
-##    common_name         scientific_name          population_size conservation_s…¹
-##    &lt;chr&gt;               &lt;chr&gt;                              &lt;dbl&gt; &lt;lgl&gt;           
-##  1 Bald Eagle          Haliaeetus leucocephalus              NA NA              
-##  2 Broad-winged Hawk   Buteo platypterus                1700000 FALSE           
-##  3 Cooper&#39;s Hawk       Accipiter cooperii                700000 FALSE           
-##  4 Ferruginous Hawk    Buteo regalis                      80000 TRUE            
-##  5 Golden Eagle        Aquila chrysaetos                 130000 TRUE            
-##  6 Gray Hawk           Buteo nitidus                         NA NA              
-##  7 Harris&#39;s Hawk       Parabuteo unicinctus               50000 TRUE            
-##  8 Hook-billed Kite    Chondrohierax uncinatus               NA NA              
-##  9 Northern Goshawk    Accipiter gentilis                200000 TRUE            
-## 10 Northern Harrier    Circus cyaneus                    700000 FALSE           
-## 11 Red-shouldered Hawk Buteo lineatus                   1100000 FALSE           
-## 12 Red-tailed Hawk     Buteo jamaicensis                2000000 FALSE           
-## 13 Rough-legged Hawk   Buteo lagopus                     300000 FALSE           
-## 14 Sharp-shinned Hawk  Accipiter striatus                500000 FALSE           
-## 15 Short-tailed Hawk   Buteo brachyurus                      NA NA              
-## 16 Snail Kite          Rostrhamus sociabilis                 NA NA              
-## 17 Swainson&#39;s Hawk     Buteo swainsoni                   540000 FALSE           
-## 18 White-tailed Hawk   Buteo albicaudatus                    NA NA              
-## 19 White-tailed Kite   Elanus leucurus                       NA NA              
-## 20 Zone-tailed Hawk    Buteo albonotatus                     NA NA              
-## # … with abbreviated variable name ¹​conservation_status</code></pre>
+  filter(!is.na(population_size)) %&gt;% 
+  mutate(conservation_status =population_size &lt;250000) </code></pre>
+<pre><code>## # A tibble: 12 × 4
+##    common_name         scientific_name      population_size conservation_status
+##    &lt;chr&gt;               &lt;chr&gt;                          &lt;dbl&gt; &lt;lgl&gt;              
+##  1 Broad-winged Hawk   Buteo platypterus            1700000 FALSE              
+##  2 Cooper&#39;s Hawk       Accipiter cooperii            700000 FALSE              
+##  3 Ferruginous Hawk    Buteo regalis                  80000 TRUE               
+##  4 Golden Eagle        Aquila chrysaetos             130000 TRUE               
+##  5 Harris&#39;s Hawk       Parabuteo unicinctus           50000 TRUE               
+##  6 Northern Goshawk    Accipiter gentilis            200000 TRUE               
+##  7 Northern Harrier    Circus cyaneus                700000 FALSE              
+##  8 Red-shouldered Hawk Buteo lineatus               1100000 FALSE              
+##  9 Red-tailed Hawk     Buteo jamaicensis            2000000 FALSE              
+## 10 Rough-legged Hawk   Buteo lagopus                 300000 FALSE              
+## 11 Sharp-shinned Hawk  Accipiter striatus            500000 FALSE              
+## 12 Swainson&#39;s Hawk     Buteo swainsoni               540000 FALSE</code></pre>
 <p>Problem 11. (2 points) Consider the results from questions 9 and 10.
 Are there any species for which their threatened status needs further
 study? How do you know?</p>
 <pre class="r"><code>eagles %&gt;% 
+  filter(!is.na(population_size)) %&gt;% 
   group_by(population_size) %&gt;% 
   mutate(conservation_status = population_size &lt;250000) %&gt;% 
-  arrange(population_size) </code></pre>
-<pre><code>## # A tibble: 20 × 4
-## # Groups:   population_size [12]
-##    common_name         scientific_name          population_size conservation_s…¹
-##    &lt;chr&gt;               &lt;chr&gt;                              &lt;dbl&gt; &lt;lgl&gt;           
-##  1 Harris&#39;s Hawk       Parabuteo unicinctus               50000 TRUE            
-##  2 Ferruginous Hawk    Buteo regalis                      80000 TRUE            
-##  3 Golden Eagle        Aquila chrysaetos                 130000 TRUE            
-##  4 Northern Goshawk    Accipiter gentilis                200000 TRUE            
-##  5 Rough-legged Hawk   Buteo lagopus                     300000 FALSE           
-##  6 Sharp-shinned Hawk  Accipiter striatus                500000 FALSE           
-##  7 Swainson&#39;s Hawk     Buteo swainsoni                   540000 FALSE           
-##  8 Cooper&#39;s Hawk       Accipiter cooperii                700000 FALSE           
-##  9 Northern Harrier    Circus cyaneus                    700000 FALSE           
-## 10 Red-shouldered Hawk Buteo lineatus                   1100000 FALSE           
-## 11 Broad-winged Hawk   Buteo platypterus                1700000 FALSE           
-## 12 Red-tailed Hawk     Buteo jamaicensis                2000000 FALSE           
-## 13 Bald Eagle          Haliaeetus leucocephalus              NA NA              
-## 14 Gray Hawk           Buteo nitidus                         NA NA              
-## 15 Hook-billed Kite    Chondrohierax uncinatus               NA NA              
-## 16 Short-tailed Hawk   Buteo brachyurus                      NA NA              
-## 17 Snail Kite          Rostrhamus sociabilis                 NA NA              
-## 18 White-tailed Hawk   Buteo albicaudatus                    NA NA              
-## 19 White-tailed Kite   Elanus leucurus                       NA NA              
-## 20 Zone-tailed Hawk    Buteo albonotatus                     NA NA              
-## # … with abbreviated variable name ¹​conservation_status</code></pre>
+  filter(conservation_status == &quot;TRUE&quot;) %&gt;% 
+  arrange(population_size)</code></pre>
+<pre><code>## # A tibble: 4 × 4
+## # Groups:   population_size [4]
+##   common_name      scientific_name      population_size conservation_status
+##   &lt;chr&gt;            &lt;chr&gt;                          &lt;dbl&gt; &lt;lgl&gt;              
+## 1 Harris&#39;s Hawk    Parabuteo unicinctus           50000 TRUE               
+## 2 Ferruginous Hawk Buteo regalis                  80000 TRUE               
+## 3 Golden Eagle     Aquila chrysaetos             130000 TRUE               
+## 4 Northern Goshawk Accipiter gentilis            200000 TRUE</code></pre>
 <p>Yes, the Harris’s Hawk, Ferruginous Hawk, Golden Eagle, and the
-Northern Goshawk. Problem 12. (4 points) Use the <code>ecosphere</code>
-data to perform one exploratory analysis of your choice. The analysis
-must have a minimum of three lines and two functions. You must also
-clearly state the question you are attempting to answer.</p>
-<p>I want to know if having a vegetation diet or vertebrates leads to
-longer lifespan</p>
+Northern Goshawk, the conservation_status is true, meaning that the
+population size is less than 250,000.</p>
+<p>Problem 12. (4 points) Use the <code>ecosphere</code> data to perform
+one exploratory analysis of your choice. The analysis must have a
+minimum of three lines and two functions. You must also clearly state
+the question you are attempting to answer.</p>
+<p>Which diet(s) have the longest life expectancy?</p>
 <pre class="r"><code>ecosphere %&gt;% 
-  group_by(life_expectancy) %&gt;% 
-  select(diet, life_expectancy) %&gt;% 
-  filter(diet== &quot;Vegetation&quot;) %&gt;% 
-  count(diet)</code></pre>
-<pre><code>## # A tibble: 3 × 3
-## # Groups:   life_expectancy [3]
-##   life_expectancy diet           n
-##   &lt;chr&gt;           &lt;chr&gt;      &lt;int&gt;
-## 1 Long            Vegetation     5
-## 2 Middle          Vegetation    17
-## 3 Short           Vegetation     9</code></pre>
+ tabyl(diet)</code></pre>
+<pre><code>##           diet   n    percent
+##          Fruit  11 0.01996370
+##  Invertebrates 216 0.39201452
+##         Nectar  13 0.02359347
+##       Omnivore 114 0.20689655
+##           Seed  64 0.11615245
+##     Vegetation  31 0.05626134
+##    Vertebrates 102 0.18511797</code></pre>
 <pre class="r"><code>ecosphere %&gt;% 
-  group_by(life_expectancy) %&gt;% 
+  group_by(diet) %&gt;% 
   select(diet, life_expectancy) %&gt;% 
-  filter(diet== &quot;Vertebrates&quot;) %&gt;% 
-  count(diet)</code></pre>
-<pre><code>## # A tibble: 3 × 3
-## # Groups:   life_expectancy [3]
-##   life_expectancy diet            n
-##   &lt;chr&gt;           &lt;chr&gt;       &lt;int&gt;
-## 1 Long            Vertebrates    28
-## 2 Middle          Vertebrates    58
-## 3 Short           Vertebrates    16</code></pre>
+  filter(life_expectancy == &quot;Long&quot;) %&gt;% 
+  tabyl(diet,life_expectancy)</code></pre>
+<pre><code>##           diet Long
+##  Invertebrates    7
+##       Omnivore    7
+##     Vegetation    5
+##    Vertebrates   28</code></pre>
 <p>Please provide the names of the students you have worked with with
 during the exam:</p>
+<pre class="r"><code># Harika worked with me</code></pre>
 <p>Please be 100% sure your exam is saved, knitted, and pushed to your
 github repository. No need to submit a link on canvas, we will find your
 exam in your repository.</p>
