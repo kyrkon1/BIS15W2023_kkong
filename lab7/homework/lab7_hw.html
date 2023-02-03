@@ -11,7 +11,7 @@
 
 <meta name="author" content="Kyra Kong" />
 
-<meta name="date" content="2023-02-02" />
+<meta name="date" content="2023-02-03" />
 
 <title>Lab 7 Homework</title>
 
@@ -382,7 +382,7 @@ pre code {
 
 <h1 class="title toc-ignore">Lab 7 Homework</h1>
 <h4 class="author">Kyra Kong</h4>
-<h4 class="date">2023-02-02</h4>
+<h4 class="date">2023-02-03</h4>
 
 </div>
 
@@ -592,14 +592,154 @@ NAs in the <code>egg_mass_g</code> column sorted by taxonomic class;
 i.e. how many NA’s are present in the <code>egg_mass_g</code> column in
 birds, mammals, and reptiles? Does this results make sense biologically?
 How do these results affect your interpretation of NA’s?</strong></p>
+<pre class="r"><code>names(amniota)</code></pre>
+<pre><code>##  [1] &quot;class&quot;                                
+##  [2] &quot;order&quot;                                
+##  [3] &quot;family&quot;                               
+##  [4] &quot;genus&quot;                                
+##  [5] &quot;species&quot;                              
+##  [6] &quot;subspecies&quot;                           
+##  [7] &quot;common_name&quot;                          
+##  [8] &quot;female_maturity_d&quot;                    
+##  [9] &quot;litter_or_clutch_size_n&quot;              
+## [10] &quot;litters_or_clutches_per_y&quot;            
+## [11] &quot;adult_body_mass_g&quot;                    
+## [12] &quot;maximum_longevity_y&quot;                  
+## [13] &quot;gestation_d&quot;                          
+## [14] &quot;weaning_d&quot;                            
+## [15] &quot;birth_or_hatching_weight_g&quot;           
+## [16] &quot;weaning_weight_g&quot;                     
+## [17] &quot;egg_mass_g&quot;                           
+## [18] &quot;incubation_d&quot;                         
+## [19] &quot;fledging_age_d&quot;                       
+## [20] &quot;longevity_y&quot;                          
+## [21] &quot;male_maturity_d&quot;                      
+## [22] &quot;inter_litter_or_interbirth_interval_y&quot;
+## [23] &quot;female_body_mass_g&quot;                   
+## [24] &quot;male_body_mass_g&quot;                     
+## [25] &quot;no_sex_body_mass_g&quot;                   
+## [26] &quot;egg_width_mm&quot;                         
+## [27] &quot;egg_length_mm&quot;                        
+## [28] &quot;fledging_mass_g&quot;                      
+## [29] &quot;adult_svl_cm&quot;                         
+## [30] &quot;male_svl_cm&quot;                          
+## [31] &quot;female_svl_cm&quot;                        
+## [32] &quot;birth_or_hatching_svl_cm&quot;             
+## [33] &quot;female_svl_at_maturity_cm&quot;            
+## [34] &quot;female_body_mass_at_maturity_g&quot;       
+## [35] &quot;no_sex_svl_cm&quot;                        
+## [36] &quot;no_sex_maturity_d&quot;</code></pre>
+<pre class="r"><code>anyNA(amniota_tidy$egg_mass_g)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>amniota_egg_mass &lt;- amniota_tidy %&gt;% 
+  select(class,egg_mass_g)</code></pre>
+<pre class="r"><code>amniota_egg_mass %&gt;% 
+  group_by(class) %&gt;% 
+  summarise_all(~(sum(is.na(.))))</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##   class    egg_mass_g
+##   &lt;chr&gt;         &lt;int&gt;
+## 1 Aves           4914
+## 2 Mammalia       4953
+## 3 Reptilia       6040</code></pre>
+<p>It makes sense biologically how there are more NAs in the Reptilia
+egg masses. This would mean that its hard to measure the masses of the
+eggs or difficult to obtain them.</p>
 <p><strong>9. The <code>amphibio</code> data have variables that
 classify species as fossorial (burrowing), terrestrial, aquatic, or
 arboreal.Calculate the number of NA’s in each of these variables. Do you
 think that the authors intend us to think that there are NA’s in these
 columns or could they represent something else? Explain.</strong></p>
+<pre class="r"><code>names(amphibio)</code></pre>
+<pre><code>##  [1] &quot;id&quot;                      &quot;Order&quot;                  
+##  [3] &quot;Family&quot;                  &quot;Genus&quot;                  
+##  [5] &quot;Species&quot;                 &quot;Fos&quot;                    
+##  [7] &quot;Ter&quot;                     &quot;Aqu&quot;                    
+##  [9] &quot;Arb&quot;                     &quot;Leaves&quot;                 
+## [11] &quot;Flowers&quot;                 &quot;Seeds&quot;                  
+## [13] &quot;Fruits&quot;                  &quot;Arthro&quot;                 
+## [15] &quot;Vert&quot;                    &quot;Diu&quot;                    
+## [17] &quot;Noc&quot;                     &quot;Crepu&quot;                  
+## [19] &quot;Wet_warm&quot;                &quot;Wet_cold&quot;               
+## [21] &quot;Dry_warm&quot;                &quot;Dry_cold&quot;               
+## [23] &quot;Body_mass_g&quot;             &quot;Age_at_maturity_min_y&quot;  
+## [25] &quot;Age_at_maturity_max_y&quot;   &quot;Body_size_mm&quot;           
+## [27] &quot;Size_at_maturity_min_mm&quot; &quot;Size_at_maturity_max_mm&quot;
+## [29] &quot;Longevity_max_y&quot;         &quot;Litter_size_min_n&quot;      
+## [31] &quot;Litter_size_max_n&quot;       &quot;Reproductive_output_y&quot;  
+## [33] &quot;Offspring_size_min_mm&quot;   &quot;Offspring_size_max_mm&quot;  
+## [35] &quot;Dir&quot;                     &quot;Lar&quot;                    
+## [37] &quot;Viv&quot;                     &quot;OBS&quot;</code></pre>
+<pre class="r"><code>amphibio_tidy &lt;-janitor:: clean_names(amphibio)
+names(amphibio_tidy)</code></pre>
+<pre><code>##  [1] &quot;id&quot;                      &quot;order&quot;                  
+##  [3] &quot;family&quot;                  &quot;genus&quot;                  
+##  [5] &quot;species&quot;                 &quot;fos&quot;                    
+##  [7] &quot;ter&quot;                     &quot;aqu&quot;                    
+##  [9] &quot;arb&quot;                     &quot;leaves&quot;                 
+## [11] &quot;flowers&quot;                 &quot;seeds&quot;                  
+## [13] &quot;fruits&quot;                  &quot;arthro&quot;                 
+## [15] &quot;vert&quot;                    &quot;diu&quot;                    
+## [17] &quot;noc&quot;                     &quot;crepu&quot;                  
+## [19] &quot;wet_warm&quot;                &quot;wet_cold&quot;               
+## [21] &quot;dry_warm&quot;                &quot;dry_cold&quot;               
+## [23] &quot;body_mass_g&quot;             &quot;age_at_maturity_min_y&quot;  
+## [25] &quot;age_at_maturity_max_y&quot;   &quot;body_size_mm&quot;           
+## [27] &quot;size_at_maturity_min_mm&quot; &quot;size_at_maturity_max_mm&quot;
+## [29] &quot;longevity_max_y&quot;         &quot;litter_size_min_n&quot;      
+## [31] &quot;litter_size_max_n&quot;       &quot;reproductive_output_y&quot;  
+## [33] &quot;offspring_size_min_mm&quot;   &quot;offspring_size_max_mm&quot;  
+## [35] &quot;dir&quot;                     &quot;lar&quot;                    
+## [37] &quot;viv&quot;                     &quot;obs&quot;</code></pre>
+<pre class="r"><code>amphibio_tidy_selection &lt;- amphibio_tidy %&gt;% 
+  select(fos,ter,aqu,arb)</code></pre>
+<pre class="r"><code>amphibio_tidy_selection %&gt;% 
+  summarize_all(~sum(is.na(.)))</code></pre>
+<pre><code>##    fos  ter  aqu  arb
+## 1 6053 1104 2810 4347</code></pre>
 <p><strong>10. Now that we know how NA’s are represented in the
 <code>amniota</code> data, how would you load the data such that the
 values which represent NA’s are automatically converted?</strong></p>
+<pre class="r"><code>amniota_new &lt;- read.csv(&quot;data/amniota.csv&quot;, na = c(&quot;-999&quot;))
+glimpse(amniota_new)</code></pre>
+<pre><code>## Rows: 21,322
+## Columns: 36
+## $ class                                 &lt;chr&gt; &quot;Aves&quot;, &quot;Aves&quot;, &quot;Aves&quot;, &quot;Aves&quot;, …
+## $ order                                 &lt;chr&gt; &quot;Accipitriformes&quot;, &quot;Accipitrifor…
+## $ family                                &lt;chr&gt; &quot;Accipitridae&quot;, &quot;Accipitridae&quot;, …
+## $ genus                                 &lt;chr&gt; &quot;Accipiter&quot;, &quot;Accipiter&quot;, &quot;Accip…
+## $ species                               &lt;chr&gt; &quot;albogularis&quot;, &quot;badius&quot;, &quot;bicolo…
+## $ subspecies                            &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ common_name                           &lt;chr&gt; &quot;Pied Goshawk&quot;, &quot;Shikra&quot;, &quot;Bicol…
+## $ female_maturity_d                     &lt;dbl&gt; NA, 363.468, NA, NA, 363.468, NA…
+## $ litter_or_clutch_size_n               &lt;dbl&gt; NA, 3.250, 2.700, NA, 4.000, NA,…
+## $ litters_or_clutches_per_y             &lt;dbl&gt; NA, 1, NA, NA, 1, NA, NA, 1, NA,…
+## $ adult_body_mass_g                     &lt;dbl&gt; 251.500, 140.000, 345.000, 142.0…
+## $ maximum_longevity_y                   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 19.9…
+## $ gestation_d                           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ weaning_d                             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ birth_or_hatching_weight_g            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ weaning_weight_g                      &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ egg_mass_g                            &lt;dbl&gt; NA, 21.00, 32.00, NA, 21.85, NA,…
+## $ incubation_d                          &lt;dbl&gt; NA, 30.00, NA, NA, 32.50, NA, NA…
+## $ fledging_age_d                        &lt;dbl&gt; NA, 32.00, NA, NA, 42.50, NA, NA…
+## $ longevity_y                           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 12.5…
+## $ male_maturity_d                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 365,…
+## $ inter_litter_or_interbirth_interval_y &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ female_body_mass_g                    &lt;dbl&gt; 352.500, 168.500, 390.000, NA, 2…
+## $ male_body_mass_g                      &lt;dbl&gt; 223.000, 125.000, 212.000, 142.0…
+## $ no_sex_body_mass_g                    &lt;dbl&gt; NA, 123.0, NA, NA, NA, NA, NA, 1…
+## $ egg_width_mm                          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ egg_length_mm                         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ fledging_mass_g                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ adult_svl_cm                          &lt;dbl&gt; NA, 30.00, 39.50, NA, 33.50, NA,…
+## $ male_svl_cm                           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ female_svl_cm                         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ birth_or_hatching_svl_cm              &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ female_svl_at_maturity_cm             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ female_body_mass_at_maturity_g        &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ no_sex_svl_cm                         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ no_sex_maturity_d                     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>

@@ -86,17 +86,44 @@ naniar::miss_var_summary(amphibio)
 
 **8. For the `amniota` data, calculate the number of NAs in the `egg_mass_g` column sorted by taxonomic class; i.e. how many NA's are present in the `egg_mass_g` column in birds, mammals, and reptiles? Does this results make sense biologically? How do these results affect your interpretation of NA's?**  
 ```{r}
-
+names(amniota)
 ```
+```{r}
+anyNA(amniota_tidy$egg_mass_g)
+```
+```{r}
+amniota_egg_mass <- amniota_tidy %>% 
+  select(class,egg_mass_g)
+```
+
+```{r}
+amniota_egg_mass %>% 
+  group_by(class) %>% 
+  summarise_all(~(sum(is.na(.))))
+```
+It makes sense biologically how there are more NAs in the Reptilia egg masses. This would mean that its hard to measure the masses of the eggs or difficult to obtain them.
 
 **9. The `amphibio` data have variables that classify species as fossorial (burrowing), terrestrial, aquatic, or arboreal.Calculate the number of NA's in each of these variables. Do you think that the authors intend us to think that there are NA's in these columns or could they represent something else? Explain.**
 ```{r}
-
+names(amphibio)
+```
+```{r}
+amphibio_tidy <-janitor:: clean_names(amphibio)
+names(amphibio_tidy)
+```
+```{r}
+amphibio_tidy_selection <- amphibio_tidy %>% 
+  select(fos,ter,aqu,arb)
+```
+```{r}
+amphibio_tidy_selection %>% 
+  summarize_all(~sum(is.na(.)))
 ```
 
 **10. Now that we know how NA's are represented in the `amniota` data, how would you load the data such that the values which represent NA's are automatically converted?**
 ```{r}
-
+amniota_new <- read.csv("data/amniota.csv", na = c("-999"))
+glimpse(amniota_new)
 ```
 
 ## Push your final code to GitHub!
