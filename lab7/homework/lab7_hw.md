@@ -1,7 +1,7 @@
 ---
 title: "Lab 7 Homework"
 author: "Kyra Kong"
-date: "2023-02-03"
+date: "2023-02-06"
 output:
   html_document: 
     theme: spacelab
@@ -319,7 +319,7 @@ amniota_egg_mass %>%
 ## 2 Mammalia       4953
 ## 3 Reptilia       6040
 ```
-It makes sense biologically how there are more NAs in the Reptilia egg masses. This would mean that its hard to measure the masses of the eggs or difficult to obtain them.
+It makes sense biologically how there are more NAs in the Mammalia since they don't normally lay eggs. For the other Aves and Reptilia, this would mean that its hard to measure the masses of the eggs or difficult to obtain them.
 
 **9. The `amphibio` data have variables that classify species as fossorial (burrowing), terrestrial, aquatic, or arboreal.Calculate the number of NA's in each of these variables. Do you think that the authors intend us to think that there are NA's in these columns or could they represent something else? Explain.**
 
