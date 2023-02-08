@@ -93,15 +93,47 @@ sydneybeaches_wide %>%
 
 6. We haven't dealt much with dates yet, but separate the date into columns day, month, and year. Do this on the `sydneybeaches_long` data.
 
+```{r}
+sydneybeaches_long %>% 
+  separate(date,into =c("day", "month", "year"),  sep = "/")
+```
 
 7. What is the average `enterococci_cfu_100ml` by year for each beach. Think about which data you will use- long or wide.
 
+```{r}
+sydneybeaches_long %>% 
+  separate(date, into = c("day", "month", "year"), sep = "/") %>% 
+  select(site, year, enterococci_cfu_100ml) %>% 
+  group_by(site, year) %>% 
+  summarize(enterococci_cfu_100ml_mean= mean(enterococci_cfu_100ml, na.rm =T))
+            
+  
+```
 
 8. Make the output from question 7 easier to read by pivoting it to wide format.
+```{r}
+sydneybeaches_long %>% 
+  separate(date, into = c("day", "month", "year"), sep = "/") %>% 
+  select(site, year, enterococci_cfu_100ml) %>% 
+  group_by(site,year) %>% 
+  summarize(enterococci_cfu_100ml_mean= mean(enterococci_cfu_100ml, na.rm =T)) %>% 
+  pivot_wider(names_from = "site",
+              values_from = "enterococci_cfu_100ml_mean")
+```
 
 
 9. What was the most polluted beach in 2018?
-
+```{r}
+sydneybeaches_long %>% 
+  separate(date, into = c("day", "month", "year"), sep = "/") %>% 
+  select(site, year, enterococci_cfu_100ml) %>% 
+  group_by(site,year) %>% 
+  summarize(enterococci_cfu_100ml_mean= mean(enterococci_cfu_100ml, na.rm =T)) %>% 
+  filter(year == "2018") %>% 
+  arrange(desc(enterococci_cfu_100ml_mean))
+ 
+```
+Most polluted beach in 2018 is South Maroubra Rockpool.
 
 10. Please complete the class project survey at: [BIS 15L Group Project](https://forms.gle/H2j69Z3ZtbLH3efW6)
 

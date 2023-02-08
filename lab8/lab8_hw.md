@@ -1,7 +1,7 @@
 ---
 title: "Lab 8 Homework"
 author: "Kyra Kong"
-date: "2023-02-07"
+date: "2023-02-08"
 output:
   html_document: 
     theme: spacelab
@@ -198,14 +198,132 @@ sydneybeaches_wide %>%
 6. We haven't dealt much with dates yet, but separate the date into columns day, month, and year. Do this on the `sydneybeaches_long` data.
 
 
+```r
+sydneybeaches_long %>% 
+  separate(date,into =c("day", "month", "year"),  sep = "/")
+```
+
+```
+## # A tibble: 3,690 × 5
+##    site           day   month year  enterococci_cfu_100ml
+##    <chr>          <chr> <chr> <chr>                 <dbl>
+##  1 Clovelly Beach 02    01    2013                     19
+##  2 Clovelly Beach 06    01    2013                      3
+##  3 Clovelly Beach 12    01    2013                      2
+##  4 Clovelly Beach 18    01    2013                     13
+##  5 Clovelly Beach 30    01    2013                      8
+##  6 Clovelly Beach 05    02    2013                      7
+##  7 Clovelly Beach 11    02    2013                     11
+##  8 Clovelly Beach 23    02    2013                     97
+##  9 Clovelly Beach 07    03    2013                      3
+## 10 Clovelly Beach 25    03    2013                      0
+## # … with 3,680 more rows
+```
+
 7. What is the average `enterococci_cfu_100ml` by year for each beach. Think about which data you will use- long or wide.
 
 
+```r
+sydneybeaches_long %>% 
+  separate(date, into = c("day", "month", "year"), sep = "/") %>% 
+  select(site, year, enterococci_cfu_100ml) %>% 
+  group_by(site, year) %>% 
+  summarize(enterococci_cfu_100ml_mean= mean(enterococci_cfu_100ml, na.rm =T))
+```
+
+```
+## `summarise()` has grouped output by 'site'. You can override using the
+## `.groups` argument.
+```
+
+```
+## # A tibble: 66 × 3
+## # Groups:   site [11]
+##    site         year  enterococci_cfu_100ml_mean
+##    <chr>        <chr>                      <dbl>
+##  1 Bondi Beach  2013                        32.2
+##  2 Bondi Beach  2014                        11.1
+##  3 Bondi Beach  2015                        14.3
+##  4 Bondi Beach  2016                        19.4
+##  5 Bondi Beach  2017                        13.2
+##  6 Bondi Beach  2018                        22.9
+##  7 Bronte Beach 2013                        26.8
+##  8 Bronte Beach 2014                        17.5
+##  9 Bronte Beach 2015                        23.6
+## 10 Bronte Beach 2016                        61.3
+## # … with 56 more rows
+```
+
 8. Make the output from question 7 easier to read by pivoting it to wide format.
+
+```r
+sydneybeaches_long %>% 
+  separate(date, into = c("day", "month", "year"), sep = "/") %>% 
+  select(site, year, enterococci_cfu_100ml) %>% 
+  group_by(site,year) %>% 
+  summarize(enterococci_cfu_100ml_mean= mean(enterococci_cfu_100ml, na.rm =T)) %>% 
+  pivot_wider(names_from = "site",
+              values_from = "enterococci_cfu_100ml_mean")
+```
+
+```
+## `summarise()` has grouped output by 'site'. You can override using the
+## `.groups` argument.
+```
+
+```
+## # A tibble: 6 × 12
+##   year  Bondi …¹ Bront…² Clove…³ Cooge…⁴ Gordo…⁵ Littl…⁶ Malab…⁷ Marou…⁸ South…⁹
+##   <chr>    <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+## 1 2013      32.2    26.8    9.28    39.7    24.8   122.    101.    47.1    39.3 
+## 2 2014      11.1    17.5   13.8     52.6    16.7    19.5    54.5    9.23   14.9 
+## 3 2015      14.3    23.6    8.82    40.3    36.2    25.5    66.9   14.5     8.25
+## 4 2016      19.4    61.3   11.3     59.5    39.0    31.2    91.0   26.6    10.7 
+## 5 2017      13.2    16.8    7.93    20.7    13.7    18.2    49.8   11.6     8.26
+## 6 2018      22.9    43.4   10.6     21.6    17.6    59.1    38.0    9.21   12.5 
+## # … with 2 more variables: `South Maroubra Rockpool` <dbl>,
+## #   `Tamarama Beach` <dbl>, and abbreviated variable names ¹​`Bondi Beach`,
+## #   ²​`Bronte Beach`, ³​`Clovelly Beach`, ⁴​`Coogee Beach`, ⁵​`Gordons Bay (East)`,
+## #   ⁶​`Little Bay Beach`, ⁷​`Malabar Beach`, ⁸​`Maroubra Beach`,
+## #   ⁹​`South Maroubra Beach`
+```
 
 
 9. What was the most polluted beach in 2018?
 
+```r
+sydneybeaches_long %>% 
+  separate(date, into = c("day", "month", "year"), sep = "/") %>% 
+  select(site, year, enterococci_cfu_100ml) %>% 
+  group_by(site,year) %>% 
+  summarize(enterococci_cfu_100ml_mean= mean(enterococci_cfu_100ml, na.rm =T)) %>% 
+  filter(year == "2018") %>% 
+  arrange(desc(enterococci_cfu_100ml_mean))
+```
+
+```
+## `summarise()` has grouped output by 'site'. You can override using the
+## `.groups` argument.
+```
+
+```
+## # A tibble: 11 × 3
+## # Groups:   site [11]
+##    site                    year  enterococci_cfu_100ml_mean
+##    <chr>                   <chr>                      <dbl>
+##  1 South Maroubra Rockpool 2018                      112.  
+##  2 Little Bay Beach        2018                       59.1 
+##  3 Bronte Beach            2018                       43.4 
+##  4 Malabar Beach           2018                       38.0 
+##  5 Bondi Beach             2018                       22.9 
+##  6 Coogee Beach            2018                       21.6 
+##  7 Gordons Bay (East)      2018                       17.6 
+##  8 Tamarama Beach          2018                       15.5 
+##  9 South Maroubra Beach    2018                       12.5 
+## 10 Clovelly Beach          2018                       10.6 
+## 11 Maroubra Beach          2018                        9.21
+```
+Most polluted beach in 2018 is South Maroubra Rockpool.
 
 10. Please complete the class project survey at: [BIS 15L Group Project](https://forms.gle/H2j69Z3ZtbLH3efW6)
 
