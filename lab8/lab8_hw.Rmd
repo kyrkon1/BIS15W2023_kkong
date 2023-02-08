@@ -65,11 +65,30 @@ I'd consider the data to be tidy since the columns are their own variables, rows
 
 3. We are only interested in the variables site, date, and enterococci_cfu_100ml. Make a new object focused on these variables only. Name the object `sydneybeaches_long`
 
+```{r}
+sydneybeaches_long <- sydneybeaches %>% 
+  select(site,date, enterococci_cfu_100ml)
+sydneybeaches_long
+```
 
 4. Pivot the data such that the dates are column names and each beach only appears once. Name the object `sydneybeaches_wide`
+```{r}
+sydneybeaches_wide<- sydneybeaches_long %>% 
+  group_by(site) %>% 
+  pivot_wider(names_from = "date",
+              values_from= "enterococci_cfu_100ml")
+sydneybeaches_wide
+  
+```
 
 
 5. Pivot the data back so that the dates are data and not column names.
+```{r}
+sydneybeaches_wide %>% 
+  pivot_longer(-c("site"),
+              names_to = "date",
+              values_to = "enterococci_cfu_100ml")
+```
 
 
 6. We haven't dealt much with dates yet, but separate the date into columns day, month, and year. Do this on the `sydneybeaches_long` data.

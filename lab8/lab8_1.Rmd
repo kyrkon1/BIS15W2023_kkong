@@ -159,7 +159,7 @@ billboard %>%
 ## Practice  
 1. Import `plant_data.csv` as a new object `plant_data`.  
 ```{r}
-plant_data <- read_csv(here("data","plant_data.csv"))
+plant_data <- read_csv(here("lab8", "data","plant_data.csv"))
 plant_data
 ```
 
