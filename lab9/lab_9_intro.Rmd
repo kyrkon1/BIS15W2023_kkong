@@ -1,0 +1,51 @@
+---
+title: "Lab 9 Intro"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("jpeg")
+```
+
+## Seating
+1. If you already have a group, it will be helpful to start sitting next to each other.
+2. If you don't have a group, hang tight we are working on it.
+3. Please setup your computer as normal for today.
+
+## Warm-up
+1. In the data folder there is an epidemiology data set on an outbreak of malaria.
+2. `rdt` refers to rapid diagnostic test and they are identified here by age group.
+3. Make the data tidy and store them as a new object.
+4. Which district had the highest *total* number of cases on July 30, 2020?
+
+```{r}
+library(tidyverse)
+library(here)
+```
+```{r}
+getwd()
+```
+# what the data set is 
+```{r}
+malaria <- read.csv(here("data", "malaria.csv"))
+malaria
+```
+# making data tidy 
+```{r}
+malaria_longer <-malaria %>% 
+  pivot_longer(-c("location_name", "data_date", "submitted_date", "Province", "District", "malaria_tot", "newid"),
+               names_to = c("malaria_rdt"),
+               values_to = "tests_ran")
+malaria_longer
+
+  
+```
+```{r}
+
+```
+
+homework for the next weeks:
+shopping for datasets
+canvas

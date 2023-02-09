@@ -1,0 +1,54 @@
+---
+title: "lab 9 warmup"
+output: html_document
+date: "2023-02-09"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+```
+```{r}
+getwd()
+```
+# what the data set is 
+```{r}
+malaria <- read.csv(here("data", "malaria.csv")) %>% clean_names()
+malaria
+```
+simulated data for medicine
+
+rdt 0-4 years old
+rdt 5-14 years old
+rdt 15 years old
+R for Epidemiologists good source
+# making data tidy
+cleaning names so its all lowercase
+```{r}
+malaria <- janitor::clean_names(malaria)
+names(malaria)
+```
+
+```{r}
+malaria_longer <- malaria %>% 
+  pivot_longer(cols= starts_with("malaria_rdt"),
+               names_to= "age_class",
+               values_to= "cases") %>% 
+  select(newid, data_date, submitted_date, location_name, province, district, age_class, cases)
+
+malaria_longer
+```
+# which district had the highest number of cases on July 30 2020
+```{r}
+malaria_longer %>% 
+  filter(data_date== "2020-07-30") %>% 
+  group_by (district) %>% 
+  summarize(total_cases = sum(cases, na.rm =T)) %>% 
+  arrange(desc(total_cases))
+```
+
