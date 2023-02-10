@@ -1,11 +1,11 @@
 ---
 title: "Lab 9 Homework"
-author: "Please Add Your Name Here"
+author: "Kyra Kong"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -27,7 +27,7 @@ library(naniar)
 
 For this homework, we will take a departure from biological data and use data about California colleges. These data are a subset of the national college scorecard (https://collegescorecard.ed.gov/data/). Load the `ca_college_data.csv` as a new object called `colleges`.
 ```{r}
-
+colleges <- read.csv("data/ca_college_data.csv")
 ```
 
 The variables are a bit hard to decipher, here is a key:  
@@ -45,15 +45,18 @@ PFTFTUG1_EF: Percentage of undergraduate students who are first-time, full-time 
 
 1. Use your preferred function(s) to have a look at the data and get an idea of its structure. Make sure you summarize NA's and determine whether or not the data are tidy. You may also consider dealing with any naming issues.
 ```{r}
-
+glimpse(colleges)
 ```
 
 ```{r}
-
+colleges <- janitor::clean_names(colleges)
 ```
 
 ```{r}
-
+names(colleges)
+```
+```{r}
+naniar::miss_var_summary(colleges)
 ```
 
 2. Which cities in California have the highest number of colleges?
