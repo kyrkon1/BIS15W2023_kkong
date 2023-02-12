@@ -75,7 +75,7 @@ cities_colleges
 ```{r}
 cities_colleges %>% 
   ggplot(aes(x = city, y = n))+
-  geom_point() +
+  geom_col() +
   coord_flip()
 ```
 
