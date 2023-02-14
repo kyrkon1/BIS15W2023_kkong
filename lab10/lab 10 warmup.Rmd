@@ -1,0 +1,40 @@
+---
+title: "lab 10 warmup"
+output: html_document
+date: "2023-02-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("tidyverse")
+library("janitor")
+library("here")
+```
+# loading in data as homerange
+```{r}
+homerange <- read.csv("data/Tamburelloetal_HomeRangeDatabase.csv")
+```
+
+```{r}
+glimpse(homerange)
+```
+#finding max, min, mean of log 10 mass by taxonomical class
+```{r}
+homerange_log10_mass <-homerange %>% 
+  group_by(class) %>% 
+  summarize(min_log10_mass = min(log10.mass, na.rm =T), # why log 10 mass, little and big fish, mass difference is too great, harder to plot so log 10 can work
+            mean_log10_mass = mean(log10.mass, na.rm =T),
+            max_log10_mass = max(log10.mass, na.rm =T))
+
+```
+# plotting data
+```{r}
+homerange %>% 
+  ggplot(aes(x=class, y= log10.mass)) +
+  geom_boxplot()
+
+```
+
