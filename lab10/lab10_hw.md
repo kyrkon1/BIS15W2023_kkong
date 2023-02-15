@@ -123,7 +123,8 @@ The species most frequently studied is merriami and the species the least studie
 deserts %>% 
   ggplot(aes(x=taxa))+
   geom_bar()+
-  scale_y_log10()
+  scale_y_log10()+
+  labs(title= "Proportion of Taxa in the Study")
 ```
 
 ![](lab10_hw_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
@@ -147,8 +148,9 @@ deserts %>%
 ```r
 deserts %>% 
   ggplot(aes(x=taxa, fill = plot_type))+
-  geom_bar()+
-  scale_y_log10()
+  geom_bar(position="dodge")+
+  scale_y_log10()+
+  labs(title= "Proportion of Individuals in Taxa by plot type")
 ```
 
 ![](lab10_hw_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
@@ -169,10 +171,13 @@ names(deserts)
 
 ```r
 deserts %>% 
-  filter(!is.na(weight)) %>% 
+  filter(weight!="NA") %>% 
   ggplot(aes(x=species, y=weight))+
   geom_boxplot()+
-  coord_flip()
+  coord_flip()+
+  labs(title="Range of Weight Across Species",
+       x= "Weights",
+       y="Species")
 ```
 
 ![](lab10_hw_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
@@ -181,11 +186,14 @@ deserts %>%
 
 ```r
 deserts %>% 
-  filter(!is.na(weight)) %>% 
+  filter(weight!="NA") %>% 
   ggplot(aes(x=species, y=weight))+
   geom_boxplot()+
+  geom_point()+
   coord_flip()+
-  geom_point()
+  labs(title="Range of Weight Across Species",
+       x= "Weights",
+       y="Species")
 ```
 
 ![](lab10_hw_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
@@ -217,7 +225,10 @@ deserts_merriami %>%
 deserts %>% 
   ggplot(aes(x=hindfoot_length, y=weight)) +
   geom_point() +
-  geom_smooth(method=lm, se=F)
+  geom_smooth(method=lm, se=F)+
+  labs(title ="Hindfoot length versus Weight",
+       x= "Hindfoot Length",
+       y= "Weight")
 ```
 
 ```
@@ -304,7 +315,8 @@ deserts_albigula
 ```r
 deserts_albigula %>% 
   ggplot(aes(x=ratio, fill= sex))+
-  geom_bar()
+  geom_bar(position="dodge")+
+  labs(title = "Albigula's Ratio of Weight/Hindfoot_length")
 ```
 
 ```
@@ -342,7 +354,8 @@ deserts_spectabilis
 ```r
 deserts_spectabilis %>% 
   ggplot(aes(x=ratio, fill= sex))+
-  geom_bar()
+  geom_bar(position="dodge")+
+  labs(title = "Spectabilis's Ratio of Weight/Hindfoot_length")
 ```
 
 ```
