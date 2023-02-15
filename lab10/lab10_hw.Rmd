@@ -1,11 +1,11 @@
 ---
 title: "Lab 10 Homework"
-author: "Please Add Your Name Here"
+author: "Kyra Kong"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -32,24 +32,153 @@ deserts <- read_csv(here("lab10", "data", "surveys_complete.csv"))
 ```
 
 1. Use the function(s) of your choice to get an idea of its structure, including how NA's are treated. Are the data tidy?  
+```{r}
+glimpse(deserts)
+```
+The data is tidy and NAs are presented in the data as empty cells
 
 2. How many genera and species are represented in the data? What are the total number of observations? Which species is most/ least frequently sampled in the study?
 
+```{r}
+deserts %>% 
+  count(genus, sort =T)
+```
+26 genera and 40 species, 
+```{r}
+deserts %>% 
+  count(species, sort =T)
+```
+The species most frequently studied is merriami and the species the least studied are the clarki, scutalatus, tereticaudus, tigris, uniparens, and viridis.
+
+
 3. What is the proportion of taxa included in this study? Show a table and plot that reflects this count.
+```{r}
+deserts %>% 
+  ggplot(aes(x=taxa))+
+  geom_bar()+
+  scale_y_log10()
+```
+```{r}
+deserts %>% 
+  tabyl(taxa)
+```
+
 
 4. For the taxa included in the study, use the fill option to show the proportion of individuals sampled by `plot_type.`
+```{r}
+deserts %>% 
+  ggplot(aes(x=taxa, fill = plot_type))+
+  geom_bar()+
+  scale_y_log10()
+```
 
 5. What is the range of weight for each species included in the study? Remove any observations of weight that are NA so they do not show up in the plot.
+```{r}
+names(deserts)
+```
+
+```{r}
+deserts %>% 
+  filter(!is.na(weight)) %>% 
+  ggplot(aes(x=species, y=weight))+
+  geom_boxplot()+
+  coord_flip()
+```
 
 6. Add another layer to your answer from #4 using `geom_point` to get an idea of how many measurements were taken for each species.
+```{r}
+deserts %>% 
+  filter(!is.na(weight)) %>% 
+  ggplot(aes(x=species, y=weight))+
+  geom_boxplot()+
+  coord_flip()+
+  geom_point()
+```
 
 7. [Dipodomys merriami](https://en.wikipedia.org/wiki/Merriam's_kangaroo_rat) is the most frequently sampled animal in the study. How have the number of observations of this species changed over the years included in the study?
+```{r}
+deserts_merriami <- deserts%>% 
+  filter(genus== "merriami")
+```
+
+```{r}
+deserts_merriami %>% 
+  count(year) %>% 
+  ggplot(aes(x=year, y= n)) +
+  geom_col() +
+  labs(title = "Number of Observations for Dipodomys Merriami over the years", 
+       y= "Number of Observations", x = "Year")
+```
+
 
 8. What is the relationship between `weight` and `hindfoot` length? Consider whether or not over plotting is an issue.
 
+```{r}
+deserts %>% 
+  ggplot(aes(x=hindfoot_length, y=weight)) +
+  geom_point() +
+  geom_smooth(method=lm, se=F)
+```
+In general there is a positive correlation.
+
 9. Which two species have, on average, the highest weight? Once you have identified them, make a new column that is a ratio of `weight` to `hindfoot_length`. Make a plot that shows the range of this new ratio and fill by sex.
 
+```{r}
+names(deserts)
+```
+
+```{r}
+deserts %>% 
+  group_by(species) %>% 
+  filter(!is.na(weight)) %>% 
+  summarize(avg_weight = mean(weight,na.rm =T)) %>% 
+  arrange(desc(avg_weight))
+```
+```{r}
+deserts_albigula <- deserts %>% 
+  filter(species == "albigula") %>% 
+  mutate(ratio = weight/hindfoot_length)
+deserts_albigula
+```
+```{r}
+deserts_albigula %>% 
+  ggplot(aes(x=ratio, fill= sex))+
+  geom_bar()
+```
+```{r}
+deserts_spectabilis <-deserts %>% 
+  filter(species == "spectabilis") %>% 
+  mutate(ratio = weight/hindfoot_length) 
+deserts_spectabilis
+```
+```{r}
+deserts_spectabilis %>% 
+  ggplot(aes(x=ratio, fill= sex))+
+  geom_bar()
+```
+```{r}
+deserts %>% 
+  filter(species == "albigula"| species == "spectabilis") %>% 
+  mutate(ratio = weight/hindfoot_length) %>% 
+  ggplot(aes(x=species, y= ratio, fill= sex)) +
+  geom_boxplot(na.rm=T)
+```
+
+
 10. Make one plot of your choice! Make sure to include at least two of the aesthetics options you have learned.
+
+```{r}
+names(deserts)
+```
+```{r}
+deserts %>% 
+  ggplot(aes(x=weight,y= sex, fill= sex))+
+  geom_col() +
+  coord_flip() +
+  labs(title= "Weight by Sex for Species")+
+  theme(axis.text.y = element_text(angle = 60, hjust = 1))
+```
+
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences. 
