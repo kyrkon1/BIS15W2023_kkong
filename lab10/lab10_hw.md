@@ -71,6 +71,29 @@ The data is tidy and NAs are presented in the data as empty cells
 
 
 ```r
+structure(deserts)
+```
+
+```
+## # A tibble: 34,786 × 13
+##    record…¹ month   day  year plot_id speci…² sex   hindf…³ weight genus species
+##       <dbl> <dbl> <dbl> <dbl>   <dbl> <chr>   <chr>   <dbl>  <dbl> <chr> <chr>  
+##  1        1     7    16  1977       2 NL      M          32     NA Neot… albigu…
+##  2        2     7    16  1977       3 NL      M          33     NA Neot… albigu…
+##  3        3     7    16  1977       2 DM      F          37     NA Dipo… merria…
+##  4        4     7    16  1977       7 DM      M          36     NA Dipo… merria…
+##  5        5     7    16  1977       3 DM      M          35     NA Dipo… merria…
+##  6        6     7    16  1977       1 PF      M          14     NA Pero… flavus 
+##  7        7     7    16  1977       2 PE      F          NA     NA Pero… eremic…
+##  8        8     7    16  1977       1 DM      M          37     NA Dipo… merria…
+##  9        9     7    16  1977       1 DM      F          34     NA Dipo… merria…
+## 10       10     7    16  1977       6 PF      F          20     NA Pero… flavus 
+## # … with 34,776 more rows, 2 more variables: taxa <chr>, plot_type <chr>, and
+## #   abbreviated variable names ¹​record_id, ²​species_id, ³​hindfoot_length
+```
+Total number of observations is 34,786.
+
+```r
 deserts %>% 
   count(genus, sort =T)
 ```
@@ -114,8 +137,79 @@ deserts %>%
 ## 10 albigula      1252
 ## # … with 30 more rows
 ```
-The species most frequently studied is merriami and the species the least studied are the clarki, scutalatus, tereticaudus, tigris, uniparens, and viridis.
 
+```r
+deserts %>% 
+  count(species, sort =T)
+```
+
+```
+## # A tibble: 40 × 2
+##    species          n
+##    <chr>        <int>
+##  1 merriami     10596
+##  2 penicillatus  3123
+##  3 ordii         3027
+##  4 baileyi       2891
+##  5 megalotis     2609
+##  6 spectabilis   2504
+##  7 torridus      2249
+##  8 flavus        1597
+##  9 eremicus      1299
+## 10 albigula      1252
+## # … with 30 more rows
+```
+
+
+```r
+deserts %>% 
+  group_by(species) %>% 
+  summarize(n_samples=n()) %>% 
+  arrange(n_samples)
+```
+
+```
+## # A tibble: 40 × 2
+##    species      n_samples
+##    <chr>            <int>
+##  1 clarki               1
+##  2 scutalatus           1
+##  3 tereticaudus         1
+##  4 tigris               1
+##  5 uniparens            1
+##  6 viridis              1
+##  7 leucophrys           2
+##  8 savannarum           2
+##  9 fuscus               5
+## 10 undulatus            5
+## # … with 30 more rows
+```
+
+```r
+deserts %>% 
+  group_by(species) %>% 
+  summarize(n_samples=n()) %>% 
+  arrange(desc(n_samples))
+```
+
+```
+## # A tibble: 40 × 2
+##    species      n_samples
+##    <chr>            <int>
+##  1 merriami         10596
+##  2 penicillatus      3123
+##  3 ordii             3027
+##  4 baileyi           2891
+##  5 megalotis         2609
+##  6 spectabilis       2504
+##  7 torridus          2249
+##  8 flavus            1597
+##  9 eremicus          1299
+## 10 albigula          1252
+## # … with 30 more rows
+```
+
+The species most frequently studied is merriami and the species the least studied are the clarki, scutalatus, tereticaudus, tigris, uniparens, and viridis.
 
 3. What is the proportion of taxa included in this study? Show a table and plot that reflects this count.
 
@@ -127,7 +221,7 @@ deserts %>%
   labs(title= "Proportion of Taxa in the Study")
 ```
 
-![](lab10_hw_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](lab10_hw_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 ```r
 deserts %>% 
@@ -153,7 +247,7 @@ deserts %>%
   labs(title= "Proportion of Individuals in Taxa by plot type")
 ```
 
-![](lab10_hw_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](lab10_hw_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 5. What is the range of weight for each species included in the study? Remove any observations of weight that are NA so they do not show up in the plot.
 
@@ -180,7 +274,7 @@ deserts %>%
        y="Species")
 ```
 
-![](lab10_hw_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](lab10_hw_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
 6. Add another layer to your answer from #4 using `geom_point` to get an idea of how many measurements were taken for each species.
 
@@ -196,26 +290,27 @@ deserts %>%
        y="Species")
 ```
 
-![](lab10_hw_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![](lab10_hw_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
 
 7. [Dipodomys merriami](https://en.wikipedia.org/wiki/Merriam's_kangaroo_rat) is the most frequently sampled animal in the study. How have the number of observations of this species changed over the years included in the study?
 
 ```r
 deserts_merriami <- deserts%>% 
-  filter(genus== "merriami")
+  filter(species_id == "DM")
 ```
 
 
 ```r
-deserts_merriami %>% 
-  count(year) %>% 
-  ggplot(aes(x=year, y= n)) +
+deserts %>% 
+  group_by(year) %>% 
+  summarize(n_samples=n()) %>% 
+  ggplot(aes(x=as.factor(year), y= n_samples)) +
   geom_col() +
-  labs(title = "Number of Observations for Dipodomys Merriami over the years", 
-       y= "Number of Observations", x = "Year")
+  theme(axis.text.x=element_text(angle=40, hjust=1))+
+  labs(title = "Number of Observations for Dipodomys Merriami over the years", y= "Number of Observations", x = "Year")
 ```
 
-![](lab10_hw_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+![](lab10_hw_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
 
 8. What is the relationship between `weight` and `hindfoot` length? Consider whether or not over plotting is an issue.
@@ -243,7 +338,7 @@ deserts %>%
 ## Warning: Removed 4048 rows containing missing values (`geom_point()`).
 ```
 
-![](lab10_hw_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![](lab10_hw_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 In general there is a positive correlation.
 
 9. Which two species have, on average, the highest weight? Once you have identified them, make a new column that is a ratio of `weight` to `hindfoot_length`. Make a plot that shows the range of this new ratio and fill by sex.
@@ -297,7 +392,7 @@ deserts %>%
   labs(title= "Ratio of Weight by Hindfoot Length For Albigula and Spectabilis", x= "species", y ="Weight/Hindfoot Length")
 ```
 
-![](lab10_hw_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+![](lab10_hw_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
 
 
@@ -328,7 +423,7 @@ deserts %>%
 ## Warning: Removed 2503 rows containing missing values (`position_stack()`).
 ```
 
-![](lab10_hw_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
+![](lab10_hw_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
 
 ## Push your final code to GitHub!

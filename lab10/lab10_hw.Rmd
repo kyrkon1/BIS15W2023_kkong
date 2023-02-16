@@ -40,6 +40,10 @@ The data is tidy and NAs are presented in the data as empty cells
 2. How many genera and species are represented in the data? What are the total number of observations? Which species is most/ least frequently sampled in the study?
 
 ```{r}
+structure(deserts)
+```
+Total number of observations is 34,786.
+```{r}
 deserts %>% 
   count(genus, sort =T)
 ```
@@ -48,8 +52,25 @@ deserts %>%
 deserts %>% 
   count(species, sort =T)
 ```
-The species most frequently studied is merriami and the species the least studied are the clarki, scutalatus, tereticaudus, tigris, uniparens, and viridis.
+```{r}
+deserts %>% 
+  count(species, sort =T)
+```
 
+```{r}
+deserts %>% 
+  group_by(species) %>% 
+  summarize(n_samples=n()) %>% 
+  arrange(n_samples)
+```
+```{r}
+deserts %>% 
+  group_by(species) %>% 
+  summarize(n_samples=n()) %>% 
+  arrange(desc(n_samples))
+```
+
+The species most frequently studied is merriami and the species the least studied are the clarki, scutalatus, tereticaudus, tigris, uniparens, and viridis.
 
 3. What is the proportion of taxa included in this study? Show a table and plot that reflects this count.
 ```{r}
@@ -106,16 +127,17 @@ deserts %>%
 7. [Dipodomys merriami](https://en.wikipedia.org/wiki/Merriam's_kangaroo_rat) is the most frequently sampled animal in the study. How have the number of observations of this species changed over the years included in the study?
 ```{r}
 deserts_merriami <- deserts%>% 
-  filter(genus== "merriami")
+  filter(species_id == "DM")
 ```
 
 ```{r}
-deserts_merriami %>% 
-  count(year) %>% 
-  ggplot(aes(x=year, y= n)) +
+deserts %>% 
+  group_by(year) %>% 
+  summarize(n_samples=n()) %>% 
+  ggplot(aes(x=as.factor(year), y= n_samples)) +
   geom_col() +
-  labs(title = "Number of Observations for Dipodomys Merriami over the years", 
-       y= "Number of Observations", x = "Year")
+  theme(axis.text.x=element_text(angle=40, hjust=1))+
+  labs(title = "Number of Observations for Dipodomys Merriami over the years", y= "Number of Observations", x = "Year")
 ```
 
 
