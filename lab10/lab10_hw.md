@@ -287,92 +287,18 @@ deserts %>%
 ```
 
 ```r
-deserts_albigula <- deserts %>% 
-  filter(species == "albigula") %>% 
-  mutate(ratio = weight/hindfoot_length)
-deserts_albigula
-```
-
-```
-## # A tibble: 1,252 × 14
-##    record…¹ month   day  year plot_id speci…² sex   hindf…³ weight genus species
-##       <dbl> <dbl> <dbl> <dbl>   <dbl> <chr>   <chr>   <dbl>  <dbl> <chr> <chr>  
-##  1        1     7    16  1977       2 NL      M          32     NA Neot… albigu…
-##  2        2     7    16  1977       3 NL      M          33     NA Neot… albigu…
-##  3       22     7    17  1977      15 NL      F          31     NA Neot… albigu…
-##  4       38     7    17  1977      17 NL      M          33     NA Neot… albigu…
-##  5       72     8    19  1977       2 NL      M          31     NA Neot… albigu…
-##  6      106     8    20  1977      12 NL      <NA>       NA     NA Neot… albigu…
-##  7      107     8    20  1977      18 NL      <NA>       NA     NA Neot… albigu…
-##  8      121     8    21  1977      15 NL      <NA>       NA     NA Neot… albigu…
-##  9      171     9    11  1977      12 NL      <NA>       NA     NA Neot… albigu…
-## 10      194     9    12  1977      11 NL      <NA>       NA     NA Neot… albigu…
-## # … with 1,242 more rows, 3 more variables: taxa <chr>, plot_type <chr>,
-## #   ratio <dbl>, and abbreviated variable names ¹​record_id, ²​species_id,
-## #   ³​hindfoot_length
-```
-
-```r
-deserts_albigula %>% 
-  ggplot(aes(x=ratio, fill= sex))+
-  geom_bar(position="dodge")+
-  labs(title = "Albigula's Ratio of Weight/Hindfoot_length")
-```
-
-```
-## Warning: Removed 206 rows containing non-finite values (`stat_count()`).
-```
-
-![](lab10_hw_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
-
-```r
-deserts_spectabilis <-deserts %>% 
-  filter(species == "spectabilis") %>% 
-  mutate(ratio = weight/hindfoot_length) 
-deserts_spectabilis
-```
-
-```
-## # A tibble: 2,504 × 14
-##    record…¹ month   day  year plot_id speci…² sex   hindf…³ weight genus species
-##       <dbl> <dbl> <dbl> <dbl>   <dbl> <chr>   <chr>   <dbl>  <dbl> <chr> <chr>  
-##  1       11     7    16  1977       5 DS      F          53     NA Dipo… specta…
-##  2       17     7    16  1977       3 DS      F          48     NA Dipo… specta…
-##  3       20     7    17  1977      11 DS      F          48     NA Dipo… specta…
-##  4       30     7    17  1977      10 DS      F          52     NA Dipo… specta…
-##  5       42     7    18  1977      18 DS      F          46     NA Dipo… specta…
-##  6       58     7    18  1977      12 DS      M          45     NA Dipo… specta…
-##  7       73     8    19  1977       3 DS      F          44     NA Dipo… specta…
-##  8       76     8    19  1977       9 DS      F          47     NA Dipo… specta…
-##  9       80     8    19  1977       1 DS      M          48     NA Dipo… specta…
-## 10       91     8    20  1977      11 DS      F          50     NA Dipo… specta…
-## # … with 2,494 more rows, 3 more variables: taxa <chr>, plot_type <chr>,
-## #   ratio <dbl>, and abbreviated variable names ¹​record_id, ²​species_id,
-## #   ³​hindfoot_length
-```
-
-```r
-deserts_spectabilis %>% 
-  ggplot(aes(x=ratio, fill= sex))+
-  geom_bar(position="dodge")+
-  labs(title = "Spectabilis's Ratio of Weight/Hindfoot_length")
-```
-
-```
-## Warning: Removed 478 rows containing non-finite values (`stat_count()`).
-```
-
-![](lab10_hw_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
-
-```r
 deserts %>% 
-  filter(species == "albigula"| species == "spectabilis") %>% 
-  mutate(ratio = weight/hindfoot_length) %>% 
-  ggplot(aes(x=species, y= ratio, fill= sex)) +
-  geom_boxplot(na.rm=T)
+  filter(species_id == "NL" | species_id == "DS") %>% 
+  filter(weight!="NA" & hindfoot_length !="NA" & sex !="NA") %>% 
+  mutate(ratio= weight/hindfoot_length) %>% 
+  select(species_id, sex, weight, hindfoot_length, ratio) %>% 
+  ggplot(aes(x=species_id, y= ratio, fill =sex)) +
+  geom_boxplot()+
+  labs(title= "Ratio of Weight by Hindfoot Length For Albigula and Spectabilis", x= "species", y ="Weight/Hindfoot Length")
 ```
 
-![](lab10_hw_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
+![](lab10_hw_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+
 
 
 10. Make one plot of your choice! Make sure to include at least two of the aesthetics options you have learned.
@@ -402,7 +328,7 @@ deserts %>%
 ## Warning: Removed 2503 rows containing missing values (`position_stack()`).
 ```
 
-![](lab10_hw_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
+![](lab10_hw_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
 
 
 ## Push your final code to GitHub!
