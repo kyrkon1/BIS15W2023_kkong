@@ -1,6 +1,6 @@
 ---
 title: "Lab 11 Homework"
-author: "Please Add Your Name Here"
+author: "Kyra Kong"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -42,15 +42,132 @@ The questions below are open-ended and have many possible solutions. Your approa
 
 **1. Use the function(s) of your choice to get an idea of the overall structure of the data frame, including its dimensions, column names, variable classes, etc. As part of this, determine how NA's are treated in the data.**  
 
+```{r}
+gapminder <- data.frame(gapminder)
+```
+
+```{r}
+glimpse(gapminder)
+```
+```{r}
+structure(gapminder)
+```
+```{r}
+naniar::miss_var_summary(gapminder)
+```
+
+```{r}
+any_na(gapminder)
+```
+There are 1704 observations and 6 variables, the data is tidy and there are no NAs.
+
 **2. Among the interesting variables in gapminder is life expectancy. How has global life expectancy changed between 1952 and 2007?**
+```{r}
+names(gapminder)
+```
+
+```{r}
+gapminder %>% 
+  filter(between(year,1952,2007)) %>% 
+  group_by(lifeExp) %>% 
+  ggplot(aes(x=year, y= lifeExp)) +
+  geom_col(fill = "peachpuff", alpha =0.5)+
+  theme_bw()+
+  labs(title = "Life Expectancy across 1952", y= "Life Expectancy")
+ 
+```
+
 
 **3. How do the distributions of life expectancy compare for the years 1952 and 2007?**
 
+
+
+```{r}
+gapminder %>% 
+  filter(year== 1952| year == 2007) %>% 
+  select(year, lifeExp) %>% 
+  ggplot(aes(x=year, y=lifeExp)) +
+  geom_col(alpha =0.5, fill= "peachpuff")+
+  theme_bw()+
+  labs(title = "Distributions of Life Expectancy between 1952 and 2007",
+       x= "Year", y= "Life Expectancy")
+```
+
+
 **4. Your answer above doesn't tell the whole story since life expectancy varies by region. Make a summary that shows the min, mean, and max life expectancy by continent for all years represented in the data.**
+```{r}
+gapminder %>% 
+  group_by(lifeExp) %>% 
+  ggplot(aes(x=continent, y= lifeExp, fill= year))+
+  geom_boxplot(alpha =0.5)+
+  theme_bw()+
+  labs(title= "Life Expectancy Across Continents from 1952 to 2007",
+       x= "Continent", y= "Life Expectancy")
+```
+
 
 **5. How has life expectancy changed between 1952-2007 for each continent?**
 
+```{r}
+gapminder %>% 
+  filter(continent == "Africa") %>% 
+  filter(between(year, 1952,2007)) %>% 
+  ggplot(aes(x=year, y= lifeExp)) +
+  geom_col(alpha=0.5, fill= "light green")+
+  labs(title= "Life Expectancy between 1952 and 2007 for Africa",
+       x= "Year", y= "Life Expectancy")+
+  theme_bw()
+```
+```{r}
+gapminder %>% 
+  filter(continent == "Americas") %>% 
+  filter(between(year, 1952,2007)) %>% 
+  ggplot(aes(x=year, y= lifeExp)) +
+  geom_col(alpha=0.5, fill= "light blue")+
+  labs(title= "Life Expectancy between 1952 and 2007 for Americas",
+       x= "Year", y= "Life Expectancy")+
+  theme_bw()
+```
+```{r}
+gapminder %>% 
+  filter(continent == "Asia") %>% 
+  filter(between(year, 1952,2007)) %>% 
+  ggplot(aes(x=year, y= lifeExp)) +
+  geom_col(alpha=0.5, fill= "pink")+
+  labs(title= "Life Expectancy between 1952 and 2007 for Asia",
+       x= "Year", y= "Life Expectancy")+
+  theme_bw()
+```
+```{r}
+gapminder %>% 
+  filter(continent == "Europe") %>% 
+  filter(between(year, 1952,2007)) %>% 
+  ggplot(aes(x=year, y= lifeExp)) +
+  geom_col(alpha=0.5, fill= "orange")+
+  labs(title= "Life Expectancy between 1952 and 2007 for Europe",
+       x= "Year", y= "Life Expectancy")+
+  theme_bw()
+```
+```{r}
+gapminder %>% 
+  filter(continent == "Oceania") %>% 
+  filter(between(year, 1952,2007)) %>% 
+  ggplot(aes(x=year, y= lifeExp)) +
+  geom_col(alpha=0.5, fill= "purple")+
+  labs(title= "Life Expectancy between 1952 and 2007 for Oceania",
+       x= "Year", y= "Life Expectancy")+
+  theme_bw()
+```
+Overall the life expectancies for all the continents increase.
+
 **6. We are interested in the relationship between per capita GDP and life expectancy; i.e. does having more money help you live longer?**
+```{r}
+gapminder %>% 
+  ggplot(aes(x=lifeExp,y=gdpPercap))+
+  geom_point(alpha =0.5)+
+  labs(title= "Per Capita GDP versus Life Expectancy",
+       x= "Life Expectancy", y= "Per Capita GDP")
+```
 
 **7. Which countries have had the largest population growth since 1952?**
 
