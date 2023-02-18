@@ -58,7 +58,7 @@ deserts <- read_csv("data/surveys_complete.csv")
 
 [Homerange](http://datadryad.org/resource/doi:10.5061/dryad.q5j65/1). The data are from: Tamburello N, Cote IM, Dulvy NK (2015) Energy and the scaling of animal space use. The American Naturalist 186(2):196-211. http://dx.doi.org/10.1086/682070.  
 ```{r message=FALSE, warning=FALSE}
-homerange <- read_csv(here( "data", "Tamburelloetal_HomeRangeDatabase.csv"), na = c("", "NA", "\\"))
+homerange <- read_csv(here("lab11", "data", "Tamburelloetal_HomeRangeDatabase.csv"), na = c("", "NA", "\\"))
 ```
 
 ## Review

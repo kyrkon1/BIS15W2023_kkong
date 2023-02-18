@@ -3,9 +3,9 @@ title: "Lab 11 Homework"
 author: "Kyra Kong"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -171,11 +171,111 @@ gapminder %>%
 
 **7. Which countries have had the largest population growth since 1952?**
 
+```{r}
+gapminder %>% 
+  select(pop, country) %>% 
+  group_by(country) %>% 
+  arrange(desc(pop))
+```
+
+```{r}
+gapminder %>% 
+  ggplot(aes(x=reorder(country, -pop), y= pop))+
+  geom_boxplot()+
+  scale_y_log10()+
+  theme(axis.text.x= element_text(angle = 90))+
+  labs(title = "Population Growth across Countries", x= "Country", y= "Population Growth")
+```
+```{r}
+gapminder %>% 
+  filter(continent == "Asia") %>% 
+  ggplot(aes(x=country,y=pop)) +
+  geom_boxplot()+
+    theme(axis.text.x= element_text(angle = 90)) +
+  labs(title = "Population Growth in Asia", x= "Country", y= "Population Growth")
+```
+```{r}
+gapminder %>% 
+  filter(continent == "Americas") %>% 
+  ggplot(aes(x=country,y=pop)) +
+  geom_boxplot()+
+    theme(axis.text.x= element_text(angle = 90))+
+  labs(title= "Population Growth in Americas", x = "Country", y= "Population Growth")
+```
+```{r}
+gapminder %>% 
+  filter(continent == "Europe") %>% 
+  ggplot(aes(x=country,y=pop)) +
+  geom_boxplot()+
+    theme(axis.text.x= element_text(angle = 90))+
+  labs(title= "Population Growth in Europe", x = "Country", y= "Population Growth")
+```
+```{r}
+gapminder %>% 
+  filter(continent == "Oceania") %>% 
+  ggplot(aes(x=country,y=pop)) +
+  geom_boxplot()+
+    theme(axis.text.x= element_text(angle = 90))+
+  labs(title= "Population Growth in Oceania", x = "Country", y= "Population Growth")
+```
+
 **8. Use your results from the question above to plot population growth for the top five countries since 1952.**
+```{r}
+gapminder %>% 
+  filter(country == "China"| country == "India"| country == "United States" | country == "Indonesia" | country == "Brazil") %>% 
+  select(country, pop) %>% 
+  ggplot(aes(x=country, y= pop))+
+  geom_boxplot()+
+  scale_y_log10()+
+  labs(title = "Population Growth For the Top 5 Countries Since 1952", 
+       x= "Country", y= "Population Growth")
+```
 
 **9. How does per-capita GDP growth compare between these same five countries?**
+```{r}
+gapminder %>% 
+  filter(country == "China"| country == "India"| country == "United States" | country == "Indonesia" | country == "Brazil") %>% 
+  ggplot(aes(x=country, y= gdpPercap))+
+  geom_boxplot()+
+  scale_y_log10()+
+  labs(title= "Per-Capita GDP Growth Across Top Five Countries", x= "Country", y= "Per Capita GDP Growth")
+```
 
 **10. Make one plot of your choice that uses faceting!**
+
+```{r}
+options(scipen=999)
+library(gtools)
+quartiles2 <-quantcut(gapminder$pop)
+table(quartiles2)
+
+```
+```{r}
+summary(gapminder$pop)
+```
+
+
+```{r}
+gapminder <- gapminder %>% 
+  mutate(range_pop = case_when(pop < 2793664 ~"very_small",
+                              pop >= 2793664 & pop <= 7023596 ~"small",
+                              pop >=7023596 & pop<=19585222 ~ "medium",
+                              pop >=19585222 ~ "large"))
+gapminder %>% 
+  select(range_pop, country, pop)
+```
+
+```{r}
+gapminder %>% 
+  ggplot(aes(x=continent, y= gdpPercap, fill= range_pop))+
+  geom_boxplot(alpha=0.5)+
+  facet_grid(.~range_pop)+
+  scale_y_log10()+
+  theme(axis.text.x = element_text(angle=60))+
+  labs(title= "Per Capita GDP by Continent and Population Range",
+       x= "Continent", y= "Per Capita GDP")
+```
+
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences. 
