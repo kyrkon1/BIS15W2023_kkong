@@ -1,7 +1,7 @@
 ---
 title: "Lab 11 Homework"
 author: "Kyra Kong"
-date: "2023-02-19"
+date: "2023-02-20"
 output:
   html_document: 
     theme: spacelab
@@ -1943,63 +1943,63 @@ gapminder %>%
 
 **7. Which countries have had the largest population growth since 1952?**
 
-
 ```r
 gapminder %>% 
-  select(pop, country) %>% 
-  group_by(country) %>% 
-  arrange(desc(pop))
+  select(country, year, pop) %>% 
+  filter(year == 1952|year ==2007) %>% 
+  pivot_wider(names_from = year, names_prefix = "yr_", values_from = pop) %>% 
+  mutate(growth = yr_2007-yr_1952) %>% 
+  arrange(desc(growth))
 ```
 
 ```
-## # A tibble: 1,704 × 2
-## # Groups:   country [142]
-##           pop country
-##         <int> <fct>  
-##  1 1318683096 China  
-##  2 1280400000 China  
-##  3 1230075000 China  
-##  4 1164970000 China  
-##  5 1110396331 India  
-##  6 1084035000 China  
-##  7 1034172547 India  
-##  8 1000281000 China  
-##  9  959000000 India  
-## 10  943455000 China  
-## # … with 1,694 more rows
-```
-
-```r
-gapminder_populationgrowth <- gapminder %>% 
-  group_by(country) %>% 
-  mutate(max_pop = max(pop),
-         min_pop = min(pop),
-         range_pop = max_pop - min_pop)
+## # A tibble: 142 × 4
+##    country         yr_1952    yr_2007    growth
+##    <fct>             <int>      <int>     <int>
+##  1 China         556263527 1318683096 762419569
+##  2 India         372000000 1110396331 738396331
+##  3 United States 157553000  301139947 143586947
+##  4 Indonesia      82052000  223547000 141495000
+##  5 Brazil         56602560  190010647 133408087
+##  6 Pakistan       41346560  169270617 127924057
+##  7 Bangladesh     46886859  150448339 103561480
+##  8 Nigeria        33119096  135031164 101912068
+##  9 Mexico         30144317  108700891  78556574
+## 10 Philippines    22438691   91077287  68638596
+## # … with 132 more rows
 ```
 
 ```r
-gapminder_populationgrowth %>%
-  ggplot(aes(x=reorder(country, -range_pop), y= range_pop))+
-  geom_col()+
-   theme(axis.text.x= element_text(angle = 90))+
-  labs(title = "Population Growth of Countries Since 1952",
-       x= "Country", y= "Population Growth")
+options(scipen = 999)
 ```
-
-![](lab11_hw_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
-
 
 
 ```r
 gapminder %>% 
-  ggplot(aes(x=reorder(country, -pop), y= pop))+
-    scale_y_log10()+
-  geom_boxplot()+
-  theme(axis.text.x= element_text(angle = 90))+
-  labs(title = "Population Growth across Countries", x= "Country", y= "Population Growth")
+  select(country, year, pop) %>% 
+  filter(year == 1952|year ==2007) %>% 
+  pivot_wider(names_from = year, names_prefix = "yr_", values_from = pop) %>% 
+  mutate(growth = yr_2007-yr_1952) %>% 
+  arrange(desc(growth))
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
+```
+## # A tibble: 142 × 4
+##    country         yr_1952    yr_2007    growth
+##    <fct>             <int>      <int>     <int>
+##  1 China         556263527 1318683096 762419569
+##  2 India         372000000 1110396331 738396331
+##  3 United States 157553000  301139947 143586947
+##  4 Indonesia      82052000  223547000 141495000
+##  5 Brazil         56602560  190010647 133408087
+##  6 Pakistan       41346560  169270617 127924057
+##  7 Bangladesh     46886859  150448339 103561480
+##  8 Nigeria        33119096  135031164 101912068
+##  9 Mexico         30144317  108700891  78556574
+## 10 Philippines    22438691   91077287  68638596
+## # … with 132 more rows
+```
+
 
 ```r
 gapminder %>% 
@@ -2011,7 +2011,7 @@ gapminder %>%
   labs(title = "Population Growth in Asia", x= "Country", y= "Population Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
 ```r
 gapminder %>% 
@@ -2023,7 +2023,7 @@ ggplot(aes(x=reorder(country, - pop),country,y=pop)) +
   labs(title= "Population Growth in Americas", x = "Country", y= "Population Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
 
 ```r
 gapminder %>% 
@@ -2035,7 +2035,7 @@ gapminder %>%
   labs(title= "Population Growth in Europe", x = "Country", y= "Population Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
 ```r
 gapminder %>% 
@@ -2047,35 +2047,33 @@ gapminder %>%
   labs(title= "Population Growth in Oceania", x = "Country", y= "Population Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
 
 **8. Use your results from the question above to plot population growth for the top five countries since 1952.**
 
 ```r
 gapminder %>% 
-  filter(country == "China"| country == "India"| country == "United States" | country == "Indonesia" | country == "Brazil") %>% 
-  select(country, pop) %>% 
-  ggplot(aes(x=country, y= pop))+
-  geom_boxplot()+
-  scale_y_log10()+
-  labs(title = "Population Growth For the Top 5 Countries Since 1952", 
-       x= "Country", y= "Population Growth")
+  filter(country == "China"| country == "India"| country == "United States"| country== "Indonesia"| country == "Brazil") %>% 
+  select(country, year, pop) %>% 
+  ggplot(aes(x=year,y=pop, color = country))+
+  geom_line()+
+  labs(title = "Population Growth for Top Five Countries",
+       x= "Year", y= "Population Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-26-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
 
 **9. How does per-capita GDP growth compare between these same five countries?**
 
 ```r
 gapminder %>% 
   filter(country == "China"| country == "India"| country == "United States" | country == "Indonesia" | country == "Brazil") %>% 
-  ggplot(aes(x=country, y= gdpPercap))+
-  geom_boxplot()+
-  scale_y_log10()+
-  labs(title= "Per-Capita GDP Growth Across Top Five Countries", x= "Country", y= "Per Capita GDP Growth")
+  ggplot(aes(x=year, y= gdpPercap, color = country))+
+  geom_line()+
+  labs(title= "Per-Capita GDP Growth Across Top Five Countries", x= "year", y= "Per Capita GDP Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-27-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-26-1.png)<!-- -->
 
 **10. Make one plot of your choice that uses faceting!**
 
@@ -3834,7 +3832,7 @@ gapminder %>%
        x= "Continent", y= "Per Capita GDP")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-31-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-30-1.png)<!-- -->
 
 
 ## Push your final code to GitHub!
