@@ -68,12 +68,12 @@ names(gapminder)
 
 ```{r}
 gapminder %>% 
-  filter(between(year,1952,2007)) %>% 
+  filter(year == 1952| year == 2007) %>% 
   group_by(lifeExp) %>% 
   ggplot(aes(x=year, y= lifeExp)) +
   geom_col(fill = "peachpuff", alpha =0.5)+
   theme_bw()+
-  labs(title = "Life Expectancy across 1952", y= "Life Expectancy")
+  labs(title = "Life Expectancy between 1952 and 2007", y= "Life Expectancy")
  
 ```
 
@@ -98,7 +98,7 @@ gapminder %>%
 ```{r}
 gapminder %>% 
   group_by(lifeExp) %>% 
-  ggplot(aes(x=continent, y= lifeExp, fill= year))+
+  ggplot(aes(x=continent, y= lifeExp, fill= continent))+
   geom_boxplot(alpha =0.5)+
   theme_bw()+
   labs(title= "Life Expectancy Across Continents from 1952 to 2007",
@@ -163,8 +163,9 @@ Overall the life expectancies for all the continents increase.
 **6. We are interested in the relationship between per capita GDP and life expectancy; i.e. does having more money help you live longer?**
 ```{r}
 gapminder %>% 
-  ggplot(aes(x=lifeExp,y=gdpPercap))+
+  ggplot(aes(x=lifeExp,y=gdpPercap, color=continent))+
   geom_point(alpha =0.5)+
+  coord_flip()+
   labs(title= "Per Capita GDP versus Life Expectancy",
        x= "Life Expectancy", y= "Per Capita GDP")
 ```
@@ -177,19 +178,36 @@ gapminder %>%
   group_by(country) %>% 
   arrange(desc(pop))
 ```
+```{r}
+gapminder_populationgrowth <- gapminder %>% 
+  group_by(country) %>% 
+  mutate(max_pop = max(pop),
+         min_pop = min(pop),
+         range_pop = max_pop - min_pop)
+```
+```{r}
+gapminder_populationgrowth %>%
+  ggplot(aes(x=reorder(country, -range_pop), y= range_pop))+
+  geom_col()+
+   theme(axis.text.x= element_text(angle = 90))+
+  labs(title = "Population Growth of Countries Since 1952",
+       x= "Country", y= "Population Growth")
+```
+
 
 ```{r}
 gapminder %>% 
   ggplot(aes(x=reorder(country, -pop), y= pop))+
+    scale_y_log10()+
   geom_boxplot()+
-  scale_y_log10()+
   theme(axis.text.x= element_text(angle = 90))+
   labs(title = "Population Growth across Countries", x= "Country", y= "Population Growth")
 ```
 ```{r}
 gapminder %>% 
   filter(continent == "Asia") %>% 
-  ggplot(aes(x=country,y=pop)) +
+  ggplot(aes(x=reorder(country, - pop),country,y=pop)) +
+  scale_y_log10()+
   geom_boxplot()+
     theme(axis.text.x= element_text(angle = 90)) +
   labs(title = "Population Growth in Asia", x= "Country", y= "Population Growth")
@@ -197,16 +215,18 @@ gapminder %>%
 ```{r}
 gapminder %>% 
   filter(continent == "Americas") %>% 
-  ggplot(aes(x=country,y=pop)) +
+ggplot(aes(x=reorder(country, - pop),country,y=pop)) +
   geom_boxplot()+
+  scale_y_log10()+
     theme(axis.text.x= element_text(angle = 90))+
   labs(title= "Population Growth in Americas", x = "Country", y= "Population Growth")
 ```
 ```{r}
 gapminder %>% 
   filter(continent == "Europe") %>% 
-  ggplot(aes(x=country,y=pop)) +
+  ggplot(aes(x=reorder(country, - pop),country,y=pop)) +
   geom_boxplot()+
+  scale_y_log10()+
     theme(axis.text.x= element_text(angle = 90))+
   labs(title= "Population Growth in Europe", x = "Country", y= "Population Growth")
 ```
@@ -214,6 +234,7 @@ gapminder %>%
 gapminder %>% 
   filter(continent == "Oceania") %>% 
   ggplot(aes(x=country,y=pop)) +
+  scale_y_log10()+
   geom_boxplot()+
     theme(axis.text.x= element_text(angle = 90))+
   labs(title= "Population Growth in Oceania", x = "Country", y= "Population Growth")
