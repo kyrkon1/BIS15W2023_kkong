@@ -23,4 +23,11 @@ gapminder %>%
             mean_lifeExp=mean(lifeExp),
             max_lifeExp=max(lifeExp))
 ```
+```{r}
+gapminder %>% 
+  filter(year== 1952| year == 2007) %>% 
+  ggplot(aes(y = lifeExp, group=country)) +
+  geom_density()+
+  coord_flip()
+```
 
