@@ -68,29 +68,23 @@ names(gapminder)
 
 ```{r}
 gapminder %>% 
-  filter(year == 1952| year == 2007) %>% 
-  group_by(lifeExp) %>% 
   ggplot(aes(x=year, y= lifeExp)) +
-  geom_col(fill = "peachpuff", alpha =0.5)+
-  theme_bw()+
-  labs(title = "Life Expectancy between 1952 and 2007", y= "Life Expectancy")
- 
+  geom_col()+
+  labs(title = "Life Expectancy from 1952 and 2007",
+       x= "Year", y= "Life Expectancy")
 ```
+
 
 
 **3. How do the distributions of life expectancy compare for the years 1952 and 2007?**
 
 
-
 ```{r}
 gapminder %>% 
   filter(year== 1952| year == 2007) %>% 
-  select(year, lifeExp) %>% 
-  ggplot(aes(x=year, y=lifeExp)) +
-  geom_col(alpha =0.5, fill= "peachpuff")+
-  theme_bw()+
-  labs(title = "Distributions of Life Expectancy between 1952 and 2007",
-       x= "Year", y= "Life Expectancy")
+  ggplot(aes(x = year, y = lifeExp)) +
+  geom_col(alpha = 0.5)+
+  labs(title ="Life Expectancy for 1952 and 2007", x= "Year", y= "Life Expectancy")
 ```
 
 
@@ -107,23 +101,29 @@ gapminder %>%
 
 
 **5. How has life expectancy changed between 1952-2007 for each continent?**
-
+```{r}
+gapminder %>% 
+  ggplot(aes(x=year, y= lifeExp, group= country, color= continent))+
+  geom_line()
+```
 ```{r}
 gapminder %>% 
   filter(continent == "Africa") %>% 
   filter(between(year, 1952,2007)) %>% 
   ggplot(aes(x=year, y= lifeExp)) +
-  geom_col(alpha=0.5, fill= "light green")+
-  labs(title= "Life Expectancy between 1952 and 2007 for Africa",
+  geom_col(alpha=0.5, fill= "green")+
+  labs(title= "Life Expectancy between 1952 and 2007 for Americas",
        x= "Year", y= "Life Expectancy")+
   theme_bw()
 ```
+
+
 ```{r}
 gapminder %>% 
   filter(continent == "Americas") %>% 
   filter(between(year, 1952,2007)) %>% 
   ggplot(aes(x=year, y= lifeExp)) +
-  geom_col(alpha=0.5, fill= "light blue")+
+  geom_col(alpha=0.5, fill = "red")+
   labs(title= "Life Expectancy between 1952 and 2007 for Americas",
        x= "Year", y= "Life Expectancy")+
   theme_bw()

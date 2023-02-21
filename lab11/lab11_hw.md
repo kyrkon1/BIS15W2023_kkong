@@ -1814,31 +1814,26 @@ names(gapminder)
 
 ```r
 gapminder %>% 
-  filter(year == 1952| year == 2007) %>% 
-  group_by(lifeExp) %>% 
   ggplot(aes(x=year, y= lifeExp)) +
-  geom_col(fill = "peachpuff", alpha =0.5)+
-  theme_bw()+
-  labs(title = "Life Expectancy between 1952 and 2007", y= "Life Expectancy")
+  geom_col()+
+  labs(title = "Life Expectancy from 1952 and 2007",
+       x= "Year", y= "Life Expectancy")
 ```
 
 ![](lab11_hw_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
 
 
 **3. How do the distributions of life expectancy compare for the years 1952 and 2007?**
 
 
 
-
 ```r
 gapminder %>% 
   filter(year== 1952| year == 2007) %>% 
-  select(year, lifeExp) %>% 
-  ggplot(aes(x=year, y=lifeExp)) +
-  geom_col(alpha =0.5, fill= "peachpuff")+
-  theme_bw()+
-  labs(title = "Distributions of Life Expectancy between 1952 and 2007",
-       x= "Year", y= "Life Expectancy")
+  ggplot(aes(x = year, y = lifeExp)) +
+  geom_col(alpha = 0.5)+
+  labs(title ="Life Expectancy for 1952 and 2007", x= "Year", y= "Life Expectancy")
 ```
 
 ![](lab11_hw_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
@@ -1861,32 +1856,41 @@ gapminder %>%
 
 **5. How has life expectancy changed between 1952-2007 for each continent?**
 
-
 ```r
 gapminder %>% 
-  filter(continent == "Africa") %>% 
-  filter(between(year, 1952,2007)) %>% 
-  ggplot(aes(x=year, y= lifeExp)) +
-  geom_col(alpha=0.5, fill= "light green")+
-  labs(title= "Life Expectancy between 1952 and 2007 for Africa",
-       x= "Year", y= "Life Expectancy")+
-  theme_bw()
+  ggplot(aes(x=year, y= lifeExp, group= country, color= continent))+
+  geom_line()
 ```
 
 ![](lab11_hw_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 ```r
 gapminder %>% 
-  filter(continent == "Americas") %>% 
+  filter(continent == "Africa") %>% 
   filter(between(year, 1952,2007)) %>% 
   ggplot(aes(x=year, y= lifeExp)) +
-  geom_col(alpha=0.5, fill= "light blue")+
+  geom_col(alpha=0.5, fill= "green")+
   labs(title= "Life Expectancy between 1952 and 2007 for Americas",
        x= "Year", y= "Life Expectancy")+
   theme_bw()
 ```
 
 ![](lab11_hw_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+
+
+
+```r
+gapminder %>% 
+  filter(continent == "Americas") %>% 
+  filter(between(year, 1952,2007)) %>% 
+  ggplot(aes(x=year, y= lifeExp)) +
+  geom_col(alpha=0.5, fill = "red")+
+  labs(title= "Life Expectancy between 1952 and 2007 for Americas",
+       x= "Year", y= "Life Expectancy")+
+  theme_bw()
+```
+
+![](lab11_hw_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
 ```r
 gapminder %>% 
@@ -1899,7 +1903,7 @@ gapminder %>%
   theme_bw()
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
 
 ```r
 gapminder %>% 
@@ -1912,7 +1916,7 @@ gapminder %>%
   theme_bw()
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
 ```r
 gapminder %>% 
@@ -1925,7 +1929,7 @@ gapminder %>%
   theme_bw()
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 Overall the life expectancies for all the continents increase.
 
 **6. We are interested in the relationship between per capita GDP and life expectancy; i.e. does having more money help you live longer?**
@@ -1939,7 +1943,7 @@ gapminder %>%
        x= "Life Expectancy", y= "Per Capita GDP")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
 **7. Which countries have had the largest population growth since 1952?**
 
@@ -2011,7 +2015,7 @@ gapminder %>%
   labs(title = "Population Growth in Asia", x= "Country", y= "Population Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
 
 ```r
 gapminder %>% 
@@ -2023,7 +2027,7 @@ ggplot(aes(x=reorder(country, - pop),country,y=pop)) +
   labs(title= "Population Growth in Americas", x = "Country", y= "Population Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
 ```r
 gapminder %>% 
@@ -2035,7 +2039,7 @@ gapminder %>%
   labs(title= "Population Growth in Europe", x = "Country", y= "Population Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
 
 ```r
 gapminder %>% 
@@ -2047,7 +2051,7 @@ gapminder %>%
   labs(title= "Population Growth in Oceania", x = "Country", y= "Population Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
 
 **8. Use your results from the question above to plot population growth for the top five countries since 1952.**
 
@@ -2061,7 +2065,7 @@ gapminder %>%
        x= "Year", y= "Population Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-26-1.png)<!-- -->
 
 **9. How does per-capita GDP growth compare between these same five countries?**
 
@@ -2073,7 +2077,7 @@ gapminder %>%
   labs(title= "Per-Capita GDP Growth Across Top Five Countries", x= "year", y= "Per Capita GDP Growth")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-26-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-27-1.png)<!-- -->
 
 **10. Make one plot of your choice that uses faceting!**
 
@@ -3832,7 +3836,7 @@ gapminder %>%
        x= "Continent", y= "Per Capita GDP")
 ```
 
-![](lab11_hw_files/figure-html/unnamed-chunk-30-1.png)<!-- -->
+![](lab11_hw_files/figure-html/unnamed-chunk-31-1.png)<!-- -->
 
 
 ## Push your final code to GitHub!
