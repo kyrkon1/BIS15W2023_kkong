@@ -1814,14 +1814,13 @@ names(gapminder)
 
 ```r
 gapminder %>% 
-  ggplot(aes(x=year, y= lifeExp)) +
+  filter(between(year, 1952, 2007)) %>%
+  ggplot(aes(x=year, y= lifeExp, group= year))+
   geom_col()+
-  labs(title = "Life Expectancy from 1952 and 2007",
-       x= "Year", y= "Life Expectancy")
+  labs(title = "Global Life Expectancy between 1952 and 2007", x= "Year", y= "Life Expectancy")
 ```
 
 ![](lab11_hw_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
-
 
 
 **3. How do the distributions of life expectancy compare for the years 1952 and 2007?**
@@ -1858,8 +1857,16 @@ gapminder %>%
 
 ```r
 gapminder %>% 
-  ggplot(aes(x=year, y= lifeExp, group= country, color= continent))+
-  geom_line()
+  group_by(year,continent) %>% 
+  summarize(mean=mean(lifeExp)) %>% 
+  ggplot(aes(x=year, y= mean, group = continent, color =continent))+
+  geom_line()+
+  labs(title= "Life Expectancy Between 1952 and 2007 for Continents", x= "Year", y= "Mean Life Expectancy")
+```
+
+```
+## `summarise()` has grouped output by 'year'. You can override using the
+## `.groups` argument.
 ```
 
 ![](lab11_hw_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
