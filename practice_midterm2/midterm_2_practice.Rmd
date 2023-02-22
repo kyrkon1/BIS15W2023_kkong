@@ -209,15 +209,18 @@ income %>%
 
 9. (3 points) Create three new objects that restrict each data set (life expectancy, population, income) to the years 1920-2020. Hint: I suggest doing this with the long form of your data. Once this is done, merge all three data sets using the code I provide below. You may need to adjust the code depending on how you have named your objects. I called mine `life_expectancy_100`, `population_100`, and `income_100`. For some of you, learning these `joins` will be important for your project.  
 ```{r}
-
+life_expectancy_100 <-life_expectancy_tidy%>% 
+  filter(between(year,1920,2020))
 ```
 
 ```{r}
-
+population_100 <-population_tidy %>% 
+  filter(between(year,1920,2020))
 ```
 
 ```{r}
-
+income_100 <-income_tidy %>% 
+  filter(between(year,1920,2020))
 ```
 
 ```{r}
@@ -229,9 +232,24 @@ gapminder_join
 10. (4 points) Use the joined data to perform an analysis of your choice. The analysis should include a comparison between two or more of the variables `life_expectancy`, `population`, or `income.`  
 
 ```{r}
-
+gapminder_join %>% 
+  group_by(country) %>% 
+  summarize(mean_life_expectancy = mean(life_expectancy, na.rm =T),
+            mean_population =mean(population, na.rm=T),
+            mean_income = mean(income, na.rm =T))
+  
 ```
 
 ```{r}
-
+gapminder_join %>% 
+  group_by(country) %>% 
+  summarize(mean_life_expectancy = mean(life_expectancy, na.rm =T),
+            mean_population =mean(population, na.rm=T),
+            mean_income = mean(income, na.rm =T)) %>% 
+  ggplot(aes(x=mean_life_expectancy, y= mean_income))+
+  scale_y_log10()+
+  geom_point()+
+  geom_smooth(method=lm,se=F)+
+  theme_linedraw()+
+  labs(title = "Mean Life Expectancy by Mean Income", x= "Mean Life Expectancy", y= "Mean Income")
 ```
