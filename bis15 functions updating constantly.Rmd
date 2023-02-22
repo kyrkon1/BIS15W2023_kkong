@@ -47,3 +47,23 @@ fisheries<- fisheries %>%
 We will briefly introduce `if_else()` here because it allows us to use `mutate()` but not have the entire column affected in the same way. In a sense, this can function like find and replace in a spreadsheet program. With `ifelse()`, you first specify a logical statement, afterwards what needs to happen if the statement returns `TRUE`, and lastly what needs to happen if it's  `FALSE`.  
 
 Have a look at the data from mammals below. Notice that the values for newborn include `-999.00`. This is sometimes used as a placeholder for NA (but, is a really bad idea). We can use `if_else()` to replace `-999.00` with `NA`. 
+
+
+
+Pivot Wider: widens data by increasing the number of columns and decreasing number of rows
+uses names_from, names_prefix, names_sep, names_vary, values_from
+
+
+Pivot longer: lengthens data frame by increasing the number of rows and decreasing the number of columns, uses names_to, names_sep, names_prefix, names_pattern, values_to, values_drop_na, 
+
+
+Geom_boxplot: used to display distribution of a continuous variable, shows the media, two hinges, and the two whiskers
+
+Geom_point: makes scatterplot between two continuous variables, and cab ne used to compare one continuous and one categorical or two categorical variables but variations like geom_jitter() or geom_count() or geom_bin2d() can be doable.
+
+Bar charts:
+-geom_bar(): makes the height of the bar proportional to the number of cases in each group
+geom_col(): used to show the heights of the bar to represent values in the data
+
+
+Geom_density: alternative smooth version of the histogram, used for continuous data that comes from an underlying smooth distribution 
