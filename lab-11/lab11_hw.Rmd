@@ -119,7 +119,6 @@ gapminder %>%
   theme_bw()
 ```
 
-
 ```{r}
 gapminder %>% 
   filter(continent == "Americas") %>% 
