@@ -127,17 +127,96 @@ The variable `ccsmort30rate` is a measure of the overall 30-day mortality rate a
 7. (4 points) What are the 5 procedures associated with highest risk of 30-day mortality AND how do they compare with the 5 procedures with highest risk of complication? (hint: no need for a plot here)
 ```{r}
 surgery%>% 
-  select(ahrq_ccs, ccsmort30rate) 
-            
+group_by(ahrq_ccs) %>% 
+  summarize( mean_ccsmort30rate = mean(ccsmort30rate)) %>% 
+  slice_max(mean_ccsmort30rate, n=5)
 
+```
+```{r}
+surgery%>% 
+group_by(ahrq_ccs) %>% 
+  summarize(mean_ccscomplicationrate = mean(ccscomplicationrate)) %>% 
+  slice_max(mean_ccscomplicationrate, n=5)
 ```
 
 8. (3 points) Make a plot that compares the `ccsmort30rate` for all listed `ahrq_ccs` procedures.
+```{r}
+surgery %>% 
+  group_by(ahrq_ccs) %>% 
+  summarize(mean_ccsmort30rate = mean(ccsmort30rate)) %>% 
+  ggplot(aes(x=ahrq_ccs, y= mean_ccsmort30rate))+
+  geom_col()+
+  labs(title = "Distribution of CCSMORT30 Rate for All AHRQ_CCS Procedures", x= "AHRQ Procedures", y= "Mean CCSMORT 30 Rate")+
+  coord_flip()+
+  theme_bw()
+```
 
 9. (4 points) When is the best month to have surgery? Make a chart that shows the 30-day mortality and complications for the patients by month. `mort30` is the variable that shows whether or not a patient survived 30 days post-operation.
+```{r}
+names(surgery)
+```
+
+```{r}
+surgery %>% 
+  mutate(complication =as.factor(complication)) %>% 
+  mutate(mort30 =as.factor(mort30)) %>% 
+  group_by(month) %>% 
+  count(mort30) %>% 
+  filter(mort30 == "Yes") %>% 
+  arrange(desc(n))
+
+```
+
+```{r}
+surgery %>% 
+  mutate(complication =as.factor(complication)) %>% 
+  mutate(mort30 =as.factor(mort30)) %>% 
+  group_by(month) %>% 
+  count(mort30) %>% 
+  filter(mort30 == "No") %>% 
+  arrange(desc(n))
+```
+
+```{r}
+surgery %>% 
+  mutate(complication =as.factor(complication)) %>% 
+  mutate(mort30 =as.factor(mort30)) %>% 
+  group_by(month) %>% 
+  count(complication) %>% 
+  filter(complication == "Yes") %>% 
+  arrange(desc(n))
+```
+```{r}
+surgery %>% 
+  mutate(complication =as.factor(complication)) %>% 
+  mutate(mort30 =as.factor(mort30)) %>% 
+  group_by(month) %>% 
+  count(complication, mort30) %>% 
+  arrange(desc(n))
+```
+Least amount of deaths in Month of December.
+
 
 10. (4 points) Make a plot that visualizes the chart from question #9. Make sure that the months are on the x-axis. Do a search online and figure out how to order the months Jan-Dec.
 
+```{r}
+names(surgery)
+```
+```{r}
+surgery$month =factor(surgery$month, levels= month.abb)
+```
+
+```{r}
+surgery %>% 
+  mutate(complication = as.factor(complication)) %>% 
+  mutate(mort30 = as.factor(mort30)) %>% 
+  ggplot(aes(x=month, y= mort30, fill=mort30))+
+  geom_col()+
+  labs(title = "Distribution of Mort 30 over Months", x= "Month", y= "Mort 30")
+```
+
+
 Please provide the names of the students you have worked with with during the exam:
+#Kyle and Harika
 
 Please be 100% sure your exam is saved, knitted, and pushed to your github repository. No need to submit a link on canvas, we will find your exam in your repository.

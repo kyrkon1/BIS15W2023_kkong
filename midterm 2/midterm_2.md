@@ -308,32 +308,229 @@ The variable `ccsmort30rate` is a measure of the overall 30-day mortality rate a
 
 ```r
 surgery%>% 
-  select(ahrq_ccs, ccsmort30rate) 
+group_by(ahrq_ccs) %>% 
+  summarize( mean_ccsmort30rate = mean(ccsmort30rate)) %>% 
+  slice_max(mean_ccsmort30rate, n=5)
 ```
 
 ```
-## # A tibble: 32,001 × 2
-##    ahrq_ccs ccsmort30rate
-##    <chr>            <dbl>
-##  1 <Other>        0.00425
-##  2 <Other>        0.00425
-##  3 <Other>        0.00425
-##  4 <Other>        0.00425
-##  5 <Other>        0.00425
-##  6 <Other>        0.00425
-##  7 <Other>        0.00425
-##  8 <Other>        0.00425
-##  9 <Other>        0.00425
-## 10 <Other>        0.00425
-## # … with 31,991 more rows
+## # A tibble: 5 × 2
+##   ahrq_ccs                                             mean_ccsmort30rate
+##   <chr>                                                             <dbl>
+## 1 Colorectal resection                                            0.0167 
+## 2 Small bowel resection                                           0.0129 
+## 3 Gastrectomy; partial and total                                  0.0127 
+## 4 Endoscopy and endoscopic biopsy of the urinary tract            0.00811
+## 5 Spinal fusion                                                   0.00742
+```
+
+```r
+surgery%>% 
+group_by(ahrq_ccs) %>% 
+  summarize(mean_ccscomplicationrate = mean(ccscomplicationrate)) %>% 
+  slice_max(mean_ccscomplicationrate, n=5)
+```
+
+```
+## # A tibble: 5 × 2
+##   ahrq_ccs                         mean_ccscomplicationrate
+##   <chr>                                               <dbl>
+## 1 Small bowel resection                               0.466
+## 2 Colorectal resection                                0.312
+## 3 Nephrectomy; partial or complete                    0.197
+## 4 Gastrectomy; partial and total                      0.190
+## 5 Spinal fusion                                       0.183
 ```
 
 8. (3 points) Make a plot that compares the `ccsmort30rate` for all listed `ahrq_ccs` procedures.
 
+```r
+surgery %>% 
+  group_by(ahrq_ccs) %>% 
+  summarize(mean_ccsmort30rate = mean(ccsmort30rate)) %>% 
+  ggplot(aes(x=ahrq_ccs, y= mean_ccsmort30rate))+
+  geom_col()+
+  labs(title = "Distribution of CCSMORT30 Rate for All AHRQ_CCS Procedures", x= "AHRQ Procedures", y= "Mean CCSMORT 30 Rate")+
+  coord_flip()+
+  theme_bw()
+```
+
+![](midterm_2_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
+
 9. (4 points) When is the best month to have surgery? Make a chart that shows the 30-day mortality and complications for the patients by month. `mort30` is the variable that shows whether or not a patient survived 30 days post-operation.
+
+```r
+names(surgery)
+```
+
+```
+##  [1] "ahrq_ccs"            "age"                 "gender"             
+##  [4] "race"                "asa_status"          "bmi"                
+##  [7] "baseline_cancer"     "baseline_cvd"        "baseline_dementia"  
+## [10] "baseline_diabetes"   "baseline_digestive"  "baseline_osteoart"  
+## [13] "baseline_psych"      "baseline_pulmonary"  "baseline_charlson"  
+## [16] "mortality_rsi"       "complication_rsi"    "ccsmort30rate"      
+## [19] "ccscomplicationrate" "hour"                "dow"                
+## [22] "month"               "moonphase"           "mort30"             
+## [25] "complication"
+```
+
+
+```r
+surgery %>% 
+  mutate(complication =as.factor(complication)) %>% 
+  mutate(mort30 =as.factor(mort30)) %>% 
+  group_by(month) %>% 
+  count(mort30) %>% 
+  filter(mort30 == "Yes") %>% 
+  arrange(desc(n))
+```
+
+```
+## # A tibble: 12 × 3
+## # Groups:   month [12]
+##    month mort30     n
+##    <chr> <fct>  <int>
+##  1 Jan   Yes       19
+##  2 Feb   Yes       17
+##  3 Sep   Yes       16
+##  4 Jun   Yes       14
+##  5 Apr   Yes       12
+##  6 Jul   Yes       12
+##  7 Mar   Yes       12
+##  8 May   Yes       10
+##  9 Aug   Yes        9
+## 10 Oct   Yes        8
+## 11 Nov   Yes        5
+## 12 Dec   Yes        4
+```
+
+
+```r
+surgery %>% 
+  mutate(complication =as.factor(complication)) %>% 
+  mutate(mort30 =as.factor(mort30)) %>% 
+  group_by(month) %>% 
+  count(mort30) %>% 
+  filter(mort30 == "No") %>% 
+  arrange(desc(n))
+```
+
+```
+## # A tibble: 12 × 3
+## # Groups:   month [12]
+##    month mort30     n
+##    <chr> <fct>  <int>
+##  1 Sep   No      3192
+##  2 Aug   No      3168
+##  3 Jun   No      2980
+##  4 Apr   No      2686
+##  5 Mar   No      2685
+##  6 Oct   No      2681
+##  7 Jan   No      2651
+##  8 May   No      2644
+##  9 Nov   No      2539
+## 10 Feb   No      2489
+## 11 Jul   No      2313
+## 12 Dec   No      1835
+```
+
+
+```r
+surgery %>% 
+  mutate(complication =as.factor(complication)) %>% 
+  mutate(mort30 =as.factor(mort30)) %>% 
+  group_by(month) %>% 
+  count(complication) %>% 
+  filter(complication == "Yes") %>% 
+  arrange(desc(n))
+```
+
+```
+## # A tibble: 12 × 3
+## # Groups:   month [12]
+##    month complication     n
+##    <chr> <fct>        <int>
+##  1 Aug   Yes            462
+##  2 Sep   Yes            424
+##  3 Jun   Yes            410
+##  4 Jan   Yes            407
+##  5 Oct   Yes            377
+##  6 Feb   Yes            343
+##  7 May   Yes            333
+##  8 Nov   Yes            325
+##  9 Mar   Yes            324
+## 10 Apr   Yes            321
+## 11 Jul   Yes            301
+## 12 Dec   Yes            237
+```
+
+```r
+surgery %>% 
+  mutate(complication =as.factor(complication)) %>% 
+  mutate(mort30 =as.factor(mort30)) %>% 
+  group_by(month) %>% 
+  count(complication, mort30) %>% 
+  arrange(desc(n))
+```
+
+```
+## # A tibble: 48 × 4
+## # Groups:   month [12]
+##    month complication mort30     n
+##    <chr> <fct>        <fct>  <int>
+##  1 Sep   No           No      2774
+##  2 Aug   No           No      2708
+##  3 Jun   No           No      2574
+##  4 Apr   No           No      2369
+##  5 Mar   No           No      2363
+##  6 May   No           No      2314
+##  7 Oct   No           No      2306
+##  8 Jan   No           No      2252
+##  9 Nov   No           No      2217
+## 10 Feb   No           No      2152
+## # … with 38 more rows
+```
+Least amount of deaths in Month of December.
+
 
 10. (4 points) Make a plot that visualizes the chart from question #9. Make sure that the months are on the x-axis. Do a search online and figure out how to order the months Jan-Dec.
 
+
+```r
+names(surgery)
+```
+
+```
+##  [1] "ahrq_ccs"            "age"                 "gender"             
+##  [4] "race"                "asa_status"          "bmi"                
+##  [7] "baseline_cancer"     "baseline_cvd"        "baseline_dementia"  
+## [10] "baseline_diabetes"   "baseline_digestive"  "baseline_osteoart"  
+## [13] "baseline_psych"      "baseline_pulmonary"  "baseline_charlson"  
+## [16] "mortality_rsi"       "complication_rsi"    "ccsmort30rate"      
+## [19] "ccscomplicationrate" "hour"                "dow"                
+## [22] "month"               "moonphase"           "mort30"             
+## [25] "complication"
+```
+
+```r
+surgery$month =factor(surgery$month, levels= month.abb)
+```
+
+
+```r
+surgery %>% 
+  mutate(complication = as.factor(complication)) %>% 
+  mutate(mort30 = as.factor(mort30)) %>% 
+  ggplot(aes(x=month, y= mort30, fill=mort30))+
+  geom_col()+
+  labs(title = "Distribution of Mort 30 over Months", x= "Month", y= "Mort 30")
+```
+
+![](midterm_2_files/figure-html/unnamed-chunk-28-1.png)<!-- -->
+
+
 Please provide the names of the students you have worked with with during the exam:
+#Kyle and Harika
 
 Please be 100% sure your exam is saved, knitted, and pushed to your github repository. No need to submit a link on canvas, we will find your exam in your repository.
