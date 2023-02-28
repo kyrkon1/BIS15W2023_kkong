@@ -34,25 +34,36 @@ library(shiny)
 We will also need the `tidyverse` and `palmerpenguins` to run the examples.
 ```{r, echo=FALSE}
 library(tidyverse)
-library(palmerpenguins)
+library("palmerpenguins")
+
 ```
 
 ## Shiny Example
 Shiny apps can be designed to do almost anything you can imagine. They are very useful for making specialized tools for specific needs in business and research, or just for fun! Let's run a basic example on our computer. Type the following into the R console. You should have the file `plot_iris.R` in your working directory. Use the drop down menus to change the x and y axes on the plot. 
 ```{r, eval=F, echo=T}
-runApp("plot_iris.R")
+runApp("plot_iris.R") # uses iris dataset, interactive: allows users to figure out what they want to plot (changing x and y axes)
 ```
 
 ## Shiny App Skeleton
 A shiny app consists of a user interface (ui) function, server function, and run function.  
 
-1. The `ui` function controls the user inputs and the way the app will be displayed.  
+1. The `ui` function controls the user inputs and the way the app will be displayed.  (specify what parts are interactive)
 2. The `server` function is the part of the app which takes the values of the user inputs, performs calculations and/or makes plots, and prepares the outputs for display.  
 3. The `run` function combines the ui and server function to run the app.  
 
 Below is a bare bones shiny app. You can get this code snippet by typing `shinyapp`. It doesn't do anything because we haven't created any inputs with the ui or any outputs with the server.
 ```{r}
+library(shiny)
 
+ui <- fluidPage(
+  
+)
+
+server <- function(input, output, session) {
+  
+}
+
+shinyApp(ui, server) # run combines the ui and the server
 ```
 
 For the rest of the lab we will work on building an example app using `palmerpenguins`.  
@@ -63,9 +74,13 @@ There are many types of inputs in shiny, see the [shiny cheat sheet](https://shi
 Let's get the names of the `palmerpenguins` data frame and add them as a `selectInput()` to our ui. `selectInput()` takes several arguments including the label that the server function will use, the label that will display to the user, the selection choices, and the initially selected choice.  
 
 Since we will make a scatterplot, let's focus on the continuous variables. The first step is to setup the x variable input.
+```{r}
+names(penguins)
+```
+
 ```{r, eval=F, echo=T}
 ui <- fluidPage(
-    selectInput("x", "Select X Variable", choices = c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"), selected = "bill_length_mm")
+    selectInput("x", "Select X Variable", choices = c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"), selected = "bill_length_mm") #what the variable is, what the user sees, and then the 4 choices, and selected is where the option starts
 )
 
 server <- function(input, output) {
@@ -75,9 +90,19 @@ server <- function(input, output) {
 shinyApp(ui, server)
 ```
 
+
+`
 Let's repeat the process for the y variable input. Remember to hit stop after each app run to close the app. 
 ```{r, eval=F, echo=T}
+ui <- fluidPage(
+    selectInput("x", "Select X Variable", choices = c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"), selected = "bill_length_mm"), 
+     selectInput("y", "Select Y Variable", choices = c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"), selected = "bill_length_mm") 
+)
+server <- function(input, output) {
+  
+}
 
+shinyApp(ui, server)
 ```
 
 ## Server Side  
@@ -102,8 +127,35 @@ shinyApp(ui, server)
 
 ## Shiny Outputs  
 So we have our inputs in a reactive environment, but we want to actually use those inputs to make a plot and display it on the ui. To make and display the plot, we need to save it to a named output object that the ui can use. To do this we use the reactive expression `renderPlot()` and access the plot on the ui side with `plotOutput()`. The inputs from `selectInput()` are character strings, so we need to use `aes_string()` in `ggplot`.
-```{r, eval=F, echo=T}
+```{r}
+names(penguins)
+```
 
+```{r}
+penguins %>% 
+  ggplot(aes(x=bill_length_mm, y= flipper_length_mm))+
+  geom_point()
+```
+
+```{r, eval=F, echo=T}
+ui <- fluidPage(
+    selectInput("x", "Select X Variable", choices = c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"), 
+              selected = "bill_length_mm"),
+    selectInput("y", "Select Y Variable", choices = c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"), 
+              selected = "bill_length_mm"), 
+    plotOutput("plot", width = "500px", height = "400px") # tell ui that the output is a plot
+)
+
+server <- function(input, output) {
+  output$plot <-renderPlot({
+    ggplot(data=penguins, aes_string(x=input$x, y= input$y, color = "species"))+
+      geom_point()+
+      theme_light(base_size= 18)
+  })
+  
+}
+    
+shinyApp(ui, server)
 ```
 
 Congratulations, you made your first shiny app!  
@@ -113,10 +165,38 @@ Congratulations, you made your first shiny app!
 ```{r, echo=FALSE}
 homerange <- readr::read_csv("data/Tamburelloetal_HomeRangeDatabase.csv")
 ```
+```{r}
+homerange %>% 
+  ggplot(aes(x=locomotion, fill = trophic.guild))+
+  geom_bar(position = "dodge")
+```
 
+```{r}
+homerange %>% 
+  ggplot(aes(x=locomotion, fill = thermoregulation))+
+  geom_bar(position = "dodge")
+```
 2. Build a shiny app that produces a barplot that explores `locomotion` type with a fill reaction for the variables `trophic.guild` and `thermoregulation`.  
 ```{r}
+library(shiny)
 
+ui <- fluidPage(
+  radioButtons( "x", "Select Fill Variable", choices = c("trophic.guild", "thermoregulation"), selected= "trophic.guild"),
+  plotOutput("plot")
+  
+)
+
+server <- function(input, output, session) {
+  output$plot<-renderPlot({
+    ggplot(data= homerange, aes_string(x="locomotion", fill= input$x))+
+      geom_bar(position="dodge", alpha =0.8, color = "black")+
+      theme_light()+
+      labs(x= NULL, y= NULL, fill = "Fill Variable") # null means there's no labels for the x or the y axis 
+  })
+  
+}
+
+shinyApp(ui, server)
 ```
 
 A little nicer aesthetics...  

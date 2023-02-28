@@ -12,4 +12,17 @@ library("jpeg")
 ## Projects
 1. Meet with your group members and discuss where you are in the project.
 2. Make a plan; who is doing which parts?
+
+Has happiness changed from COVID times to now?
+
+Analyze the factors for happiness: Dystopia, Generosity, Perceptions of Corruption, Freedom to make decisions, Healthy Life Expectations, Social support, and GDP per capita.
+
+
+Top 5 Happiest Countries: Harika for both 2020 and 2021
+
+Bottom 5 Happiest Countries: Kyra for both 2020 and 2021
+
+Mapping happiness on a world map?
+-need to learn how to do this and manage dates
+-use the basis
 3. What do you need from us?
