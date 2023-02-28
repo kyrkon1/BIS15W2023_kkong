@@ -23,7 +23,7 @@ library(tidyverse)
 library(shiny)
 library(shinydashboard)
 ```
-
+# go through the hw and adjust and do the practice example for the wolves (app for the wolves)
 ## Data
 The data for this assignment come from the [University of California Information Center](https://www.universityofcalifornia.edu/infocenter). Admissions data were collected for the years 2010-2019 for each UC campus. Admissions are broken down into three categories: applications, admits, and enrollees. The number of individuals in each category are presented by demographic.  
 ```{r}
@@ -179,6 +179,30 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+
+
+
+## Wolves Example
+Let's try to build an app that allows users to explore sexual composition of wolf packs by `pop`. These data are from: Brandell, Ellen E (2021), Serological dataset and R code for: Patterns and processes of pathogen exposure in gray wolves across North America, Dryad, [Dataset](https://doi.org/10.5061/dryad.5hqbzkh51)  
+
+1. Start by loading and exploring the data.
+```{r}
+wolves <- read_csv("data/wolves_data/wolves_dataset.csv")
+```
+
+```{r}
+names(wolves)
+```
+
+2. For the app, here is a faceted version of what we are looking for. We want the reactive part to be `pop` and you should use `shinydashboard`.
+```{r}
+wolves %>% 
+  filter(sex!="NA") %>% 
+  ggplot(aes(x=sex, fill=sex))+
+  geom_bar()+
+  facet_wrap(~pop)
+```
+
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences. 

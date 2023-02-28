@@ -46,7 +46,7 @@ homerange <- readr::read_csv("data/Tamburelloetal_HomeRangeDatabase.csv")
 ```{r}
 ui <- fluidPage(titlePanel("Homerange Locomotion"),
                 radioButtons("x", "Select Fill Variable", choices=c("trophic.guild", "thermoregulation"), selected="trophic.guild"),
-                plotOutput("plot", width="600px", height="500px")
+                plotOutput("plot", width="600px", height="500px") # raido button, you can click on which one to choose from
 )
 
 server <- function(input, output, session) {
@@ -66,15 +66,47 @@ shinyApp(ui, server)
 There are many ways to adjust shiny apps for better visual appeal. Let's start with some more practice and then add details.
 
 Let's build an app using the `homerange` data that will produce a density plot of `log10.hra` with reactivity assigned to `taxon`.
-```{r}
 
+```{r}
+table(homerange$taxon)
+```
+
+```{r}
+homerange %>% 
+  filter(taxon == "birds") %>% 
+  ggplot(aes(x=log10.hra))+
+  geom_density( fill = "steelblue", color = "black", alpha =0.6)
+```
+
+```{r}
+library(shiny)
+
+ui <- fluidPage(titlePanel("Log10.hra by Taxon"),
+                 selectInput("x", "Select Taxon", choices = c("birds", "lake fishes", "lizards", "mammals", "marine fishes", "river fishes", "snakes", "tortoises", "turtles"), selected = "birds"), # drop down menu for select input
+                 plotOutput("plot", width = "600px", height = "400px")
+  
+)
+
+server <- function(input, output, session) {
+  output$plot <- renderPlot( {
+    homerange %>% 
+      filter(taxon == input$x) %>% 
+      ggplot(aes(x= log10.hra))+
+      geom_density(fill = "steelblue", color = "black", alpha =0.6)
+  })
+  
+}
+
+shinyApp(ui, server)
 ```
 
 ## Adding Numeric Input
 Let's try adding a new numeric input so the user can change the size of the points on the plot with a slider. We can do this with the `sliderInput()` function. The `sliderInput()` function takes a label that the server function will use to access the value, the label that the ui will display to the user, a minimum and maximum value, a starting value, and a step size. Edit the script to include the slider input in the ui and for the server to access the input value.
+
+(with three interactions, selecting x, y variables and adjusting the point size)
 ```{r, eval=F, echo=T}
 ui <- fluidPage(
-    selectInput("x", "Select X Variable", choices = c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"),
+    selectInput("x", "Select X Variable", choices = c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"), 
               selected = "bill_length_mm"),
     selectInput("y", "Select Y Variable", choices = c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"),
               selected = "bill_depth_mm"),
@@ -83,7 +115,7 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  session$onSessionEnded(stopApp)
+  session$onSessionEnded(stopApp) # when you close the session, stops the app 
   output$plot <- renderPlot({
   ggplot(penguins, aes_string(x = input$x, y = input$y, color="species")) + 
       geom_point(size=input$pointsize) + 
@@ -259,7 +291,7 @@ Please review the learning goals and be sure to use the code here as a reference
 -->[Home](https://jmledford3115.github.io/datascibiol/)
 
 
-Sneaky Example...
+Sneaky Example... 
 ```{r, eval=F, echo=T}
 ui <- fluidPage(    
   
