@@ -1,0 +1,73 @@
+---
+title: "Lab-12-hw-wolf"
+author: "Kyra Kong"
+date: '2023-03-01'
+output: 
+  html_document: 
+    keep_md: yes
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Libraries
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(shiny)
+library(shinydashboard)
+```
+
+## Wolves Example
+Let's try to build an app that allows users to explore sexual composition of wolf packs by `pop`. These data are from: Brandell, Ellen E (2021), Serological dataset and R code for: Patterns and processes of pathogen exposure in gray wolves across North America, Dryad, [Dataset](https://doi.org/10.5061/dryad.5hqbzkh51)  
+
+1. Start by loading and exploring the data.
+```{r}
+wolves <- read_csv("data/wolves_data/wolves_dataset.csv")
+```
+
+```{r}
+names(wolves)
+```
+
+2. For the app, here is a faceted version of what we are looking for. We want the reactive part to be `pop` and you should use `shinydashboard`.
+```{r}
+wolves %>% 
+  filter(sex!="NA") %>% 
+  ggplot(aes(x=sex, fill=sex))+
+  geom_bar()+
+  facet_wrap(~pop)
+```
+```{r}
+library(shiny)
+
+ui <-dashboardPage(
+  dashboardHeader(title ="Sexual Composition of Wolves by Population"),
+  dashboardSidebar(disable= T),
+  dashboardBody(
+    fluidRow(
+      box(title = "Population Options", width = 3,
+        selectInput("x", "Select Population", choices = c("AK.PEN", "BAN.JAS", "BC", "DENALI", "ELLES", "GTNP", "INT.AK", "MEXICAN", "MI", "MT", "N.NWT", "ONT", "SE.AK", "SNF", "SS.NWT", "YNP", "YUCH"), selected = "AK.PEN"),
+                plotOutput("plot", width= "600px", height = "400px")
+  
+))))
+
+server <- function(input, output, session) {
+  session$onSessionEnded(stopApp) 
+  output$plot <- renderPlot({
+    wolves %>% 
+      filter(sex!= "NA") %>% 
+      filter(pop== input$x) %>% 
+      ggplot(aes(x=sex, fill= sex))+
+      geom_bar(color= "black", alpha = 0.5)+
+      theme_light()
+      
+  })
+  
+}
+
+shinyApp(ui, server)
+```
+
