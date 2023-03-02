@@ -27,20 +27,34 @@ elephants <-read.csv("data/ElephantsMF.csv")
 glimpse(elephants)
 ```
 
+```{r}
+elephants %>% 
+  ggplot(aes(x=Age, y= Height))+
+  geom_point()+
+  facet_wrap(~Sex)
+```
+
 2. Make a simple shiny app that produces a scatterplot of age vs. height with reactivity assigned to sex. Make sure to include a title and try to incorporate the reference to the data.
 
 ```{r, eval=F, echo=T}
 library(shiny)
 
 ui <- fluidPage(
-  selectInput("x", "Select Sex", choices = c("M", "F")),
-  plotOutput
-  
+  titlePanel("Elephants Age vs Height"),
+  selectInput("Sex", "Select Sex", choices = c("M", "F"), selected = "M"),
+  plotOutput("plot", width = "400px", height= "400px"),
+  helpText("Reference: Phyllis Lee, Stirling University, and Lee, P., et al(2013), Enduring Consequences of early experiences: 40-year effects on survival and success among African elephants (Loxodonta africana), Biology Letters, 9: 20130011.")
   
 )
-
 server <- function(input, output, session) {
+  output$plot <-renderPlot({
+      session$onSessionEnded(stopApp)
+    filter(elephants, Sex == input$Sex) %>% 
+    ggplot(aes(x=Age, y= Height))+
+      geom_point(alpha = 0.5)+
+      theme_bw()
   
+  })
 }
 
 shinyApp(ui, server)
