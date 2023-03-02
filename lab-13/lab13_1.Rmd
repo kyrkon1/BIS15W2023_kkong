@@ -48,7 +48,7 @@ files
 Now we want to read each of these files into R without having to do them one at a time because there are quite a few. There are several ways to do this, but a quick and straightforward way is to import them as a list. A list in R is an object which can store multiple other objects of the same or differing types. Lists are common in R so it's useful to be comfortable with them. Let's import our .csv files into a list. The `lapply()` function is a part of the `apply` family of functions. It will iterate over elements of an object, apply a function we specify, and return a list. We have a character vector of file paths, so we want to iterate over all the path names and apply `read_csv()`.  
 
 ```{r, message = FALSE}
-spider_list <- lapply(files, read_csv)
+spider_list <- lapply(files, read_csv) # makes a list in files, read.csv (iterates all of the files) from the list of files made earlier
 ```
 
 We can view elements in our list with double brackets. Let's view the data for Butte county.
@@ -59,7 +59,33 @@ spider_list[[3]]
 ## Practice
 1. Getting an idea of the structure of lists is a bit tricky, especially when there are many elements. Try exploring the elements in `spider_list` using names(), str(), or glimpse(). For names(), you will need to specify an element using [[]].  
 ```{r}
+names(spider_list[[1]])
+```
+```{r}
+str(spider_list[[1]])
+```
+```{r}
+glimpse(spider_list[[1]])
+```
+##Naming List Elements
 
+```{r}
+names<-list.files(path= "data/spiders", pattern =" .csv")
+```
+```{r}
+names_list= strsplit(names, split=" .csv")
+```
+```{r}
+names_vec <-unlist(names_list)
+```
+```{r}
+names(spider_list) <-names_vec
+```
+
+
+## Practice
+```{r}
+spider_list$Alameda
 ```
 
 ## Merging Files
@@ -94,14 +120,14 @@ The general syntax for joins is...
 `inner_join`  
 Where did customers 3 and 4 go?
 ```{r}
-inner_exampleDF <- inner_join(table_A, table_B, by="customer_ID")
+inner_exampleDF <- inner_join(table_A, table_B, by="customer_ID") #only focused on the same two customer IDs, joining between the two tables (common customer ids in both table a and b, where all observations for both things you are joining are the same
 inner_exampleDF
 ```
 
 `left_join`
-Where did customer 4 go? Notice the missing data for customer 3.
+Where did customer 4 go? Notice the missing data for customer 3. 
 ```{r}
-left_exampleDF <- left_join(table_A, table_B, by="customer_ID")
+left_exampleDF <- left_join(table_A, table_B, by="customer_ID") #merged the table A to table B, but since there is no data for customer 3 for the Table B, it is NA. Customer 4 goes away because it joins only TABLE A
 left_exampleDF
 ```
 
@@ -114,7 +140,7 @@ right_exampleDF
 
 `full_join`
 ```{r}
-full_exampleDF <- full_join(table_A, table_B, by="customer_ID")
+full_exampleDF <- full_join(table_A, table_B, by="customer_ID") # easier to deal with missing data than by using the other types of join (left or right)
 full_exampleDF
 ```
 
@@ -138,7 +164,7 @@ We will use a join here to merge lat/long to our data frame. Both files contain 
 1. Which type of join is most appropriate in this case?  
 ```{r}
 spiders_with_locs <- 
-  left_join(spiders_all, spiders_locs, by = "Accession")
+  left_join(spiders_all, spiders_locs, by = "Accession") # joining the tables with the location, making one to one matches
 summary(spiders_with_locs)
 names(spiders_with_locs)
 ```
@@ -149,8 +175,10 @@ As a side note, joining data can highlight problems or typos with the data when 
 We now have a single data frame with all of our spider data including locations. That was a lot of work, even with R. But remember, now we have a reproducible work flow starting from the original files. This work flow serves as a record of what we did, keeps the original files untouched, and can make it easier to track down problems later in our analysis. Most importantly, everyone who uses our R script will know exactly what we did!  
 
 There is one last thing to change. Did you notice the date column? It seems to be in the format Day/Month/Year. 
+
 ```{r}
-class(spiders_with_locs$Date)
+class(spiders_with_locs$Date) # R makes its best guess as to what the date is, for this date is interpreted as a character
+glimpse(spiders_with_locs)
 ```
 
 The `lubridate` package was specifically created to deal with dates of all types. There are many useful functions in `lubridate` for working with dates. Please see the excellent tutorial provided by [RichardOnData](https://www.youtube.com/watch?v=VYAo69WdJZg&ab_channel=RichardOnData).
@@ -190,7 +218,19 @@ dateformat5 <- "20200922 170000"
 ## Practice 
 1. Convert each of the examples above using lubridate.
 ```{r}
-
+ymd(dateformat1)
+```
+```{r}
+mdy(dateformat2)
+```
+```{r}
+dmy(dateformat3)
+```
+```{r}
+mdy_hms(dateformat4)
+```
+```{r}
+ymd_hms(dateformat5)
 ```
 
 ## A few more tricks...
@@ -216,7 +256,7 @@ It will be very helpful if you can install the following packages before the nex
 `devtools` and `ggmap`
 ```{r}
 #install.packages("devtools")
-#library(devtools)
+library(devtools)
 #devtools::install_github("dkahle/ggmap")
 ```
 
