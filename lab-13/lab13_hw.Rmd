@@ -68,27 +68,88 @@ ggmap(map1)
 ```
 
 4. Build a final map that overlays the recorded observations of grizzly bears in Alaska.  
+```{r}
+ggmap(map1)+
+  geom_point(data= grizzly, aes(longitude, latitude), alpha=0.75)+
+  labs(title= "Grizzly Bears in Alaska", x= "Longitude", y = "Latitude")
+```
 
 
 Let's switch to the wolves data. Brandell, Ellen E (2021), Serological dataset and R code for: Patterns and processes of pathogen exposure in gray wolves across North America, Dryad, [Dataset](https://doi.org/10.5061/dryad.5hqbzkh51).  
 
 5. Load the data and evaluate its structure.  
+```{r}
+glimpse(wolves)
+```
 
+6. How many distinct wolf populations are included in this study? Make a new object that restricts the data to the wolf populations in the lower 48 US states.  
 
-6. How many distinct wolf populations are included in this study? Mae a new object that restricts the data to the wolf populations in the lower 48 US states.  
+```{r}
+tabyl(wolves$pop) #not alaska and canada
+```
+```{r}
+lower48 <-wolves %>% 
+  filter(pop != "AK.PEN" & pop != "INT.AK" & pop != "SE.AK" & pop != "ONT" & pop != "BC" & pop!= "YUCH" & pop != "DENALI" & pop != "SS.NWT" & pop!= "ELLES" & pop!= "BAN.JAS" & pop!= "N.NWT") # removed anything not related to the lower 48 aka no alaska and canadian 
+```
 
+```{r}
+tabyl(lower48$pop)
+```
 
 7. Use the range of the latitude and longitude to build an appropriate bounding box for your map.  
 
+```{r}
+names(lower48)
+```
+```{r}
+lower48 %>% 
+  select(long,lat) %>% 
+  summary()
+```
+```{r}
+longitude2 <- c(-110.99,-86.82)
+latitude2<-c(33.89,47.75) 
+wolvesbbox<-make_bbox(longitude2, latitude2, f= 0.05)
+```
 
 8.  Load a map from `stamen` in a `terrain-lines` projection and display the map.  
+```{r}
+map2 <-get_map(wolvesbbox, maptype = "terrain-lines", source = "stamen")
+```
 
+```{r}
+ggmap(map2)
+```
 
 9. Build a final map that overlays the recorded observations of wolves in the lower 48 states.  
 
+```{r}
+ggmap(map2) +
+  geom_point(data=lower48, aes(long, lat), alpha = 0.05)+
+  labs(title= "Wolves in the Lower 48 States", x= "Longitude", y= "Latitude")
+```
 
 10. Use the map from #9 above, but add some aesthetics. Try to `fill` and `color` by population.  
 
+```{r}
+names(lower48)
+```
+# coloring by pop
+
+```{r}
+ggmap(map2) +
+  geom_point(data=lower48, aes(long, lat, color= pop))+
+  labs(title= "Wolves in the Lower 48 States", x= "Longitude", y= "Latitude")
+```
+
+
+# filling by pop
+```{r}
+ggmap(map2) +
+  geom_point(data=lower48, aes(long, lat, fill= pop))+
+  labs(title= "Wolves in the Lower 48 States", x= "Longitude", y= "Latitude")
+
+```
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences. 
