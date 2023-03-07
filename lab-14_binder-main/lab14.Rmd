@@ -398,16 +398,29 @@ hotspring_microbiome
 #### Take it further! 
 1. What is the most abundant bacterial species based on average abundance?
 ```{r}
-
+hotspring_microbiome %>% 
+  arrange(desc(average_abund))
 ```
 2. Make a bar plot of `name` and `average_abund`. 
 ```{r}
-
+theme_set(theme_minimal())
+p<- hotspring_microbiome %>% 
+  relocate(query_name, name, average_abund, average_containment_ani) %>% 
+  arrange(desc(average_abund))
+p %>% 
+  ggplot(aes(x = name, y = average_abund, fill = name))+
+  geom_col()+
+  theme(legend.position = "none")+
+  coord_flip()+
+  labs(title = "Abundance of Microbes in Lemonade Creek Hot Spring",
+       x = NULL,
+       y = "Average Abundance")
 ```
 
 
 3. Look up this species on wikipedia. are you surprised to find this in a hot spring?
 
+Green sulfur bacteria
 ## Wrap up 
 
 Use of the Unix Shell is fundamental to a wide range of advanced computing tasks, including high-performance computing. Experience with CLI (command line interfaces) will free you to use research software, and begin to create your own data that can be visualized in R with all of the incredible skills you've developed in this class. 
