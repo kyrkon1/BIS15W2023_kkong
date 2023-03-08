@@ -1,6 +1,6 @@
 ---
 title: "Lab 14 Homework"
-author: "Your Name Here"
+author: "Kyra Kong"
 date: "`r Sys.Date()`"
 output:
   html_document: 
@@ -22,27 +22,39 @@ Answer the following questions in RMarkdown. Please embed all of your code and p
 
 1. Look up 'Data Scientist' at https://www.bls.gov/. What degree is required for this career? Is it a growing occupation?  
 
+Need to have at least a Bachelor's degree.
+It is a growing occupation as the job outlook or projected change in occupation is 36% or faster than average.
 
 2. How would you describe your data science skills on a resume for a job application? Write a blurb that reflects the skills you have learned in this course. 
 
+Analyzing data sets, formatting data frames as tidy, data visualization, and creating interactive shiny apps.
 
 3. What are your current career interests, and how could your R skills support that career path? (hint: this might be good content for your LinkedIn profile ;)
 
+Currently, I want to work in Public Health Policy, understanding how certain diseases are spread or how experimental data can help with determining better health policy measures can be pivotal. R-skills can help with data analysis or interpretations to quantitatively determine the best modes of action for health measures.
 
 4. What about this course has been the most difficult for you? What has been the most rewarding?
 
+Dealing with error codes or when the code doesn't work the way you expected.
+The most rewarding is seeing your code work
 
 5. What do you wish you had known, or what skills do you wish you had, before taking this class.
 
+I wish I had known to clean up my desktop or have better file organization skills with my personal laptop.
 
 6. If we had 1 more lab in this class, what would you have liked to learn more about?
 
+I would definitely like one or two more labs on interactivity for applications.
 
 7. Now that you have (almost!) completed this course, do you plan to persue further data or computer science skills? What do you plan to do?
+
+I think these skills that I've worked on will be pivotal (not pun intended) for the future. I do want to learn more code for website development or for better presentation for my labs.
 
 
 8. How important was working with a partner to your success in this class? If this class were transitioned to an online format, how do you think that would affect your understanding?
 
+I feel much better knowing that I could talk to someone during this class because sometimes I don't like talking to the professor or the TA.
+For a transition to an online format, I think there is already enough ways for communication, such as the class Discord to cultivate a class community.
 
 9. Did you complete the class evaluation? Please complete the class evaluation using the link provided in the announcements. Your feedback is very important and we appreciate your time.
 
